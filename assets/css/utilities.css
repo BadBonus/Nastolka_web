@@ -1,0 +1,19 @@
+@layer utilities {
+  .-absVertCenter {
+    /* @apply absolute top-0 bottom-0 m-auto; */
+  }
+
+  .-absCenter {
+    /* @apply absolute top-0 right-0 bottom-0 left-0 m-auto; */
+  }
+
+  .-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .-borderSimple {
+    /* @apply border-primary border-[1px] border-solid; */
+  }
+}
