@@ -1,16 +1,26 @@
-<script lang="ts" setup>
-const rightDrawerOpen = ref(false);
-const toggleRightDrawer = () => {
-  rightDrawerOpen.value = !rightDrawerOpen.value;
-};
-</script>
+<script lang="ts" setup></script>
 <template>
-  <q-layout view="hHh lpR fFf">
+  <div class="common-layout">
     <MainHeader />
-    <MainDrawer />
-    <q-page-container>
+    <main>
       <slot />
-    </q-page-container>
+    </main>
     <MainFooter />
-  </q-layout>
+  </div>
 </template>
+
+<style>
+.common-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  & > main {
+    flex: 1;
+
+    box-shadow:
+      inset 0 0.5em 1.5em #0000001a,
+      inset 0 0.125em 0.5em #00000026;
+  }
+}
+</style>

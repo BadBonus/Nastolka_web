@@ -1,3 +1,13 @@
 /* Здесь будут располагаться основные глобальные стили на проект, что переписывают base стили, в base другие фреймы и библиотеки могут добавлять глобаные стили */
+
+/*NOTE: @theme - спец. директива для tailwind, ненадо путать с утилитой css @layer your_name(например theme)  */
 @layer theme {
+}
+
+@theme {
+  --color-bg-header: oklch(25.86% 0.003 228.93);
+  --color-bg-body: oklch(24.21% 0.009 255.59);
+
+  /* NUXT_UI_VARS */
+  --ui-bg: var(--color-bg-body);
 }

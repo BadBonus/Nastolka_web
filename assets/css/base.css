@@ -1,6 +1,12 @@
 /* Здесь обозначаем максимально глобальные стили на весь проект */
+
 @layer base {
   html {
-    /* font-family: "Roboto"; */
+    font-family: "Roboto";
+  }
+
+  button,
+  a {
+    cursor: pointer;
   }
 }

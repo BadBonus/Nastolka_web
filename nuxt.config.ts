@@ -10,16 +10,16 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/test-utils',
-    'nuxt-quasar-ui',
     '@vueuse/nuxt',
     '@pinia/nuxt',
     'nuxt-svgo',
-    // 'reka-ui/nuxt',
-    // '@nuxt/ui',
+    'reka-ui/nuxt',
     // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
-    '@nuxtjs/fontaine',
     'nuxt-auth-utils',
+    '@nuxtjs/fontaine',
+    '@nuxt/ui'
   ],
+
   vite: {
     plugins: [
       tailwindcss(),
@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/main.css'],
   // quasar: {
+  // plugins: ['Dialog', 'Notify']
   //   config: {
   //     dark: true,
   //     brand: {
@@ -64,8 +65,10 @@ export default defineNuxtConfig({
   //   },
 
   // },
+
   components: [
     "~/components",
+    "~/components/ui",
     "~/components/globals",
     "~/components/features",
   ],

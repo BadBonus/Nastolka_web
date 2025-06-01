@@ -4,9 +4,18 @@ defineOptions({
 });
 </script>
 <template>
-  <q-footer bordered class="bg-grey-8 text-white">
-    <q-toolbar>
-      <q-toolbar-title> NASTOLKA </q-toolbar-title>
-    </q-toolbar>
-  </q-footer>
+  <footer class="bg-bg-header h-16 w-full p-6">
+    <div class="flex items-center gap-1 text-3xl">
+      <span class="font-bold"> NASTOLKA </span>
+      <Icon name="game-icons:cubes" />
+    </div>
+  </footer>
 </template>
+
+<!-- <style scoped>
+footer {
+  box-shadow:
+    inset 0 0.5em 1.5em #0000001a,
+    inset 0 0.125em 0.5em #00000026;
+}
+</style> -->
