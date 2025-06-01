@@ -2,6 +2,8 @@
 const { toggleDrawState } = useMainDraw();
 import { MainAuthForm } from "#components";
 
+const open = ref<boolean>(false);
+
 defineOptions({
   name: "MainHeader",
 });
@@ -16,14 +18,29 @@ defineOptions({
     </div>
 
     <div>
-      <UDrawer direction="right">
+      <UDrawer
+        v-model:open="open"
+        :ui="{ header: 'flex items-center justify-between' }"
+        direction="right"
+      >
         <UButton color="primary">
           <Icon name="ci:hamburger-lg" />
         </UButton>
-        <template #content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          quo ex quod vel doloribus, fugit sint quaerat ut consequatur iure
-          neque earum dolores, nemo nihil officiis dolorem dicta sunt corporis!
+
+        <template #header>
+          <h2 class="text-highlighted font-semibold">Навигация</h2>
+
+          <UButton
+            icon="i-lucide-x"
+            color="neutral"
+            variant="ghost"
+            @click="open = false"
+          />
+        </template>
+
+        <template #body>
+          <MainAuthForm />
+          <USeparator class="mt-4" color="primary" type="solid" />
         </template>
       </UDrawer>
     </div>

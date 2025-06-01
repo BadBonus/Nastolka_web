@@ -1,3 +1,5 @@
+@layer reset, base, theme, frameworks, components, utilities, overrides;
+
 @import "tailwindcss";
 @import "@nuxt/ui";
 @import "tw-animate-css";
@@ -8,7 +10,3 @@
 @import "./components.css";
 @import "./utilities.css";
 @import "./overrides.css";
-
-/* Я в шоке, но просто импортировать файлы css с @base/theme и т.п. для корректной работы нельзя, только вот такое извращение устроить */
-
-@layer reset, base, theme, frameworks, components, utilities, overrides;
