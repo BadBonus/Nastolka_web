@@ -28,6 +28,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   console.log(event.data);
 }
 </script>
+
 <template>
   <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Email" name="email">
@@ -41,16 +42,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UButton class="w-full justify-center font-semibold" type="submit">
       Авторизоваться
     </UButton>
-
-    <UButton
-      type="button"
-      size="sm"
-      variant="link"
-      class="w-full justify-center text-xs!"
-    >
-      Зарегистрироваться
-    </UButton>
   </UForm>
 </template>
 
-<!--<style lang="scss"></style>-->
+<!-- <style lang="scss"></style> -->

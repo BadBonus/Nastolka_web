@@ -12,10 +12,10 @@ defineOptions({
   <header
     class="bg-bg-header flex h-16 w-full items-center justify-between px-4"
   >
-    <div class="flex items-center gap-1 text-3xl">
+    <NuxtLink to="/" class="flex items-center gap-1 text-3xl">
       <span class="font-bold"> NASTOLKA </span>
       <Icon name="game-icons:cubes" />
-    </div>
+    </NuxtLink>
 
     <div>
       <UDrawer
@@ -41,6 +41,7 @@ defineOptions({
         <template #body>
           <MainAuthForm />
           <USeparator class="mt-4" color="primary" type="solid" />
+          <MainNavigation class="mt-4" />
         </template>
       </UDrawer>
     </div>
