@@ -5,5 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <div>Page</div>
+  <div>
+    <CalendarRow />
+  </div>
 </template>
