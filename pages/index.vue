@@ -6,6 +6,6 @@ defineOptions({
 
 <template>
   <div>
-    <CalendarRow />
+    <CalendarRow class="mx-auto" />
   </div>
 </template>

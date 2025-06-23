@@ -8,40 +8,66 @@ defineOptions({
 });
 
 const model = defineModel<Date>();
-const comDate = computed<{
-  month: string | null;
-  year: number | null;
-}>(() => ({
-  month: model.value?.toLocaleString("default", { month: "short" }) ?? null,
-  year: model.value?.getFullYear() ?? null,
-}));
 
-const currentYear = new Date().getFullYear();
-const data = ref<number[]>([currentYear, currentYear + 1, currentYear + 2]);
-const startIndex = computed(() =>
-  data.value.findIndex((el) => comDate.value.year === el),
-);
+const formattedDate = (date: Date) =>
+  date
+    .toLocaleString("ru-RU", {
+      month: "long",
+      year: "numeric",
+    })
+    .replace(" г.", "");
 
-const acceptYear = (year: number) => {
+const changeYear = (prev: boolean): void => {
   const newDate = new Date(model.value as Date);
-  newDate.setFullYear(year);
+  newDate.setFullYear(newDate.getFullYear() + (prev ? -1 : 1));
   model.value = newDate;
   // P.S. такая конструкция для реактивности нужна
 };
+
+const changeMonth = (prev: boolean): void => {
+  const newDate = new Date(model.value as Date);
+  newDate.setFullYear(
+    model.value?.getFullYear() ?? newDate.getFullYear(),
+    newDate.getMonth() + (prev ? -1 : 1),
+  );
+  model.value = newDate;
+};
 </script>
 <template>
-  <div class="CalendarRowMonthYear flex justify-between text-sm font-semibold">
-    <span>{{ comDate.month }}</span>
-    <UPopover>
-      <span>{{ comDate.year }}</span>
-      <template #content>
-        <CarouselsSimpleNumeric
-          :startIndex="startIndex"
-          @change="acceptYear"
-          :items="data"
-        />
-      </template>
-    </UPopover>
+  <div
+    class="CalendarRowMonthYear flex items-center justify-between text-sm font-semibold"
+  >
+    <div>
+      <UButton
+        @click="changeYear(true)"
+        class="mr-3"
+        variant="outline"
+        size="md"
+      >
+        <Icon name="mdi:chevron-double-left" />
+      </UButton>
+      <UButton @click="changeMonth(true)" variant="outline" size="md">
+        <Icon name="mdi:chevron-left" />
+      </UButton>
+    </div>
+
+    <span>
+      {{ formattedDate(model ?? new Date()) }}
+    </span>
+
+    <div>
+      <UButton
+        @click="changeMonth(false)"
+        variant="outline"
+        size="md"
+        class="mr-3"
+      >
+        <Icon name="mdi:chevron-right" />
+      </UButton>
+      <UButton @click="changeYear(false)" variant="outline" size="md">
+        <Icon name="mdi:chevron-double-right" />
+      </UButton>
+    </div>
   </div>
 </template>
 

@@ -1,32 +1,33 @@
-<script setup lang="ts">
-type TCarouselsSimpleNumeric = {
-  items: number[];
+<script setup lang="ts" generic="T extends number | string">
+type TCarouselsSimple<T = number | string> = {
+  items: T[];
   startIndex?: number;
 };
 
 defineOptions({
-  name: "CarouselsSimpleNumeric",
+  name: "CarouselsSimple",
 });
-const props = defineProps<TCarouselsSimpleNumeric>();
+const props = defineProps<TCarouselsSimple<T>>();
 const emit = defineEmits<{
-  (e: "confirm", numeric: number): void;
-  (e: "change", numeric: number): void;
+  (e: "confirm", numeric: T): void;
+  (e: "change", numeric: T): void;
 }>();
 
 const localSelect = (index: number) => emit("change", props.items[index]);
 </script>
 <template>
   <UCarousel
-    class="border-accented rounded-md border border-solid p-1"
+    class="border-accented rounded-md border border-solid p-2"
     v-slot="{ item }"
     :items="items"
     arrows
     :startIndex="startIndex"
     @select="localSelect"
+    loop
   >
     <button
       @click="$emit('confirm', item)"
-      class="block w-full cursor-pointer text-center"
+      class="mx-auto block w-fit cursor-pointer text-center"
     >
       {{ item }}
     </button>
