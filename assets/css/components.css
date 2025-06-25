@@ -1,2 +1,6 @@
 @layer components {
+  .divider {
+    width: 1px;
+    background: var(--color-text);
+  }
 }
