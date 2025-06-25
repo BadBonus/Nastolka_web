@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import MonthYear from "./MonthYear.vue";
-// import Days from "./Days.vue";
 import { getCurrentWeek } from "./utils";
 
 type TDayInfo = {
@@ -15,20 +14,29 @@ type TDayInfo = {
 defineOptions({
   name: "CalendarRow",
 });
+const emit = defineEmits<{
+  (e: "changeDate", date: Date): void;
+}>();
 
-const choosedDate = ref<Date>(new Date());
+const model = defineModel<Date | null | undefined>();
+const choosedDate = model.value ? model : ref<Date>(new Date());
 
 const days = computed<TDayInfo[]>(() => {
-  return getCurrentWeek(choosedDate.value).map((el) => {
-    const active =
-      el.date.getDate() + el.date.getMonth() ===
-      choosedDate.value.getDate() + choosedDate.value.getMonth();
+  const date: Date | undefined = choosedDate.value ?? undefined;
+  return getCurrentWeek(date).map((el) => {
+    const active = !!(
+      choosedDate.value &&
+      el.date.getDate() === choosedDate.value.getDate() &&
+      el.date.getMonth() === choosedDate.value.getMonth()
+    );
 
     return {
       id: el.date.toISOString(),
       name: el.weekdayName,
       addInfo: el.dayNumber,
-      outOfRange: el.date.getMonth() != choosedDate.value.getMonth(),
+      outOfRange:
+        el.date.getMonth() !=
+        (choosedDate.value ? choosedDate.value.getMonth() : -1),
       active,
       ...el,
     };
@@ -54,12 +62,17 @@ const changeWeek = (side: "left" | "right") => {
   );
   newDate.setDate(newDate.getDate() + (side === "left" ? -1 : 1));
   choosedDate.value = newDate;
+  emit("changeDate", choosedDate.value);
 };
+
+watch(choosedDate, (newD) => {
+  console.log(newD);
+});
 </script>
 
 <template>
   <div class="CalendarRow max-w-[360px]">
-    <MonthYear v-model="choosedDate" />
+    <MonthYear v-model="choosedDate as Date" />
     <ItemsPickSelector
       @changeViaArrow="changeWeek"
       @change="changeDate"
@@ -68,5 +81,3 @@ const changeWeek = (side: "left" | "right") => {
     />
   </div>
 </template>
-
-<!-- <style lang="scss"></style> -->

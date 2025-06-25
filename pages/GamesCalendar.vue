@@ -6,7 +6,7 @@ defineOptions({
 
 <template>
   <section class="Calendar">
-
+    <GameCalendar />
   </section>
 </template>
 

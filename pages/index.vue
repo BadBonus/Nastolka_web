@@ -5,7 +5,5 @@ defineOptions({
 </script>
 
 <template>
-  <div>
-    <CalendarRow class="mx-auto" />
-  </div>
+  <div></div>
 </template>
