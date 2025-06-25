@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FilterRow from "./FilterRow.vue";
 import RowOrigin from "./RowOrigin.vue";
 
 defineOptions({
@@ -16,6 +17,7 @@ const test = (data) => {
   <nav class="GameCalendarHeader">
     <CalendarRow @change-date="test" v-model="choosedDate" />
     <RowOrigin v-model="search" v-model:is-all-vars="isAllVars" />
+    <FilterRow class="mt-3" />
   </nav>
 </template>
 
