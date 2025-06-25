@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MonthYear from "./MonthYear.vue";
-import Days from "./Days.vue";
+// import Days from "./Days.vue";
 import { getCurrentWeek } from "./utils";
 
 type TDayInfo = {
@@ -28,6 +28,7 @@ const days = computed<TDayInfo[]>(() => {
       id: el.date.toISOString(),
       name: el.weekdayName,
       addInfo: el.dayNumber,
+      outOfRange: el.date.getMonth() != choosedDate.value.getMonth(),
       active,
       ...el,
     };
@@ -59,7 +60,7 @@ const changeWeek = (side: "left" | "right") => {
 <template>
   <div class="CalendarRow max-w-[360px]">
     <MonthYear v-model="choosedDate" />
-    <Days
+    <ItemsPickSelector
       @changeViaArrow="changeWeek"
       @change="changeDate"
       :items="days"

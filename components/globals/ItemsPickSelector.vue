@@ -1,6 +1,6 @@
 <script generic="T" setup lang="ts">
 // FIXME потом передалть в глобалку
-type TCalendarItemRow = T & {
+type TItemsPickSelectorItem = T & {
   id: string;
   name: string;
   addInfo?: string | number;
@@ -8,16 +8,16 @@ type TCalendarItemRow = T & {
   outOfRange?: boolean;
   [key: string]: any;
 };
-type TCalendarRowDays = {
-  items: TCalendarItemRow[];
+type TItemsPickSelector = {
+  items: TItemsPickSelectorItem[];
 };
 
 defineOptions({
-  name: "CalendarRowDays",
+  name: "ItemsPickSelector",
 });
-defineProps<TCalendarRowDays>();
+defineProps<TItemsPickSelector>();
 defineEmits<{
-  (e: "change", numeric: TCalendarItemRow): void;
+  (e: "change", numeric: TItemsPickSelectorItem): void;
   (e: "changeViaArrow", side: "left" | "right"): void;
 }>();
 </script>
@@ -31,7 +31,7 @@ defineEmits<{
       @click="$emit('changeViaArrow', 'left')"
     />
 
-    <ul class="CalendarRowDays flex w-full justify-between text-[E2E8F0]">
+    <ul class="ItemsPickSelector flex w-full justify-between text-[E2E8F0]">
       <li v-for="item in items" :key="item.id">
         <button
           :class="{
@@ -58,7 +58,7 @@ defineEmits<{
 </template>
 
 <style>
-.CalendarRowDays {
+.ItemsPickSelector {
   li button span:first-child:first-letter {
     text-transform: uppercase;
   }

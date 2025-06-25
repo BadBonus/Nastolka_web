@@ -5,7 +5,9 @@ defineOptions({
 </script>
 
 <template>
-  <div class="Calendar"></div>
+  <section class="Calendar">
+
+  </section>
 </template>
 
 <!-- <style lang="scss"></style> -->
