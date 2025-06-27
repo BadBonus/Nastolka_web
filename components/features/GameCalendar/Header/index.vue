@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FilterRow from "./FilterRow.vue";
 import RowOrigin from "./RowOrigin.vue";
+import ModalFilters from "../ModalFilters/index.vue";
 
 defineOptions({
   name: "GameCalendarHeader",
@@ -9,6 +10,7 @@ defineOptions({
 const isAllVars = ref<boolean>(true);
 const search = ref<string>("");
 const choosedDate = ref<Date>(new Date());
+
 const test = (data) => {
   console.log(data);
 };

@@ -12,7 +12,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: "Календарь событий",
     icon: "i-lucide-calendar",
-    to: "/calendar",
+    to: "/GamesCalendar",
   },
   {
     label: "Новости",

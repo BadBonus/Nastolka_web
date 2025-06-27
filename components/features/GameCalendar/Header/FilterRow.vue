@@ -19,13 +19,26 @@ const sortFromTopTobottom = ref<boolean>(true);
       :icon="`lucide:arrow-${sortFromTopTobottom ? 'down' : 'up'}-narrow-wide`"
     />
 
-    <UButton
-      size="xl"
-      variant="outline"
-      color="primary"
-      icon="lucide:settings-2"
+    <UModal
+      title="Фильтры"
+      :close="{
+        color: 'primary',
+        variant: 'outline',
+        class: 'rounded-full',
+      }"
     >
-      13
-    </UButton>
+      <UButton
+        size="xl"
+        variant="outline"
+        color="primary"
+        icon="lucide:settings-2"
+      >
+        13
+      </UButton>
+
+      <template #body>
+        <GameCalendarModalFilters />
+      </template>
+    </UModal>
   </div>
 </template>
