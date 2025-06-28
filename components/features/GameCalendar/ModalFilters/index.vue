@@ -6,8 +6,11 @@ import {
   cities,
   webPlatforms,
   typesOfGenres,
+  typesOfCompany,
+  statusesOfGame,
 } from "./demoData";
 import FilterBadges from "./FilterBadges.vue";
+import RangeInput from "./RangeInput.vue";
 // 	 type TFeaturesModalFilters = {
 
 // 	}
@@ -30,11 +33,11 @@ const countOfFree = ref<number>();
 const dateOfGames = ref<string[]>([]);
 const averageTimeOfGame = ref<number>();
 const masterRating = ref<number>();
-const typeOfAdventure = ref<string>();
-const typeOfPlatform = ref<EtypesOfPlatformGame>();
+const typeOfAdventure = ref<string>(typesOfCompany[0]);
+const typeOfPlatform = ref<EtypesOfPlatformGame>(typesOfPlatformGame[0]);
 const places = ref<string[]>([]);
 const genres = ref<string[]>([]);
-const statusGame = ref<string>();
+const statusGame = ref<string>(statusesOfGame[0]);
 
 const placesVariants = computed(() => {
   const placesObj = {
@@ -88,22 +91,11 @@ const placesVariants = computed(() => {
           />
         </div>
 
-        <div class="mt-3">
-          <span class="block text-xl"> Количество людей</span>
-          <div class="mt-2 flex gap-3">
-            <UInput v-model="countOfPeople[0]" icon="i-lucide-at-sign">
-              <template #leading>
-                <p class="text-muted text-sm">От:</p>
-              </template>
-            </UInput>
-
-            <UInput type="numeric" v-model="countOfPeople[1]">
-              <template #leading>
-                <p class="text-muted text-sm">До:</p>
-              </template>
-            </UInput>
-          </div>
-        </div>
+        <RangeInput
+          class="mt-3"
+          v-model="countOfPeople"
+          label="Количество людей"
+        />
 
         <div class="mt-3">
           <span class="block text-xl"> Свободные места</span>
@@ -116,42 +108,14 @@ const placesVariants = computed(() => {
           />
         </div>
 
-        <div class="mt-3">
-          <span class="block text-xl"> Возраст игроков</span>
-          <div class="mt-2 flex gap-3">
-            <UInput v-model="averageAge[0]" icon="i-lucide-at-sign">
-              <template #leading>
-                <p class="text-muted text-sm">От:</p>
-              </template>
-            </UInput>
-
-            <UInput type="numeric" v-model="averageAge[1]">
-              <template #leading>
-                <p class="text-muted text-sm">До:</p>
-              </template>
-            </UInput>
-          </div>
-        </div>
+        <RangeInput class="mt-3" v-model="averageAge" label="Возраст игроков" />
 
         <div class="mt-3">
-          <span class="block text-xl">Даты проведения игр</span>
-          <div class="mt-2 flex gap-3">
-            <UInput
-              type="date"
-              v-model="dateOfGames[0]"
-              icon="i-lucide-at-sign"
-            >
-              <template #leading>
-                <p class="text-muted text-sm">От:</p>
-              </template>
-            </UInput>
-
-            <UInput type="date" v-model="dateOfGames[1]">
-              <template #leading>
-                <p class="text-muted text-sm">До:</p>
-              </template>
-            </UInput>
-          </div>
+          <RangeInput
+            type="date"
+            v-model="dateOfGames"
+            label="Даты проведения игр"
+          />
 
           <div class="mt-3">
             <span class="block text-xl"> Среднее время игры (примерно) </span>
@@ -216,10 +180,7 @@ const placesVariants = computed(() => {
           <div class="mt-3">
             <span class="block text-xl"> Рейтинг мастера </span>
 
-            <URadioGroup
-              v-model="typeOfAdventure"
-              :items="['любой', 'oneshot', 'short company', 'long company']"
-            />
+            <URadioGroup v-model="typeOfAdventure" :items="typesOfCompany" />
           </div>
 
           <div class="mt-3">
@@ -256,10 +217,7 @@ const placesVariants = computed(() => {
           <div class="mt-3">
             <span class="block text-xl"> Статус по подбору людей</span>
 
-            <URadioGroup
-              v-model="statusGame"
-              :items="['Новая, набор игроков', 'Минимум игроков найден']"
-            />
+            <URadioGroup v-model="statusGame" :items="statusesOfGame" />
           </div>
         </div>
       </div>

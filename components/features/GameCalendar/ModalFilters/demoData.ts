@@ -26,3 +26,7 @@ export const cities = ['Минск', 'Москва', 'Астана'];
 export const webPlatforms = ['Discord', 'Skype', 'Telegram'];
 
 export const typesOfGenres = ['Триллер', 'хардкор', 'фан-приключение'];
+
+export const typesOfCompany = ['любой', 'oneshot', 'short company', 'long company'];
+
+export const statusesOfGame = ['любой', 'Новая, набор игроков', 'Минимум игроков найден'];
