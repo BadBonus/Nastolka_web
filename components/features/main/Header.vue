@@ -3,10 +3,18 @@ const { toggleDrawState } = useMainDraw();
 import { MainAuthForm } from "#components";
 
 const open = ref<boolean>(false);
+const route = useRoute();
 
 defineOptions({
   name: "MainHeader",
 });
+
+watch(
+  () => route.name,
+  () => {
+    open.value = false;
+  },
+);
 </script>
 <template>
   <header
