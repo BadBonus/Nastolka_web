@@ -1,26 +1,66 @@
 <script setup lang="ts">
 import FilterRow from "./FilterRow.vue";
 import RowOrigin from "./RowOrigin.vue";
-import ModalFilters from "../ModalFilters/index.vue";
 
 defineOptions({
   name: "GameCalendarHeader",
 });
 
-const isAllVars = ref<boolean>(true);
-const search = ref<string>("");
-const choosedDate = ref<Date>(new Date());
+const search = defineModel<string>("search");
+const isAllVars = defineModel<boolean>("isAllVars");
+const choosedDate = defineModel<Date | null | undefined>("choosedDate");
 
-const test = (data) => {
-  console.log(data);
+function scrollToTop(): void {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+const emit = defineEmits<{
+  (e: "changeDate", date: any): void;
+}>();
+const changeDate = (data: Date) => {
+  emit("changeDate", data);
 };
 </script>
 <template>
-  <nav class="GameCalendarHeader">
-    <CalendarRow @change-date="test" v-model="choosedDate" />
+  <header class="GameCalendarHeader">
+    <CalendarRow @change-date="changeDate" v-model="choosedDate" />
     <RowOrigin v-model="search" v-model:is-all-vars="isAllVars" />
-    <FilterRow class="mt-3" />
-  </nav>
-</template>
+    <div class="sticky">
+      <FilterRow class="mt-3" />
+    </div>
 
-<!--<style lang="scss"></style>-->
+    <UButton
+      size="xl"
+      variant="solid"
+      color="primary"
+      icon="material-symbols:arrow-upward-rounded"
+      class="fixed bottom-3 left-3 z-50"
+      @click="scrollToTop"
+    />
+    <UModal
+      title="Фильтры"
+      :close="{
+        color: 'primary',
+        variant: 'outline',
+        class: 'rounded-full',
+      }"
+    >
+      <UButton
+        size="xl"
+        variant="solid"
+        color="primary"
+        icon="lucide:settings-2"
+        class="fixed right-3 bottom-3 z-50"
+      >
+        13
+      </UButton>
+
+      <template #body>
+        <GameCalendarModalFilters />
+      </template>
+    </UModal>
+  </header>
+</template>

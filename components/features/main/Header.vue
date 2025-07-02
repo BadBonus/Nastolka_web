@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { toggleDrawState } = useMainDraw();
-import { MainAuthForm } from "#components";
 
 const open = ref<boolean>(false);
 const route = useRoute();
@@ -47,7 +46,7 @@ watch(
         </template>
 
         <template #body>
-          <MainAuthForm />
+          <AuthForm />
           <USeparator class="mt-4" color="primary" type="solid" />
           <MainNavigation class="mt-4" />
         </template>

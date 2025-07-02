@@ -10,6 +10,7 @@ const isAllVars = defineModel<boolean>("isAllVars");
 const search = defineModel<string>();
 const searchIsActive = ref(false);
 const input = useTemplateRef<HTMLInputElement>("input");
+const sortFromTopTobottom = ref<boolean>(true);
 
 const changeOriginVariants = (AllVariants: boolean) => {
   if (AllVariants) {
@@ -63,6 +64,13 @@ onMounted(() => {
           :variant="isAllVars ? 'ghost' : 'subtle'"
           >подписки</UButton
         >
+
+        <UButton
+          class="inline-block px-3"
+          variant="outline"
+          color="primary"
+          :icon="`lucide:arrow-${sortFromTopTobottom ? 'down' : 'up'}-narrow-wide`"
+        />
       </div>
     </div>
   </div>

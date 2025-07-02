@@ -16,17 +16,27 @@ export const games = [{
 }[];
 
 export enum EtypesOfPlatformGame {
-  'nvm' = 'Не важно',
+  'nvm' = 'nvm',
   'online' = 'online',
-  'live' = 'вживую'
+  'live' = 'live'
 };
-export const typesOfPlatformGame = ['не важно', 'online', 'вживую'] as EtypesOfPlatformGame[];
+export const typesOfPlatformGame = [
+  {
+    name: 'Не важно',
+    id: EtypesOfPlatformGame['nvm']
+  }, {
+    name: 'Онлайн',
+    id: EtypesOfPlatformGame['online']
+  }, {
+    name: 'Вживую',
+    id: EtypesOfPlatformGame['live']
+  }] as {name: string, id: EtypesOfPlatformGame}[];
 
 export const cities = ['Минск', 'Москва', 'Астана'];
 export const webPlatforms = ['Discord', 'Skype', 'Telegram'];
 
 export const typesOfGenres = ['Триллер', 'хардкор', 'фан-приключение'];
 
-export const typesOfCompany = ['любой', 'oneshot', 'short company', 'long company'];
+export const typesOfCompany = ['oneshot', 'short company', 'long company'];
 
-export const statusesOfGame = ['любой', 'Новая, набор игроков', 'Минимум игроков найден'];
+export const statusesOfGame = ['любой', 'Набор', 'Минимум есть'];

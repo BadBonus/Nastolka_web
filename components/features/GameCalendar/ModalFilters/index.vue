@@ -9,7 +9,6 @@ import {
   typesOfCompany,
   statusesOfGame,
 } from "./demoData";
-import FilterBadges from "./FilterBadges.vue";
 import RangeInput from "./RangeInput.vue";
 // 	 type TFeaturesModalFilters = {
 
@@ -34,19 +33,19 @@ const dateOfGames = ref<string[]>([]);
 const averageTimeOfGame = ref<number>();
 const masterRating = ref<number>();
 const typeOfAdventure = ref<string>(typesOfCompany[0]);
-const typeOfPlatform = ref<EtypesOfPlatformGame>(typesOfPlatformGame[0]);
+const typeOfPlatform = ref<string>(typesOfPlatformGame[0].id);
 const places = ref<string[]>([]);
 const genres = ref<string[]>([]);
 const statusGame = ref<string>(statusesOfGame[0]);
 
 const placesVariants = computed(() => {
-  const placesObj = {
-    [EtypesOfPlatformGame.live]: cities,
+  const placesObj: Record<string, string[]> = {
     [EtypesOfPlatformGame.nvm]: [...cities, ...webPlatforms],
+    [EtypesOfPlatformGame.live]: cities,
     [EtypesOfPlatformGame.online]: webPlatforms,
   };
 
-  return placesObj[typeOfPlatform.value ?? EtypesOfPlatformGame.online];
+  return placesObj[typeOfPlatform.value as string] ?? [];
 });
 
 // FIXME: почему модификаторы на инпутах v-model.number не работают - надо иным способом ограничить ввод значений
@@ -178,7 +177,7 @@ const placesVariants = computed(() => {
           </div>
 
           <div class="mt-3">
-            <span class="block text-xl"> Рейтинг мастера </span>
+            <span class="block text-xl"> Тип компании</span>
 
             <URadioGroup v-model="typeOfAdventure" :items="typesOfCompany" />
           </div>
@@ -187,6 +186,8 @@ const placesVariants = computed(() => {
             <span class="block text-xl"> Тип ведения игры </span>
 
             <URadioGroup
+              label-key="name"
+              value-key="id"
               v-model="typeOfPlatform"
               :items="typesOfPlatformGame"
             />
@@ -196,8 +197,8 @@ const placesVariants = computed(() => {
             <span class="block text-xl"> Место проведения игры </span>
 
             <USelectMenu
-              v-model="places"
               multiple
+              v-model="places"
               :items="placesVariants"
               class="mt-2 w-full"
             />

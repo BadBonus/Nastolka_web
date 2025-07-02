@@ -2,7 +2,7 @@
 <template>
   <div class="common-layout">
     <MainHeader />
-    <main>
+    <main class="py-6">
       <slot />
     </main>
     <MainFooter />

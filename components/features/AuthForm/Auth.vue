@@ -3,7 +3,7 @@ import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 defineOptions({
-  name: "MainAuthForm",
+  name: "AuthForm",
 });
 
 const schema = z.object({
