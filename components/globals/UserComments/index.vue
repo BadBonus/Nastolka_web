@@ -10,6 +10,7 @@ defineProps<TIndex>();
 defineOptions({
   name: "UserCommentsIndex",
 });
+defineSlots<{ additional(): any }>();
 </script>
 
 <template>
@@ -35,6 +36,8 @@ defineOptions({
             <UserCommentsComment v-bind="item" />
           </li>
         </ul>
+
+        <slot name="additional" />
       </template>
     </UCollapsible>
   </div>

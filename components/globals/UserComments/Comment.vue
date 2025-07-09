@@ -20,7 +20,7 @@ defineOptions({
       <div>
         <span class="font-bold">{{ name }}</span>
         <div class="flex items-center gap-1">
-          <Icon name="material-symbols:star" />
+          <Icon class="text-amber-300" name="material-symbols:star" />
           <span class="text-sm">{{ rating.toFixed(1) }}</span>
         </div>
       </div>
