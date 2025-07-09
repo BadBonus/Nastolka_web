@@ -1,9 +1,10 @@
-<script lang="ts" setup></script>
 <template>
   <div class="common-layout">
     <MainHeader />
-    <main class="py-6">
-      <slot />
+    <main class="layout_main px-1.5 py-6">
+      <div delete-tag class="mx-auto max-w-[360px]">
+        <slot />
+      </div>
     </main>
     <MainFooter />
   </div>

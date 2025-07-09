@@ -32,7 +32,7 @@ const formatDate = (date: Date | string): string | undefined => {
 };
 </script>
 <template>
-  <UCard class="p-1" variant="outline">
+  <UCard class="bg-accented p-1" variant="outline">
     <template #header>
       <span class="block text-center text-xl">
         {{ name }}
