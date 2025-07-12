@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UButton } from "#components";
+import StatsComments from "./StatsComments.vue";
 
 // 	 type TProfileHeader = {
 
@@ -53,6 +54,8 @@ defineOptions({
       <Icon class="text-amber-300" name="material-symbols:star" />
       <span> 5.0 (29) </span>
     </div>
+
+    <StatsComments />
   </header>
 </template>
 

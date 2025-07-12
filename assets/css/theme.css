@@ -5,12 +5,75 @@
 }
 
 @theme {
+  /* Новая цветовая гамма - start*/
+  /* контраст color-text к поверхностям 10+ - отлично */
+
+/* Палитра базовых цветов  - старт*/
+  --font-main: 'Montserrat Alternates', 'Roboto';
+  --font-secondary: 'Roboto';
+  --font-decorate: 'Artist-Nouveau'; /*его еще установить надо*/
+
+  --color-red: oklch(0.5555 0.1429 26.42);
+  --color-red-hover: oklch(71% 0.05 45);
+  --color-neutral-dark: oklch(0.3132 0 0);
+  --color-neutral-dark-hover: oklch(0.6128 0 0);
+  --color-brown: oklch(0.5114 0.0833 55.39);
+  --color-brown-hover: oklch(0.499 0.0853 55.27);
+  --color-dark-brown: oklch(0.4 0.1 50);
+  --color-green: oklch(0.5974 0.1198 161.26);
+  --color-green-hover: oklch(0.6908 0.1579 158.13);
+  --color-gold: oklch(0.7007 0.1502 69.8);
+  --color-gold-hover: oklch(0.6908 0.1579 158.13);
+  --color-blue:  oklch(0.7234 0.1421 253);
+  --color-blue-hover: oklch(0.7685 0.1066 252.15);
+  --color-neutral-light: oklch(0.9 0.02 60);
+  --color-neutral-medium: oklch(0.7 0.05 55);
+
+/* Палитра базовых цветов  - конец*/
+
+  --color-danger: var(--color-red);
+  --color-danger-hover: var(--color-red-hover);
+  --color-main: var(--color-brown);
+  --color-main-hover: var(--color-brown-hover);
+  --color-success: var(--color-green);
+  --color-success-hover: var(--color-green-hover);
+  --color-warning: var(--color-gold);
+  --color-warning-hover: var(--color-gold-hover);
+  --color-secondary: var(--color-neutral-dark);
+  --color-secondary-hover: var(--color-neutral-dark-hover);
+  --color-info: var(--color-blue);
+  --color-info-hover: var(--color-blue-hover);
+  
+  --color-border: var(--color-neutral-dark);
+  --color-text-secondary: var(--color-brown);
+  --color-text-primary: var(--color-neutral-dark);
+  --color-primary-background: oklch(0.9189 0 0);
+  --color-elements-surface: oklch(0.9461 0 0);
+  --color-text: var(--color-neutral-dark);
+  --color-text-secondary: var(--color-brown);
+  --color-shadow: oklch(0.3329 0 0 / 55%);
+  --color-border: var(--color-neutral-medium);
+  --color-elements-surface: var(--color-neutral-light);
+  --color-focus-state: var(--color-info-hover);
+  --color-bg-footer: var(--color-dark-brown);
+  --color-bg-header: var(--color-dark-brown);
+  /* --color-link: */
+  /* --color-link-hover: */ 
+  /* --color-link-visited: */ 
+
+
+  --shadow-color: oklch(0.3329 0 0 / 55%);
+  --shadow-box-text: 1px 1px 0px var(--shadow-color);
+  --shadow-box-elements: 3px 3px 0px var(--shadow-color);
+
+
+  /* Новая цветовая гамма - end*/
+
   --color-bg-header: oklch(25.86% 0.003 228.93);
-  --color-bg-body: oklch(24.21% 0.009 255.59);
+  --color-bg-body: oklch(0.9189 0 0);
   --color-bg-secondary: oklch(0.3126 0.014 211.12);
-  --color-text: var(--text-color-default);
-  --color-text-secondary: oklch(from var(--color-text) l c h / 80%);
 
   /* NUXT_UI_VARS */
   --ui-bg: var(--color-bg-body);
 }
+z

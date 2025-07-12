@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import Comment from "~/components/globals/UserComments/Comment.vue";
-
-// 	 type TGameGM = {
-
-// 	}
-
 const demoComments = [
   {
     avatar: "/images/wod_1.png",

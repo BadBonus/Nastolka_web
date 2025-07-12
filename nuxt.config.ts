@@ -34,7 +34,9 @@ export default defineNuxtConfig({
     dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
   },
   css: [
-    '~/assets/css/main.css'],
+    '~/assets/css/main.css',
+    '~/assets/fonts/fonts.css'
+  ],
   // quasar: {
   // plugins: ['Dialog', 'Notify']
   //   config: {

@@ -27,16 +27,14 @@ defineOptions({
     <span class="mt-3 block text-center text-2xl font-semibold">
       Что требуется иметь при себе
     </span>
-    <ol
-      class="mt-2.5 flex list-decimal flex-wrap gap-1.5 text-center text-left"
-    >
+    <ul class="mt-2.5 flex flex-wrap gap-1.5 text-center">
       <li class="w-[48%]">Компьютер</li>
       <li class="w-[48%]">Лист персонажа</li>
       <li class="w-[48%]">Кубики</li>
       <li class="w-[48%]">Интернет</li>
       <li class="w-[48%]">Микрофон</li>
       <li class="w-[48%]">Наушники</li>
-    </ol>
+    </ul>
   </div>
 </template>
 
