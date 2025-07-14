@@ -10,3 +10,7 @@
 @import "./components.css";
 @import "./utilities.css";
 @import "./overrides.css";
+
+/* Проблемы
+Я хз почему, но перекрытие стилей NUXT UI начинается только с файла utilities, хотя @import "@nuxt/ui" гораздо раньше.
+*/

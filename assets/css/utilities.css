@@ -1,4 +1,4 @@
-@layer utilities {
+@layer utility {
   .-absVertCenter {
     position: absolute;
     top: 0;
@@ -23,5 +23,12 @@
 
   .-borderSimple {
     /* @apply border-primary border-[1px] border-solid; */
+  }
+
+  .-shadow-element {
+    box-shadow: var(--shadow-box-elements);
+  }
+  .-shadow-text {
+    box-shadow: var(--shadow-box-text);
   }
 }

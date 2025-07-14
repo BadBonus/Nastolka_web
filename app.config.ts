@@ -1,5 +1,25 @@
 export default defineAppConfig({
   ui: {
+    button: {
+      slots: {
+        base: 'rounded-sm',
+      },
+      variant: {
+        primary: '-shadow-element'
+      }
+    },
+    drawer: {
+      slots: {
+        content: 'drawer',
+      },
+    },
+    input: {
+      slots: {
+        base: [
+          'base-input',
+        ],
+      },
+    },
     card: {
       slots: {
         root: 'rounded-lg overflow-hidden',

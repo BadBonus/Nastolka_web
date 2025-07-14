@@ -17,10 +17,10 @@ watch(
 </script>
 <template>
   <header
-    class="bg-bg-header flex h-16 w-full items-center justify-between px-4"
+    class="bg-bg-header border-b-brown flex h-16 w-full items-center justify-between border-b-4 px-4"
   >
     <NuxtLink to="/" class="flex items-center gap-1 text-3xl">
-      <span class="font-bold"> NASTOLKA </span>
+      <span class="font-decorate font-bold"> NASTOLKA </span>
       <Icon name="game-icons:cubes" />
     </NuxtLink>
 

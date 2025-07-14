@@ -15,7 +15,7 @@ defineOptions({
 </script>
 <template>
   <section class="UserCommentsComment bg-bg-secondary rounded-lg p-2">
-    <div class="flex items-center gap-1.5">
+    <div class="rounded flex items-center gap-1.5">
       <nuxt-img class="h-12 w-12 rounded-full object-cover" :src="avatar" />
       <div>
         <span class="font-bold">{{ name }}</span>

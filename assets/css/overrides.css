@@ -1,3 +1,46 @@
 /* Тут слой, что должен по важности перекрывать другие слои и перезаписывать правила*/
+@import "@nuxt/ui";
 @layer overrides {
+  .bg-default {
+    background-color: var(--color-elements-surface);
+  }
+
+  .drawer {
+    border-radius: unset;
+    background: var(--color-elements-surface);
+  }
+
+  .base-input {
+    background: var(--color-elements-surface);
+    border-style: solid !important;
+    border-width: 3px;
+    border-color: var(--color-neutral-dark);
+    box-shadow: var(--shadow-box-elements);
+    border-radius: 4px;
+    color: var(--color-text);
+    font-weight: 600;
+
+    &:focus {
+      border-color: var(--color-focus-state);
+    }
+
+    &::placeholder {
+      color: var(--color-placeholder);
+    }
+
+    &.ring-error {
+      color: var(--color-danger);
+      border-color: var(--color-danger);
+    }
+  }
+
+  label {
+    font-family: var(--font-main);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  p.text-error {
+    color: var(--color-danger);
+  }
 }
