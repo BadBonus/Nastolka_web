@@ -7,7 +7,33 @@
 
   .drawer {
     border-radius: unset;
-    background: var(--color-elements-surface);
+    background: var(--color-drawer);
+    border-left: 6px solid var(--color-brown);
+
+    label {
+      color: var(--color-text-inverted);
+    }
+
+    .base-input {
+      border-color: var(--color-brown-hover);
+    }
+
+    nav {
+      span {
+        font-weight: 600;
+        color: var(--color-neutral-light);
+      }
+
+      a.text-primary::before {
+        background: var(--color-gold);
+      }
+
+      a:hover:not(.text-primary) {
+        &::before {
+          background: var(--color-gold-hover);
+        }
+      }
+    }
   }
 
   .base-input {
@@ -35,7 +61,7 @@
   }
 
   label {
-    font-family: var(--font-main);
+    font-family: var(--font-secondary);
     font-weight: 600;
     color: var(--color-text);
   }

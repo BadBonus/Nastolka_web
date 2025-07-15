@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   },
   css: [
     '~/assets/css/main.css',
-    '~/assets/fonts/fonts.css'
+    '~/public/fonts/fonts.css'
   ],
   // quasar: {
   // plugins: ['Dialog', 'Notify']
@@ -67,6 +67,22 @@ export default defineNuxtConfig({
   //   },
 
   // },
+
+  fonts: {
+    defaults: {
+      weights: [400, 500, 600, 700, 800, 900],
+      styles: ['normal', 'italic'],
+      fallbacks: {
+        'serif': ['ShantellSans'],
+        'system-ui': ['Roboto', 'system-ui'],
+        'sans-serif': ['Pangolin'],
+      },
+
+    },
+    families: [{
+      name: 'Rubik Doodle Shadow', provider: 'google'
+    }]
+  },
 
   components: [
     "~/components",

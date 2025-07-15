@@ -9,9 +9,10 @@
   /* контраст color-text к поверхностям 10+ - отлично */
 
   /* Палитра базовых цветов  - старт*/
-  --font-main: "Montserrat Alternates", "Roboto";
-  --font-secondary: "Roboto";
-  --font-decorate: "Artist-Nouveau"; /*его еще установить надо*/
+  /* Montserrat Alternates - ранее как main */
+  --font-main: "Rubik";
+  --font-secondary: "ShantellSans";
+  --font-decorate: "Artist Nouveau";
 
   --color-red: oklch(0.5555 0.1429 26.42);
   --color-red-hover: oklch(71% 0.05 45);
@@ -60,6 +61,7 @@
   --color-focus-state: var(--color-neutral-medium);
   --color-bg-footer: var(--color-dark-brown);
   --color-bg-header: var(--color-dark-brown);
+  --color-drawer: var(--color-dark-brown);
   --color-label: color-mix(in srgb, var(--color-neutral-dark) 50%, transparent);
   --color-placeholder: color-mix(
     in srgb,

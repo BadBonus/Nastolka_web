@@ -22,6 +22,9 @@ type TButton = {
 defineOptions({
   name: "Button",
 });
+defineEmits<{
+  (e: "click"): void;
+}>();
 
 const attrs = useAttrs();
 
@@ -57,7 +60,8 @@ const buttonClasses = computed(() => {
       "bg-secondary text-text-inverted hover:bg-secondary-hover focus:ring-gray-400 shadow-button",
     outline:
       "bg-transparent border-2 border-link text-link hover:bg-blue-50 focus:ring-link shadow-button",
-    ghost: "bg-transparent text-link hover:bg-blue-50 focus:ring-link ",
+    ghost:
+      "bg-transparent text-link hover:text-text hover:bg-blue-50 focus:ring-link ",
     link: "bg-transparent text-link hover:underline focus:ring-link",
     warning:
       "bg-warning text-white hover:bg-warning-hover focus:ring-white  shadow-button",
@@ -90,6 +94,7 @@ const iconSpacingClasses = computed(() => {
     :disabled="disabled || loading"
     :class="buttonClasses"
     v-bind="attrs"
+    @click="$emit('click')"
   >
     <span
       v-if="loading"

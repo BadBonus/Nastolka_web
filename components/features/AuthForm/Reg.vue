@@ -39,9 +39,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UInput class="w-full" v-model="state.password" type="password" />
     </UFormField>
 
-    <UButton class="w-full justify-center font-semibold" type="submit">
+    <Button class="w-full justify-center font-semibold" type="submit">
       Зарегистрироваться
-    </UButton>
+    </Button>
   </UForm>
 </template>
 

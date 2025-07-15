@@ -32,6 +32,9 @@ const items = ref<NavigationMenuItem[]>([
       orientation="vertical"
       :items="items"
       class="data-[orientation=vertical]:w-48"
+      :ui="{
+        indicator: 'indicator',
+      }"
     />
   </nav>
 </template>

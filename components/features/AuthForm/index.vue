@@ -7,15 +7,15 @@ const isReg = ref<boolean>(false);
 <template>
   <RegForm v-if="isReg" />
   <AuthForm v-else />
-  <UButton
+  <Button
     @click="isReg = !isReg"
     type="button"
     size="sm"
-    variant="link"
+    variant="ghost"
     class="mt-3 w-full justify-center text-xs!"
   >
     {{ isReg ? "Авторизоваться" : "Зарегистрироваться" }}
-  </UButton>
+  </Button>
 </template>
 
 <!--<style lang="scss"></style>-->

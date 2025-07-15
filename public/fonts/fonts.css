@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "Artist Nouveau";
+  src: url("@/public/fonts/artist_nouveau/artist_nouveau.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  /* Потом расширить шрифт на другие форматы */
+  /* src: url('@/assets/fonts/artist_nouveau.woff2') format('woff2'),
+         url('@/assets/fonts/artist_nouveau.woff') format('woff'),
+         url('@/assets/fonts/artist_nouveau.ttf') format('truetype'); */
+}
+
+/* --- Comforter Brush --- */
+@font-face {
+  font-family: "Comforter Brush";
+  src: url("@/public/fonts/Comforter_Brush/ComforterBrush-Regular.ttf")
+    /* Обратите внимание на "-Regular" */ format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- Rubik --- */
+@font-face {
+  font-family: "Rubik";
+  src: url("@/public/fonts/Rubik/Rubik-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rubik Doodle Shadow";
+  src: url("@/public/fonts/Rubik_Doodle_Shadow/RubikDoodleShadow-Regular.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

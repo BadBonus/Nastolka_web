@@ -35,7 +35,9 @@ watch(
         </UButton>
 
         <template #header>
-          <h2 class="text-highlighted font-semibold">Навигация</h2>
+          <h2 class="text-highlighted font-main text-4xl font-bold">
+            Навигация
+          </h2>
 
           <UButton
             icon="i-lucide-x"
