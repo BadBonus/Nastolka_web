@@ -23,14 +23,14 @@ const changeOriginVariants = (AllVariants: boolean) => {
 };
 
 onMounted(() => {
-  if (input.value.inputRef) {
-    input.value.inputRef?.addEventListener("focus", () => {
-      searchIsActive.value = true;
-    });
-    input.value.inputRef?.addEventListener("blur", () => {
-      searchIsActive.value = false;
-    });
-  }
+  // if (input.value) {
+  //   input.value.addEventListener("focus", () => {
+  //     searchIsActive.value = true;
+  //   });
+  //   input.value.addEventListener("blur", () => {
+  //     searchIsActive.value = false;
+  //   });
+  // }
 });
 </script>
 <template>
@@ -51,21 +51,23 @@ onMounted(() => {
         v-show="!searchIsActive"
         class="text-text-secondary flex items-center gap-6 text-xl"
       >
-        <UButton
+        <Button
           @click="changeOriginVariants(true)"
           class="p-1"
-          :variant="isAllVars ? 'subtle' : 'ghost'"
-          >ВСЕ</UButton
+          size="sm"
+          :variant="isAllVars ? 'outline' : 'ghost'"
+          >ВСЕ</Button
         >
         <div class="divider h-4"></div>
-        <UButton
+        <Button
           @click="changeOriginVariants(false)"
           class="p-1"
-          :variant="isAllVars ? 'ghost' : 'subtle'"
-          >подписки</UButton
+          size="sm"
+          :variant="isAllVars ? 'ghost' : 'outline'"
+          >подписки</Button
         >
 
-        <UButton
+        <Button
           class="inline-block px-3"
           variant="outline"
           color="primary"

@@ -38,35 +38,35 @@ const changeMonth = (prev: boolean): void => {
     class="CalendarRowMonthYear flex items-center justify-between text-sm font-semibold"
   >
     <div>
-      <UButton
+      <Button
         @click="changeYear(true)"
         class="mr-3"
-        variant="outline"
+        variant="primary"
         size="md"
       >
         <Icon name="mdi:chevron-double-left" />
-      </UButton>
-      <UButton @click="changeMonth(true)" variant="outline" size="md">
+      </Button>
+      <Button @click="changeMonth(true)" variant="primary" size="md">
         <Icon name="mdi:chevron-left" />
-      </UButton>
+      </Button>
     </div>
 
-    <span>
+    <span class="text-text">
       {{ formattedDate(model ?? new Date()) }}
     </span>
 
     <div>
-      <UButton
+      <Button
         @click="changeMonth(false)"
-        variant="outline"
+        variant="primary"
         size="md"
         class="mr-3"
       >
         <Icon name="mdi:chevron-right" />
-      </UButton>
-      <UButton @click="changeYear(false)" variant="outline" size="md">
+      </Button>
+      <Button @click="changeYear(false)" variant="primary" size="md">
         <Icon name="mdi:chevron-double-right" />
-      </UButton>
+      </Button>
     </div>
   </div>
 </template>

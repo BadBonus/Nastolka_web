@@ -32,10 +32,8 @@ const changeDate = (data: Date) => {
       <FilterRow class="mt-3" />
     </div>
 
-    <UButton
-      size="xl"
-      variant="solid"
-      color="primary"
+    <Button
+      variant="secondary"
       icon="material-symbols:arrow-upward-rounded"
       class="fixed bottom-3 left-3 z-50"
       @click="scrollToTop"
@@ -48,15 +46,14 @@ const changeDate = (data: Date) => {
         class: 'rounded-full',
       }"
     >
-      <UButton
-        size="xl"
-        variant="solid"
-        color="primary"
+      <!-- <Button
+        size="lg"
+        variant="secondary"
         icon="lucide:settings-2"
         class="fixed right-3 bottom-3 z-50"
       >
         13
-      </UButton>
+      </Button> -->
 
       <template #body>
         <GameCalendarModalFilters />

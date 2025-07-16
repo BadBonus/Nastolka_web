@@ -23,19 +23,17 @@ defineEmits<{
 </script>
 <template>
   <div class="flex w-full items-center justify-between gap-3">
-    <UButton
-      variant="outline"
-      class="h-full"
-      size="xl"
+    <Button
+      variant="primary"
       icon="i-lucide-chevron-left"
       @click="$emit('changeViaArrow', 'left')"
     />
 
-    <ul class="ItemsPickSelector flex w-full justify-between text-[E2E8F0]">
+    <ul class="ItemsPickSelector text-text flex w-full justify-between">
       <li v-for="item in items" :key="item.id">
         <button
           :class="{
-            'font-bold text-white opacity-100': item.active,
+            'text-gold font-bold opacity-100': item.active,
             'opacity-15': item.outOfRange,
             'opacity-80': !item.outOfRange,
           }"
@@ -47,10 +45,8 @@ defineEmits<{
         </button>
       </li>
     </ul>
-    <UButton
-      variant="outline"
-      class="h-full"
-      size="xl"
+    <Button
+      variant="primary"
       icon="i-lucide-chevron-right"
       @click="$emit('changeViaArrow', 'right')"
     />

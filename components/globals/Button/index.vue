@@ -1,23 +1,6 @@
 <script setup lang="ts">
-type TButton = {
-  variant?:
-    | "primary"
-    | "secondary"
-    | "outline"
-    | "ghost"
-    | "link"
-    | "warning"
-    | "danger"
-    | "info";
-  size?: "sm" | "md" | "lg";
-  block?: boolean;
-  rounded?: boolean;
-  disabled?: boolean;
-  loading?: boolean;
-  icon?: string;
-  iconPos?: "left" | "right";
-  type?: "button" | "submit" | "reset";
-};
+import type { TButton } from "./button.types";
+import { variantColorClasses, sizeClasses } from "./utils";
 
 defineOptions({
   name: "Button",
@@ -29,7 +12,8 @@ defineEmits<{
 const attrs = useAttrs();
 
 const props = withDefaults(defineProps<TButton>(), {
-  variant: "primary",
+  variant: "filled",
+  color: "primary",
   size: "md",
   block: false,
   rounded: false,
@@ -42,40 +26,18 @@ const props = withDefaults(defineProps<TButton>(), {
 const buttonClasses = computed(() => {
   const baseClasses = [
     "inline-flex items-center justify-center font-semibold relative",
-    "focus:outline-none focus:ring-2  ",
+    "focus:outline-none focus:ring-2",
     "transition-all duration-200 ease-in-out",
+    props.block ? "w-full" : "",
     props.disabled || props.loading ? "opacity-60 cursor-not-allowed" : "",
   ];
-
-  const sizeClasses = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-1.5 text-base",
-    lg: "px-4.5 py-2 text-lg",
-  };
-
-  const variantClasses = {
-    primary:
-      "bg-primary hover:bg-primary-hover text-text-inverted focus:ring-warning shadow-button",
-    secondary:
-      "bg-secondary text-text-inverted hover:bg-secondary-hover focus:ring-gray-400 shadow-button",
-    outline:
-      "bg-transparent border-2 border-link text-link hover:bg-blue-50 focus:ring-link shadow-button",
-    ghost:
-      "bg-transparent text-link hover:text-text hover:bg-blue-50 focus:ring-link ",
-    link: "bg-transparent text-link hover:underline focus:ring-link",
-    warning:
-      "bg-warning text-white hover:bg-warning-hover focus:ring-white  shadow-button",
-    danger:
-      "bg-danger text-white hover:bg-danger-hover focus:ring-white shadow-button",
-    info: "bg-info text-white hover:bg-info-hover focus:ring-white shadow-button",
-  };
 
   const roundedClass = props.rounded ? "rounded-full" : "rounded";
 
   return [
     ...baseClasses,
     sizeClasses[props.size],
-    variantClasses[props.variant],
+    variantColorClasses[props.variant][props.color],
     roundedClass,
   ];
 });
@@ -126,7 +88,7 @@ const iconSpacingClasses = computed(() => {
       <Icon
         :class="[iconSpacingClasses]"
         class="flex-shrink-0 text-xl"
-        v-if="icon && iconPos === 'left'"
+        v-if="icon && props.iconPos === 'left'"
         :name="icon"
       />
 
@@ -134,7 +96,7 @@ const iconSpacingClasses = computed(() => {
       <Icon
         :class="[iconSpacingClasses]"
         class="flex-shrink-0 text-xl"
-        v-if="icon && iconPos === 'right'"
+        v-if="icon && props.iconPos === 'right'"
         :name="icon"
       />
     </span>
