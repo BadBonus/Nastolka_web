@@ -14,14 +14,19 @@ defineOptions({
 });
 </script>
 <template>
-  <section class="UserCommentsComment bg-bg-secondary rounded-lg p-2">
-    <div class="rounded flex items-center gap-1.5">
-      <nuxt-img class="h-12 w-12 rounded-full object-cover" :src="avatar" />
+  <section
+    class="UserCommentsComment bg-elements-surface border-border rounded-lg border-2 p-2"
+  >
+    <div class="flex items-center gap-1.5 rounded">
+      <nuxt-img
+        class="border-secondary h-12 w-12 rounded-full border-2 object-cover"
+        :src="avatar"
+      />
       <div>
         <span class="font-bold">{{ name }}</span>
         <div class="flex items-center gap-1">
-          <Icon class="text-amber-300" name="material-symbols:star" />
-          <span class="text-sm">{{ rating.toFixed(1) }}</span>
+          <Star />
+          <span class="font-semibold">{{ rating.toFixed(1) }}</span>
         </div>
       </div>
     </div>

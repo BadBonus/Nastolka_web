@@ -32,7 +32,10 @@ const formatDate = (date: Date | string): string | undefined => {
 };
 </script>
 <template>
-  <UCard class="bg-accented p-1" variant="outline">
+  <UCard
+    class="bg-elements-surface border-dark-brown shadow-element border-2 p-1"
+    variant="outline"
+  >
     <template #header>
       <span class="block text-center text-xl">
         {{ name }}
@@ -45,7 +48,7 @@ const formatDate = (date: Date | string): string | undefined => {
       </span>
     </template>
 
-    <div class="flex justify-between">
+    <div class="relative flex justify-between">
       <div class="flex items-center gap-1">
         <Icon name="lucide:users-round" />
         <span>{{ currentUsers }}{{ maxUsers ? "/" : "" }}{{ maxUsers }}</span>
@@ -68,7 +71,7 @@ const formatDate = (date: Date | string): string | undefined => {
     <template #footer>
       <NuxtLink :to="org.link" class="flex items-center justify-between">
         <div class="-truncate flex items-center gap-1 pr-1">
-          <UAvatar :src="org.ava" />
+          <UAvatar :src="org.ava" class="border-2" />
           <span class="-truncate ml-1 inline-block font-semibold">{{
             org.name
           }}</span>

@@ -46,7 +46,7 @@ const changeMonth = (prev: boolean): void => {
       </Button>
     </div>
 
-    <span class="text-text">
+    <span class="text-text text-base">
       {{ formattedDate(model ?? new Date()) }}
     </span>
 

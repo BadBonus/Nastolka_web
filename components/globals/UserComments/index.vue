@@ -16,24 +16,22 @@ defineSlots<{ additional(): any }>();
 <template>
   <div>
     <UCollapsible v-if="comments.length" class="flex flex-col gap-2">
-      <UButton
-        class="group w-full"
-        color="neutral"
-        variant="ghost"
-        trailing-icon="i-lucide-chevron-down"
-        :ui="{
-          trailingIcon:
-            'group-data-[state=open]:rotate-180 transition-transform duration-200',
-        }"
-        block
-      >
-        <span class="text-2xl">{{ title ?? "Отзывы" }}</span>
-      </UButton>
+      <template #default="{ open }">
+        <Button
+          class="group w-full"
+          color="secondary"
+          variant="ghost"
+          :icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
+          icon-pos="right"
+        >
+          <span class="text-2xl">{{ title ?? "Отзывы" }}</span>
+        </Button>
+      </template>
 
       <template #content>
-        <ul class="Index flex flex-col gap-3.5">
+        <ul class="Index flex flex-col gap-3.5 p-1">
           <li v-for="item in comments">
-            <UserCommentsComment v-bind="item" />
+            <UserCommentsComment class="shadow-element" v-bind="item" />
           </li>
         </ul>
 

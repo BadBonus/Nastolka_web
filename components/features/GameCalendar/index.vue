@@ -37,7 +37,7 @@ const items = computed<
           <h3 class="text-2xl font-bold uppercase">{{ list.place }}</h3>
         </USeparator>
 
-        <!-- <EventList class="mt-4" :items="list.events" /> -->
+        <EventList class="mt-4" :items="list.events" />
       </div>
     </div>
   </div>

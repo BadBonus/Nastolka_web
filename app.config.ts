@@ -1,5 +1,18 @@
 export default defineAppConfig({
   ui: {
+    modal: {
+      slots: {
+        title: 'text-text text-2xl'
+      }
+    },
+    selectMenu: {
+      slots: {
+        value: "font-semibold text-secondary",
+        placeholder: "font-semibold",
+        base: 'shadow-element border-2 border-border !bg-neutral-light',
+        item: 'my-1 hover:bg-brown-hover rounded cursor-pointer'
+      }
+    },
     button: {
       slots: {
         base: 'rounded-sm',
@@ -19,6 +32,13 @@ export default defineAppConfig({
           'base-input',
         ],
       },
+    },
+    slider: {
+      slots: {
+        range: '!bg-warning',
+        thumb: 'bg-neutral-light',
+        track: 'bg-dark-brown'
+      }
     },
     card: {
       slots: {

@@ -13,7 +13,9 @@ defineOptions({
 
     <section class="mb-4">
       <h2 class="mb-3 text-xl font-semibold">Оценки навыков</h2>
-      <ul class="flex justify-between">
+      <ul
+        class="bg-elements-surface border-border shadow-element flex justify-between rounded-sm border-2 p-1"
+      >
         <li
           class="flex flex-col items-center justify-center gap-1 rounded text-2xl"
           title="Креативность"
@@ -57,7 +59,8 @@ defineOptions({
       <div
         class="mt-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
       >
-        <Icon class="text-amber-300" name="material-symbols:star" />
+        <Star />
+        <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
         <span> 5.0 (29) </span>
       </div>
     </section>

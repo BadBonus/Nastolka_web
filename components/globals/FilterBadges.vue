@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type TModalFiltersFilterBadge = { name: string; count?: number };
+export type TModalFiltersFilterBadge = { name: string; count?: number };
 
 defineOptions({
   name: "ModalFiltersFilterBadges",
@@ -21,7 +21,7 @@ function removeElementAtIndex(
 <template>
   <ul class="flex flex-wrap gap-1.5">
     <li v-for="(el, index) in model" :key="index + el.name">
-      <UBadge size="xl" color="neutral">
+      <UBadge size="xl" color="secondary">
         <span>{{ el.name }}</span>
         <span v-if="el.count">{{ el.count }}</span>
 

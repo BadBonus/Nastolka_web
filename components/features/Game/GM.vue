@@ -43,7 +43,7 @@ defineOptions({
       <span> 11 сессий проведено </span>
     </div>
     <USeparator class="py-2" color="primary" type="solid" />
-    <ul class="flex justify-center gap-2.5">
+    <ul class="flex justify-center gap-2.5 text-white">
       <li>
         <NuxtLink
           class="flex items-center justify-center rounded-full bg-blue-700 p-1.5 text-2xl"
@@ -71,7 +71,7 @@ defineOptions({
     <USeparator class="py-2" color="primary" type="solid" />
     <UserComments :comments="demoComments">
       <template #additional>
-        <UButton class="mt-4" color="info">Изучить все комментарии</UButton>
+        <Button class="my-4" color="info">Изучить все комментарии</Button>
       </template>
     </UserComments>
   </div>

@@ -4,6 +4,7 @@ import {
   typesOfCompany,
   statusesOfGame,
 } from "@/components/features/GameCalendar/ModalFilters/demoData";
+import type { TModalFiltersFilterBadge } from "@/components/globals/FilterBadges.vue";
 
 import type { CheckboxGroupItem, CheckboxGroupValue } from "@nuxt/ui";
 
@@ -15,10 +16,14 @@ defineOptions({
   name: "HeaderFilterRow",
 });
 
-const badges = ref<any[]>([
+const badges = ref<TModalFiltersFilterBadge[]>([
   { name: "test", count: 12 },
   { name: "asdad", count: 112 },
+  { name: "test", count: 12 },
+  { name: "asdad", count: 112 },
+  { name: "test", count: 12 },
 ]);
+const isFreeGames = ref<boolean>(false);
 
 const typeOfAdventure = ref<CheckboxGroupItem[]>([]);
 const typeOfPlatform = ref<string>(typesOfPlatformGame[0].id);
@@ -71,9 +76,16 @@ const statusGame = ref<string>(statusesOfGame[0]);
       />
     </div>
 
-    <UButton class="mt-2 w-full" variant="outline">
+    <Button
+      class="mt-2 w-full"
+      @click="isFreeGames = !isFreeGames"
+      :variant="isFreeGames ? 'filled' : 'outline'"
+    >
       <span class="block w-full text-center">Бесплатные игры</span>
-    </UButton>
-    <FilterBadges class="mt-3" v-model="badges" />
+    </Button>
+    <section class="mt-4">
+      <h3 class="block text-center text-xl">Выбранные фильтры</h3>
+      <FilterBadges class="mt-3" v-model="badges" />
+    </section>
   </div>
 </template>

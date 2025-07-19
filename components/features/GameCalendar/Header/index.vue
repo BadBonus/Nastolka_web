@@ -32,12 +32,14 @@ const changeDate = (data: Date) => {
       <FilterRow class="mt-3" />
     </div>
 
-    <!-- <Button
+    <Button
       variant="filled"
       icon="material-symbols:arrow-upward-rounded"
-      class="fixed bottom-3 left-3 z-50"
+      class="fixed bottom-3 left-3 z-50 opacity-25 hover:opacity-100"
       @click="scrollToTop"
-    /> -->
+      rounded
+      only-icon
+    />
     <UModal
       title="Фильтры"
       :close="{
@@ -46,17 +48,17 @@ const changeDate = (data: Date) => {
         class: 'rounded-full',
       }"
     >
-      <!-- <Button
+      <Button
         size="lg"
-        variant="secondary"
+        variant="filled"
+        color="secondary"
         icon="lucide:settings-2"
         class="fixed right-3 bottom-3 z-50"
       >
-        13
-      </Button> -->
+      </Button>
 
       <template #body>
-        <!-- <GameCalendarModalFilters /> -->
+        <GameCalendarModalFilters />
       </template>
     </UModal>
   </header>

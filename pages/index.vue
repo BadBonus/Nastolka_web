@@ -7,14 +7,14 @@ defineOptions({
 </script>
 
 <template>
-  <div class="flex gap-1.5">
-    <Button variant="filled">Test</Button>
-    <Button variant="filled" color="danger">Test</Button>
-    <Button variant="filled" color="info">Test</Button>
-    <Button variant="filled" color="secondary">Test</Button>
-    <Button variant="filled" color="warning">Test</Button>
+  <div class=" ">
+    <Button size="sm" variant="filled">Test</Button>
+    <Button size="md" variant="filled" color="danger">Test</Button>
+    <Button size="lg" variant="filled" color="info">Test</Button>
+    <!-- <Button variant="filled" color="secondary">Test</Button>
+    <Button variant="filled" color="warning">Test</Button> -->
   </div>
-  <div class="flex gap-1.5">
+  <!-- <div class="flex gap-1.5">
     <Button variant="ghost">Test</Button>
     <Button variant="ghost" color="danger">Test</Button>
     <Button variant="ghost" color="info">Test</Button>
@@ -40,5 +40,5 @@ defineOptions({
 
   <div class="flex gap-1.5">
     <Button variant="filled" icon="i-lucide-chevron-left"> test </Button>
-  </div>
+  </div> -->
 </template>

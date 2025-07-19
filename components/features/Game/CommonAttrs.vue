@@ -8,7 +8,9 @@ defineOptions({
 });
 </script>
 <template>
-  <div class="border-primary GameCommonAttrs mt-4 rounded border">
+  <div
+    class="border-border GameCommonAttrs bg-elements-surface shadow-element mt-4 rounded border-2"
+  >
     <div class="flex items-end justify-evenly p-2 font-semibold">
       <span class="flex translate-y-[2px] items-center">
         <Icon class="text-2xl" name="ic:baseline-attach-money" />

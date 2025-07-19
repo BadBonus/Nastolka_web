@@ -37,37 +37,6 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
     '~/public/fonts/fonts.css'
   ],
-  // quasar: {
-  // plugins: ['Dialog', 'Notify']
-  //   config: {
-  //     dark: true,
-  //     brand: {
-  //       primary: 'var(--color-primary)',
-  //       secondary: 'var(--color-secondary)',
-  //       accent: 'var(--color-accent)',
-  //       dark: 'var(--color-dark)',
-  //       'dark-page': 'var(--color-dark-page)',
-  //       positive: 'var(--color-positive)',
-  //       negative: 'var(--color-negative)',
-  //       info: 'var(--color-info)',
-  //       warning: 'var(--color-warning)',
-  //     }
-  //   },
-  //   iconSet: 'material-icons',
-  //   // css: [], 
-  //   sassVariables: false,
-  //   plugins: [
-  //     'BottomSheet',
-  //     'Dialog',
-  //     'Loading',
-  //     'LoadingBar',
-  //     'Notify',],
-  //   extras: {
-  //     font: 'roboto-font',
-  //   },
-
-  // },
-
   fonts: {
     defaults: {
       weights: [400, 500, 600, 700, 800, 900],

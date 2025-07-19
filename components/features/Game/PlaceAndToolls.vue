@@ -14,13 +14,18 @@ defineOptions({
       <span>г. Москва, ул. Пушкина, д. 1</span>
     </div>
     <!-- FIXME: потом засунуть вместо картинки интерактивный плагин карты -->
-    <nuxt-img class="mt-2.5" src="/images/demo_map.png" />
+    <nuxt-img
+      class="border-border shadow-element mt-2.5 rounded-sm border-2"
+      src="/images/demo_map.png"
+    />
 
     <p class="my-3">или</p>
 
-    <div class="mt-2.5 flex items-center justify-center gap-2.5">
+    <div
+      class="bg-dark-brown mx-auto mt-2.5 flex w-fit items-center justify-center gap-2.5 rounded-xl px-3 text-white"
+    >
       <nuxt-img class="h-10 rounded" src="/images/discord.png" />
-      <span class="cursor-default">+</span>
+      <span class="cursor-default text-lg">+</span>
       <nuxt-img class="mt-2 h-10" src="/images/rol20.webp" />
     </div>
 

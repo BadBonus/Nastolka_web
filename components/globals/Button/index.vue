@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TButton } from "./button.types";
-import { variantColorClasses, sizeClasses } from "./utils";
+import { variantColorClasses, sizeClasses, sizeClassesOnlyIcon } from "./utils";
 import type { ButtonHTMLAttributes, ReservedProps } from "vue";
 
 defineOptions({
@@ -19,23 +19,31 @@ const props = withDefaults(
     loading: false,
     iconPos: "left",
     type: "button",
+    onlyIcon: false,
   },
 );
 
+defineSlots<{ default: () => any }>();
+
+const slots = useSlots();
+
 const buttonClasses = computed(() => {
   const baseClasses = [
-    "inline-flex items-center justify-center font-semibold relative",
-    "focus:outline-none focus:ring-2",
+    "inline-flex items-center justify-center font-semibold",
+    "focus:outline-none",
     "transition-all duration-200 ease-in-out",
     props.block ? "w-full" : "",
     props.disabled || props.loading ? "opacity-60 cursor-not-allowed" : "",
   ];
 
   const roundedClass = props.rounded ? "rounded-full" : "rounded";
+  const resultSizeClasses = props.onlyIcon
+    ? sizeClassesOnlyIcon[props.size]
+    : sizeClasses[props.size];
 
   return [
     ...baseClasses,
-    sizeClasses[props.size],
+    resultSizeClasses,
     variantColorClasses[props.variant][props.color],
     roundedClass,
   ];
@@ -43,8 +51,8 @@ const buttonClasses = computed(() => {
 
 const iconSpacingClasses = computed(() => {
   if (!props.icon) return "";
-  if (props.iconPos === "left") return "mr-0.5";
-  if (props.iconPos === "right") return "ml-0.5";
+  if (props.iconPos === "left") return slots.default ? "mr-0.5" : "";
+  if (props.iconPos === "right") return slots.default ? "ml-0.5" : "";
   return "";
 });
 </script>
@@ -58,7 +66,7 @@ const iconSpacingClasses = computed(() => {
   >
     <div
       v-if="loading"
-      class="absolute inset-0 flex items-center justify-center"
+      class="inset-0 flex items-center justify-center"
       aria-label="Загрузка"
       role="status"
     >
@@ -68,15 +76,15 @@ const iconSpacingClasses = computed(() => {
     <span :class="{ invisible: loading }" class="inline-flex items-center">
       <Icon
         :class="[iconSpacingClasses]"
-        class="flex-shrink-0 text-xl"
-        v-if="icon && props.iconPos === 'left'"
+        class="flex-shrink-0"
+        v-if="icon && props.iconPos === 'left' && !loading"
         :name="icon"
       />
 
       <slot />
       <Icon
         :class="[iconSpacingClasses]"
-        class="flex-shrink-0 text-xl"
+        class="flex-shrink-0"
         v-if="icon && props.iconPos === 'right'"
         :name="icon"
       />

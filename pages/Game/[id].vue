@@ -14,7 +14,7 @@ const route = useRoute();
       <h1 class="mb-0.5 text-3xl font-semibold">
         Приключение на 1 час в днд #1 dasdasdasdasdasd
       </h1>
-      <span class="text-sm italic opacity-70"> Pathfinder 2e </span>
+      <span class="text-sm font-bold italic opacity-70"> Pathfinder 2e </span>
 
       <game-common-attrs class="mt-4" />
     </section>

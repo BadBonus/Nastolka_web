@@ -12,4 +12,5 @@ export type TButton = {
   iconPos?: "left" | "right";
   type?: "button" | "submit" | "reset";
   ariaLabel?: string;
+  onlyIcon?: boolean;
 };

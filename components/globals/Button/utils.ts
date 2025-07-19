@@ -6,49 +6,56 @@ export const variantColorClasses: Record<
 > = {
   filled: {
     primary:
-      "bg-primary hover:bg-primary-hover text-text-inverted focus:ring-warning shadow-button",
+      "bg-primary focus:ring-2 hover:bg-primary-hover text-text-inverted focus:ring-warning shadow-button",
     secondary:
-      "bg-secondary hover:bg-secondary-hover text-text-inverted focus:ring-gray-400 shadow-button",
+      "bg-secondary focus:ring-2 hover:bg-secondary-hover text-text-inverted focus:ring-gray-400 shadow-button",
     warning:
-      "bg-warning hover:bg-warning-hover text-white focus:ring-white shadow-button",
+      "bg-warning focus:ring-2 hover:bg-warning-hover text-white focus:ring-white shadow-button",
     danger:
-      "bg-danger hover:bg-danger-hover text-white focus:ring-white shadow-button",
-    info: "bg-info hover:bg-info-hover text-white focus:ring-white shadow-button",
+      "bg-danger focus:ring-2 hover:bg-danger-hover text-white focus:ring-white shadow-button",
+    info: "bg-info focus:ring-2 hover:bg-info-hover text-white focus:ring-white shadow-button",
   },
   outline: {
     primary:
-      "bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white  focus:ring-primary shadow-button",
+      "focus:ring-2 bg-transparent outline-2 border-primary text-primary hover:bg-primary hover:text-white  focus:ring-primary shadow-button",
     secondary:
-      "bg-transparent border-2 border-secondary text-secondary hover:bg-secondary hover:text-white focus:ring-secondary shadow-button",
+      "focus:ring-2 bg-transparent outline-2 border-secondary text-secondary hover:bg-secondary hover:text-white focus:ring-secondary shadow-button",
     warning:
-      "bg-transparent border-2 border-warning text-warning hover:bg-warning hover:text-white focus:ring-warning shadow-button",
+      "focus:ring-2 bg-transparent outline-2 border-warning text-warning hover:bg-warning hover:text-white focus:ring-warning shadow-button",
     danger:
-      "bg-transparent border-2 border-danger text-danger hover:bg-danger-50 focus:ring-danger shadow-button hover:bg-danger hover:text-white",
-    info: "bg-transparent border-2 border-info text-info hover:bg-info hover:text-white focus:ring-info shadow-button",
+      "focus:ring-2 bg-transparent outline-2 border-danger text-danger hover:bg-danger-50 focus:ring-danger shadow-button hover:bg-danger hover:text-white",
+    info: "focus:ring-2 bg-transparent outline-2 border-info text-info hover:bg-info hover:text-white focus:ring-info shadow-button",
   },
   ghost: {
     primary:
-      "bg-transparent text-primary hover:bg-primary-50 focus:ring-primary",
+      "focus:text-primary-hover bg-transparent text-primary",
     secondary:
-      "bg-transparent text-secondary hover:bg-secondary-50 focus:ring-secondary",
+      "focus:text-secondary-hover bg-transparent text-secondary",
     warning:
-      "bg-transparent text-warning hover:bg-warning-50 focus:ring-warning",
-    danger: "bg-transparent text-danger hover:bg-red-50 focus:ring-danger",
-    info: "bg-transparent text-info hover:bg-info-50 focus:ring-info",
+      "focus:text-warning-hover bg-transparent text-warning",
+    danger: "focus:text-danger-hover bg-transparent text-danger",
+    info: "focus:text-info-hover bg-transparent text-info",
   },
   link: {
-    primary: "bg-transparent text-primary hover:underline focus:ring-primary",
+    primary: "bg-transparent text-primary hover:underline",
     secondary:
-      "bg-transparent text-secondary hover:underline focus:ring-secondary",
-    warning: "bg-transparent text-warning hover:underline focus:ring-warning",
-    danger: "bg-transparent text-danger hover:underline focus:ring-danger",
-    info: "bg-transparent text-info hover:underline focus:ring-info",
+      "bg-transparent text-secondary hover:underline",
+    warning: "bg-transparent text-warning hover:underline",
+    danger: "bg-transparent text-danger hover:underline",
+    info: "bg-transparent text-info hover:underline",
   },
 };
 
 
 export const sizeClasses = {
-  sm: "px-3 py-1.5 text-sm",
+  sm: "px-3 py-1 text-sm",
   md: "px-3.5 py-1.5 text-base",
   lg: "px-4.5 py-2 text-lg",
+};
+
+
+export const sizeClassesOnlyIcon = {
+  sm: "h-7 w-7 text-sm",
+  md: "h-9 w-9 text-2xl",
+  lg: "h-12 w-12 text-4xl",
 };
