@@ -6,7 +6,7 @@ type TItemsPickSelectorItem = T & {
   addInfo?: string | number;
   active?: boolean;
   outOfRange?: boolean;
-  [key: string]: any;
+  [itemKey: string]: any;
 };
 type TItemsPickSelector = {
   items: TItemsPickSelectorItem[];
@@ -24,9 +24,10 @@ defineEmits<{
 <template>
   <div class="flex w-full items-center justify-between gap-3">
     <Button
-      variant="primary"
+      variant="filled"
       icon="i-lucide-chevron-left"
       @click="$emit('changeViaArrow', 'left')"
+      aria-label="Предыдущий элемент"
     />
 
     <ul class="ItemsPickSelector text-text flex w-full justify-between">
@@ -40,23 +41,16 @@ defineEmits<{
           class="flex flex-col items-center duration-150 hover:opacity-100"
           @click="$emit('change', item)"
         >
-          <span class="text-2xl">{{ item.name }}</span>
+          <span class="text-2xl capitalize">{{ item.name }}</span>
           <span>{{ item.addInfo }}</span>
         </button>
       </li>
     </ul>
     <Button
-      variant="primary"
+      variant="filled"
       icon="i-lucide-chevron-right"
       @click="$emit('changeViaArrow', 'right')"
+      aria-label="Следующий элемент"
     />
   </div>
 </template>
-
-<style>
-.ItemsPickSelector {
-  li button span:first-child:first-letter {
-    text-transform: uppercase;
-  }
-}
-</style>

@@ -49,6 +49,6 @@ export const variantColorClasses: Record<
 
 export const sizeClasses = {
   sm: "px-3 py-1.5 text-sm",
-  md: "px-4 py-1.5 text-base",
+  md: "px-3.5 py-1.5 text-base",
   lg: "px-4.5 py-2 text-lg",
 };

@@ -16,6 +16,9 @@
 
     .base-input {
       border-color: var(--color-brown-hover);
+      border-style: solid !important;
+      border-width: 2px;
+      border-color: var(--color-neutral-dark);
     }
 
     nav {
@@ -37,10 +40,8 @@
   }
 
   .base-input {
-    background: var(--color-elements-surface);
-    border-style: solid !important;
-    border-width: 3px;
-    border-color: var(--color-neutral-dark);
+    background: var(--color-neutral-light);
+    outline: 2px solid var(--color-brown);
     box-shadow: var(--shadow-box-elements);
     border-radius: 4px;
     color: var(--color-text);

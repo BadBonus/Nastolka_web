@@ -6,7 +6,7 @@ defineOptions({
   name: "GameCalendarHeader",
 });
 
-const search = defineModel<string>("search");
+const search = defineModel<string | number | undefined>("search");
 const isAllVars = defineModel<boolean>("isAllVars");
 const choosedDate = defineModel<Date | null | undefined>("choosedDate");
 
@@ -32,12 +32,12 @@ const changeDate = (data: Date) => {
       <FilterRow class="mt-3" />
     </div>
 
-    <Button
-      variant="secondary"
+    <!-- <Button
+      variant="filled"
       icon="material-symbols:arrow-upward-rounded"
       class="fixed bottom-3 left-3 z-50"
       @click="scrollToTop"
-    />
+    /> -->
     <UModal
       title="Фильтры"
       :close="{
@@ -56,7 +56,7 @@ const changeDate = (data: Date) => {
       </Button> -->
 
       <template #body>
-        <GameCalendarModalFilters />
+        <!-- <GameCalendarModalFilters /> -->
       </template>
     </UModal>
   </header>

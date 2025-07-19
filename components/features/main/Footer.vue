@@ -5,7 +5,7 @@ defineOptions({
 </script>
 <template>
   <footer class="bg-bg-footer border-t-brown h-16 w-full border-t-4 p-6">
-    <div class="flex items-center gap-1 text-3xl">
+    <div class="text-inverted flex items-center gap-1 text-3xl">
       <span class="font-decorate font-bold"> NASTOLKA </span>
       <Icon name="game-icons:cubes" />
     </div>

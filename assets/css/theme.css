@@ -75,7 +75,7 @@
 
   /* Почему-то переменные некореектно работают будучи 4ым значением цвета тени */
   --shadow-box-text: 1px 1px 0px oklch(0.3329 0 0 / 55%);
-  --shadow-box-elements: 3px 3px 0px oklch(0.3329 0 0 / 55%);
+  --shadow-box-elements: 2px 2px 0px oklch(0.3329 0 0 / 55%);
 
   /* Новая цветовая гамма - end*/
 
@@ -93,7 +93,9 @@
   --ui-error: var(--color-error);
   --ui-primary: var(--color-elements-surface);
 
+  --ui-text: var(--color-text);
   --ui-text-inverted: var(--color-white);
   --tw-ring-color: var(--color-border);
   --ui-border: var(--color-border);
+  --ui-text-dimmed: var(--color-text);
 }

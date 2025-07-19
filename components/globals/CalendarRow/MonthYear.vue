@@ -38,15 +38,10 @@ const changeMonth = (prev: boolean): void => {
     class="CalendarRowMonthYear flex items-center justify-between text-sm font-semibold"
   >
     <div>
-      <Button
-        @click="changeYear(true)"
-        class="mr-3"
-        variant="primary"
-        size="md"
-      >
+      <Button @click="changeYear(true)" class="mr-3" variant="filled" size="md">
         <Icon name="mdi:chevron-double-left" />
       </Button>
-      <Button @click="changeMonth(true)" variant="primary" size="md">
+      <Button @click="changeMonth(true)" variant="filled" size="md">
         <Icon name="mdi:chevron-left" />
       </Button>
     </div>
@@ -58,13 +53,13 @@ const changeMonth = (prev: boolean): void => {
     <div>
       <Button
         @click="changeMonth(false)"
-        variant="primary"
+        variant="filled"
         size="md"
         class="mr-3"
       >
         <Icon name="mdi:chevron-right" />
       </Button>
-      <Button @click="changeYear(false)" variant="primary" size="md">
+      <Button @click="changeYear(false)" variant="filled" size="md">
         <Icon name="mdi:chevron-double-right" />
       </Button>
     </div>

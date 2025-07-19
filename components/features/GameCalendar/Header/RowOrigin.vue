@@ -7,10 +7,12 @@ defineOptions({
   name: "HeaderRowOrigin",
 });
 const isAllVars = defineModel<boolean>("isAllVars");
-const search = defineModel<string>();
+const search = defineModel<string | number | undefined>();
 const searchIsActive = ref(false);
-const input = useTemplateRef<HTMLInputElement>("input");
 const sortFromTopTobottom = ref<boolean>(true);
+const fullWidthInput = computed<boolean>(
+  () => searchIsActive.value || !!search.value,
+);
 
 const changeOriginVariants = (AllVariants: boolean) => {
   if (AllVariants) {
@@ -22,40 +24,57 @@ const changeOriginVariants = (AllVariants: boolean) => {
   }
 };
 
+const input = useTemplateRef("searchInput");
+const onFocus = () => {
+  searchIsActive.value = true;
+};
+const onBlur = () => {
+  searchIsActive.value = false;
+};
+
 onMounted(() => {
-  // if (input.value) {
-  //   input.value.addEventListener("focus", () => {
-  //     searchIsActive.value = true;
-  //   });
-  //   input.value.addEventListener("blur", () => {
-  //     searchIsActive.value = false;
-  //   });
-  // }
+  const nativeElement = input.value?.inputRef;
+  console.log(nativeElement);
+
+  if (nativeElement) {
+    nativeElement.addEventListener("focus", onFocus);
+    nativeElement.addEventListener("blur", onBlur);
+  }
+});
+
+onUnmounted(() => {
+  // Обязательно удаляем слушатели
+  const nativeElement = input.value?.input;
+  if (nativeElement) {
+    nativeElement.removeEventListener("focus", onFocus);
+    nativeElement.removeEventListener("blur", onBlur);
+  }
 });
 </script>
 <template>
   <div class="HeaderRowOrigin">
     <div class="mt-3 flex items-center justify-between">
       <UInput
+        ref="searchInput"
         :class="{
-          'w-10': !searchIsActive,
-          'w-full': searchIsActive,
+          'w-10': !fullWidthInput,
+          'w-full': fullWidthInput,
         }"
-        ref="input"
         trailing
         v-model="search"
         icon="i-lucide-search"
         class="transition-width -emptyIcon duration-300"
       />
+
       <div
-        v-show="!searchIsActive"
+        v-show="!fullWidthInput"
         class="text-text-secondary flex items-center gap-6 text-xl"
       >
         <Button
           @click="changeOriginVariants(true)"
           class="p-1"
           size="sm"
-          :variant="isAllVars ? 'outline' : 'ghost'"
+          :variant="isAllVars ? 'filled' : 'ghost'"
           >ВСЕ</Button
         >
         <div class="divider h-4"></div>
@@ -63,14 +82,13 @@ onMounted(() => {
           @click="changeOriginVariants(false)"
           class="p-1"
           size="sm"
-          :variant="isAllVars ? 'ghost' : 'outline'"
+          :variant="isAllVars ? 'ghost' : 'filled'"
           >подписки</Button
         >
 
         <Button
           class="inline-block px-3"
-          variant="outline"
-          color="primary"
+          variant="filled"
           :icon="`lucide:arrow-${sortFromTopTobottom ? 'down' : 'up'}-narrow-wide`"
         />
       </div>

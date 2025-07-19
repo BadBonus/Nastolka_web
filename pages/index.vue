@@ -15,7 +15,7 @@ defineOptions({
     <Button variant="filled" color="warning">Test</Button>
   </div>
   <div class="flex gap-1.5">
-    <Button class="variant" color="ghost">Test</Button>
+    <Button variant="ghost">Test</Button>
     <Button variant="ghost" color="danger">Test</Button>
     <Button variant="ghost" color="info">Test</Button>
     <Button variant="ghost" color="secondary">Test</Button>
@@ -36,5 +36,9 @@ defineOptions({
     <Button variant="link" color="info">Test</Button>
     <Button variant="link" color="secondary">Test</Button>
     <Button variant="link" color="warning">Test</Button>
+  </div>
+
+  <div class="flex gap-1.5">
+    <Button variant="filled" icon="i-lucide-chevron-left"> test </Button>
   </div>
 </template>
