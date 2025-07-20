@@ -6,6 +6,8 @@ defineOptions({
   name: "AuthForm",
 });
 
+const authStore = useAuthStore();
+
 const schema = z.object({
   email: z.string().email("Неккоректный имейл"),
   password: z.string().min(8, "Минимум 8 символов"),
@@ -20,6 +22,7 @@ const state = reactive<Partial<Schema>>({
 
 const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  authStore.login(state.email, state.password);
   toast.add({
     title: "Успех",
     description: "Авторизован",

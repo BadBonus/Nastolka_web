@@ -10,7 +10,7 @@ export default defineAppConfig({
         value: "font-semibold text-secondary",
         placeholder: "font-semibold",
         base: 'shadow-element border-2 border-border !bg-neutral-light',
-        item: 'my-1 hover:bg-brown-hover rounded cursor-pointer'
+
       }
     },
     button: {
