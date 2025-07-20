@@ -1,4 +1,4 @@
-export type TButtonColor = "primary" | "secondary" | "warning" | "danger" | "info";
+export type TButtonColor = "primary" | "secondary" | "warning" | "danger" | "info" | "neutral";
 export type TButtonVariant = "filled" | "outline" | "ghost" | "link";
 export type TButton = {
   variant?: TButtonVariant;

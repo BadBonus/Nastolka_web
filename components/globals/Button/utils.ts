@@ -14,6 +14,7 @@ export const variantColorClasses: Record<
     danger:
       "bg-danger focus:ring-2 hover:bg-danger-hover text-white focus:ring-white shadow-button",
     info: "bg-info focus:ring-2 hover:bg-info-hover text-white focus:ring-white shadow-button",
+    neutral: "bg-neutral focus:ring-2 hover:bg-neutral-hover text-primary focus:ring-white shadow-button",
   },
   outline: {
     primary:
@@ -25,6 +26,7 @@ export const variantColorClasses: Record<
     danger:
       "focus:ring-2 bg-transparent outline-2 border-danger text-danger hover:bg-danger-50 focus:ring-danger shadow-button hover:bg-danger hover:text-white",
     info: "focus:ring-2 bg-transparent outline-2 border-info text-info hover:bg-info hover:text-white focus:ring-info shadow-button",
+    neutral: "focus:ring-2 bg-transparent outline-2 border-neutral text-neutral hover:bg-neutral hover:text-white focus:ring-neutral shadow-button",
   },
   ghost: {
     primary:
@@ -35,6 +37,7 @@ export const variantColorClasses: Record<
       "focus:text-warning-hover bg-transparent text-warning",
     danger: "focus:text-danger-hover bg-transparent text-danger",
     info: "focus:text-info-hover bg-transparent text-info",
+    neutral: "focus:text-inverted-hover bg-transparent text-inverted",
   },
   link: {
     primary: "bg-transparent text-primary hover:underline",
@@ -43,6 +46,7 @@ export const variantColorClasses: Record<
     warning: "bg-transparent text-warning hover:underline",
     danger: "bg-transparent text-danger hover:underline",
     info: "bg-transparent text-info hover:underline",
+    neutral: "bg-transparent text-inverted hover:underline",
   },
 };
 
@@ -56,6 +60,6 @@ export const sizeClasses = {
 
 export const sizeClassesOnlyIcon = {
   sm: "h-7 w-7 text-sm",
-  md: "h-9 w-9 text-2xl",
+  md: "h-9 w-9 text-3xl",
   lg: "h-12 w-12 text-4xl",
 };
