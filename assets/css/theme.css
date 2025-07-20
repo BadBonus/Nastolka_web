@@ -54,6 +54,7 @@
   --color-elements-surface: var(--color-white);
   --color-text: var(--color-neutral-dark);
   --color-text-inverted: var(--color-white);
+  --color-inverted-hover: var(--color-neutral-light);
   --color-text-secondary: var(--color-brown);
   --color-shadow: oklch(0.3329 0 0 / 55%);
   --color-border: var(--color-neutral-medium);
@@ -98,4 +99,5 @@
   --tw-ring-color: var(--color-border);
   --ui-border: var(--color-border);
   --ui-text-dimmed: var(--color-text);
+  --text-base--line-height: "initial";
 }

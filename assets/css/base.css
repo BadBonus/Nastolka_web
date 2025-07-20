@@ -5,8 +5,17 @@
     font-family: "ShantellSans", "Roboto";
   }
 
+  * {
+    line-height: initial;
+  }
+
   button,
   a {
     cursor: pointer;
+  }
+
+  a {
+    cursor: pointer;
+    color: var(--color-link);
   }
 }

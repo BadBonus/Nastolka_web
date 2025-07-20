@@ -7,38 +7,5 @@ defineOptions({
 </script>
 
 <template>
-  <div class=" ">
-    <Button size="sm" variant="filled">Test</Button>
-    <Button size="md" variant="filled" color="danger">Test</Button>
-    <Button size="lg" variant="filled" color="info">Test</Button>
-    <!-- <Button variant="filled" color="secondary">Test</Button>
-    <Button variant="filled" color="warning">Test</Button> -->
-  </div>
-  <!-- <div class="flex gap-1.5">
-    <Button variant="ghost">Test</Button>
-    <Button variant="ghost" color="danger">Test</Button>
-    <Button variant="ghost" color="info">Test</Button>
-    <Button variant="ghost" color="secondary">Test</Button>
-    <Button variant="ghost" color="warning">Test</Button>
-  </div>
-
-  <div class="flex gap-1.5">
-    <Button variant="outline">Test</Button>
-    <Button variant="outline" color="danger">Test</Button>
-    <Button variant="outline" color="info">Test</Button>
-    <Button variant="outline" color="secondary">Test</Button>
-    <Button variant="outline" color="warning">Test</Button>
-  </div>
-
-  <div class="flex gap-1.5">
-    <Button variant="link">Test</Button>
-    <Button variant="link" color="danger">Test</Button>
-    <Button variant="link" color="info">Test</Button>
-    <Button variant="link" color="secondary">Test</Button>
-    <Button variant="link" color="warning">Test</Button>
-  </div>
-
-  <div class="flex gap-1.5">
-    <Button variant="filled" icon="i-lucide-chevron-left"> test </Button>
-  </div> -->
+  <div>Hello world!</div>
 </template>

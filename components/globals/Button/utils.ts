@@ -59,7 +59,7 @@ export const sizeClasses = {
 
 
 export const sizeClassesOnlyIcon = {
-  sm: "h-7 w-7 text-sm",
+  sm: "h-7 w-7 text-lg",
   md: "h-9 w-9 text-3xl",
   lg: "h-12 w-12 text-4xl",
 };

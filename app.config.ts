@@ -1,5 +1,15 @@
 export default defineAppConfig({
   ui: {
+    popover: {
+      slots: {
+        content: 'border-2 '
+      }
+    },
+    chip: {
+      slots: {
+        base: 'shadow-[none]',
+      }
+    },
     modal: {
       slots: {
         title: 'text-text text-2xl'
