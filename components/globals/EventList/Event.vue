@@ -33,7 +33,7 @@ const formatDate = (date: Date | string): string | undefined => {
 </script>
 <template>
   <UCard
-    class="bg-elements-surface border-dark-brown shadow-element border-2 p-1"
+    class="bg-elements-surface border-dark-brown shadow-element text-text border-2 p-1"
     variant="outline"
   >
     <template #header>
@@ -70,13 +70,13 @@ const formatDate = (date: Date | string): string | undefined => {
 
     <template #footer>
       <NuxtLink :to="org.link" class="flex items-center justify-between">
-        <div class="-truncate flex items-center gap-1 pr-1">
-          <UAvatar src="/images/wod_1.png" class="border-2" />
+        <div class="-truncate text-text flex items-center gap-1 pr-1">
+          <UAvatar src="/images/wod_1.png" class="border-secondary border-2" />
           <span class="-truncate ml-1 inline-block font-semibold">{{
             org.name
           }}</span>
         </div>
-        <div class="flex items-center gap-1">
+        <div class="text-text flex items-center gap-1">
           <Icon
             class="text-xl text-amber-300"
             name="material-symbols:star-rate"
