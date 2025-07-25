@@ -100,4 +100,5 @@
   --ui-border: var(--color-border);
   --ui-text-dimmed: var(--color-text);
   --text-base--line-height: "initial";
+  --ui-bg-elevated: var(--color-dark-brown);
 }

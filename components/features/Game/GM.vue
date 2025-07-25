@@ -32,7 +32,23 @@ defineOptions({
 </script>
 <template>
   <div class="GameGM">
-    <ProfileHeader />
+    <ProfileHeader>
+      <template #topPart>
+        <Button
+          class="absolute top-3 right-3 z-10 rounded-full p-2!"
+          color="danger"
+          icon="material-symbols:favorite"
+          size="sm"
+        />
+
+        <Button
+          class="absolute right-3 bottom-3 z-10 rounded-full p-2!"
+          color="secondary"
+          icon="ic:baseline-message"
+          size="lg"
+        />
+      </template>
+    </ProfileHeader>
     <USeparator class="py-2" color="primary" type="solid" />
     <div class="flex items-center justify-center gap-1 text-lg">
       <Icon class="text-lg" name="game-icons:dice-target" />
@@ -48,7 +64,7 @@ defineOptions({
         <NuxtLink
           class="flex items-center justify-center rounded-full bg-blue-700 p-1.5 text-2xl"
         >
-          <Icon name="ic:baseline-discord" />
+          <Icon class="text-white" name="ic:baseline-discord" />
         </NuxtLink>
       </li>
 
@@ -56,7 +72,7 @@ defineOptions({
         <NuxtLink
           class="flex items-center justify-center rounded-full bg-blue-400 p-1.5 text-2xl"
         >
-          <Icon name="ic:baseline-facebook" />
+          <Icon class="text-white" name="ic:baseline-facebook" />
         </NuxtLink>
       </li>
 
@@ -64,16 +80,26 @@ defineOptions({
         <NuxtLink
           class="flex items-center justify-center rounded-full bg-blue-500 p-1.5 text-2xl"
         >
-          <Icon name="ic:baseline-telegram" />
+          <Icon class="text-white" name="ic:baseline-telegram" />
         </NuxtLink>
       </li>
     </ul>
     <USeparator class="py-2" color="primary" type="solid" />
-    <UserComments :comments="demoComments">
-      <template #additional>
-        <Button class="my-4" color="info">Изучить все комментарии</Button>
-      </template>
-    </UserComments>
+    <section>
+      <h2 class="text-xl font-semibold">Оценка и отзывы</h2>
+      <div
+        class="mt-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
+      >
+        <Star />
+        <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
+        <span> 5.0 (29) </span>
+      </div>
+      <UserComments :comments="demoComments">
+        <template #additional>
+          <Button class="my-4" color="info">Изучить все отзывы</Button>
+        </template>
+      </UserComments>
+    </section>
   </div>
 </template>
 

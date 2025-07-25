@@ -1,5 +1,12 @@
 export default defineAppConfig({
   ui: {
+    tabs: {
+      slots: {
+        list: '!rounded ',
+        indicator: '!rounded hover:bg-red!',
+        label: 'text-text-inverted',
+      }
+    },
     popover: {
       slots: {
         content: 'border-2 '
@@ -34,6 +41,7 @@ export default defineAppConfig({
     drawer: {
       slots: {
         content: 'drawer',
+        'overlay': 'bg-secondary/50'
       },
     },
     input: {

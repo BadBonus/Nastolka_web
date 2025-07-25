@@ -2,7 +2,8 @@
   <div class="common-layout">
     <MainHeader />
     <main class="layout_main px-1.5 py-6">
-      <div delete-tag class="mx-auto mt-2.5 max-w-[360px]">
+      <!-- delete-tag - напоминание, что этот тег служит сугубо для поддержки мобильного вида и после разработки должен будет быть удален -->
+      <div delete-tag class="mx-auto max-w-[360px]">
         <slot />
       </div>
     </main>

@@ -1,11 +1,18 @@
 <script setup lang="ts">
-// 	 type TProfileStatsComments = {
+import { ESkillPlayer, ESkillGameMaster } from "@/shared/skills";
 
-// 	}
+type TProfileStatsComments = {
+  title: ESkillPlayer | ESkillGameMaster;
+  rating: number;
+};
 
 defineOptions({
   name: "ProfileStatsComments",
 });
+
+defineProps<{
+  skills: (ESkillPlayer | ESkillGameMaster)[];
+}>();
 </script>
 <template>
   <article class="ProfileStatsComments">
@@ -52,17 +59,6 @@ defineOptions({
           <span class="block">134</span>
         </li>
       </ul>
-    </section>
-
-    <section>
-      <h2 class="text-xl font-semibold">Средняя оценка и комментарии</h2>
-      <div
-        class="mt-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
-      >
-        <Star />
-        <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
-        <span> 5.0 (29) </span>
-      </div>
     </section>
   </article>
 </template>

@@ -1,35 +1,30 @@
 <script setup lang="ts">
-import { NuxtLink } from "#components";
-import StatsComments from "./Stats.vue";
+import StatsComments from "./StatsComments.vue";
 
-// FIXME: потом пропсы стабилизировать
+// 	 type TProfileHeader = {
 
-export type TProfileHeader = {
-  link?: string;
-  avatar?: string;
-  background?: string;
-  name?: string;
-  badges?: { name: string; description: string }[];
-  rating?: {
-    value: number;
-    count: number;
-  };
-};
-const props = withDefaults(defineProps<TProfileHeader>(), {
-  link: undefined,
-});
-
-const linkComponent = computed(() => (props.link ? NuxtLink : "span"));
+// 	}
 
 defineOptions({
   name: "ProfileHeader",
 });
-defineSlots<{ topPart(): any }>();
 </script>
 <template>
   <header class="ProfileHeader">
     <div class="relative h-28">
-      <slot name="topPart" />
+      <Button
+        class="absolute top-3 right-3 z-10 rounded-full p-2!"
+        color="danger"
+        icon="material-symbols:favorite"
+        size="sm"
+      />
+
+      <Button
+        class="absolute right-3 bottom-3 z-10 rounded-full p-2!"
+        color="secondary"
+        icon="ic:baseline-message"
+        size="lg"
+      />
       <NuxtImg
         class="-absCenter h-full w-full rounded-sm object-cover"
         src="/images/wod_1.png"
@@ -40,14 +35,11 @@ defineSlots<{ topPart(): any }>();
         src="https://github.com/benjamincanac.png"
       />
     </div>
-    <component
-      :is="linkComponent"
-      :to="link"
-      :class="{ underline: link }"
-      class="mt-1 block w-full text-center text-2xl font-semibold"
+    <NuxtLink
+      class="mt-1 block w-full text-center text-2xl font-semibold underline"
     >
       Jack Black
-    </component>
+    </NuxtLink>
     <ul class="mt-1 flex flex-wrap justify-center gap-1.5">
       <li><UBadge>Крутой учитель</UBadge></li>
       <li><UBadge>Мастер историй</UBadge></li>
@@ -58,11 +50,12 @@ defineSlots<{ topPart(): any }>();
     <div
       class="justify-centertext-xl mt-2 flex items-center justify-center gap-1.5 font-semibold"
     >
+      <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
       <Star />
       <span> 5.0 (29) </span>
     </div>
 
-    <Stats />
+    <StatsComments />
   </header>
 </template>
 
