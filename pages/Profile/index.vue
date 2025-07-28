@@ -11,7 +11,7 @@ defineOptions({
 <template>
   <section>
     <h1 class="text-center font-bold">Настройка данных профиля</h1>
-    <profile-header />
+    <profile-settings-main />
   </section>
 </template>
 

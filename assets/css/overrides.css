@@ -13,14 +13,6 @@
     label {
       color: var(--color-text-inverted);
     }
-
-    .base-input {
-      border-color: var(--color-brown-hover);
-      border-style: solid !important;
-      border-width: 2px;
-      border-color: var(--color-neutral-dark);
-    }
-
     nav {
       span {
         font-weight: 600;
@@ -41,7 +33,7 @@
 
   .base-input {
     background: var(--color-neutral-light);
-    border: 2px solid var(--color-brown);
+    border: 2px solid var(--color-border);
     box-sizing: border-box;
     height: 32px;
     box-shadow: var(--shadow-box-elements);

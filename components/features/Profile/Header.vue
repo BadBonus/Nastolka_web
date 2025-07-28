@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NuxtLink } from "#components";
 import StatsComments from "./Stats.vue";
+import { skillItems } from "@/shared/skills";
 
 // FIXME: потом пропсы стабилизировать
 
@@ -62,7 +63,7 @@ defineSlots<{ topPart(): any }>();
       <span> 5.0 (29) </span>
     </div>
 
-    <Stats />
+    <StatsComments :skills="skillItems.gamemaster" />
   </header>
 </template>
 

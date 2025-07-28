@@ -59,7 +59,7 @@
   --color-shadow: oklch(0.3329 0 0 / 55%);
   --color-border: var(--color-neutral-medium);
   /* --color-focus-state: var(--color-secondary-hover); */
-  --color-focus-state: var(--color-neutral-medium);
+  --color-focus-state: var(--color-brown);
   --color-bg-footer: var(--color-dark-brown);
   --color-bg-header: var(--color-dark-brown);
   --color-drawer: var(--color-dark-brown);

@@ -2,9 +2,10 @@ export default defineAppConfig({
   ui: {
     tabs: {
       slots: {
-        list: '!rounded ',
-        indicator: '!rounded hover:bg-red!',
+        list: '!rounded-md',
+        indicator: '!rounded-sm',
         label: 'text-text-inverted',
+        trigger: 'hover:text-text-inverted!'
       }
     },
     popover: {
@@ -32,10 +33,7 @@ export default defineAppConfig({
     },
     button: {
       slots: {
-        base: 'rounded-sm',
-      },
-      variant: {
-        primary: '-shadow-element'
+        base: 'rounded-sm ',
       }
     },
     drawer: {
@@ -65,6 +63,7 @@ export default defineAppConfig({
         body: 'p-3 sm:py-2 sm:px-1',
         footer: 'p-2 sm:p-1'
       },
+
       // variants: {
       //   variant: {
       //     solid: {
@@ -84,6 +83,16 @@ export default defineAppConfig({
       // defaultVariants: {
       //   variant: 'outline'
       // }
+    },
+    textarea: {
+      slots: {
+        base: '!bg-neutral-light shadow-button border-solid border-2 border-border',
+      }
+    },
+    SelectMenu: {
+      slots: {
+
+      }
     }
   }
 })

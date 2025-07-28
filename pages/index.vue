@@ -7,5 +7,7 @@ defineOptions({
 </script>
 
 <template>
-  <div>Hello world</div>
+  <div>
+    <image-cropper />
+  </div>
 </template>
