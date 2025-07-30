@@ -5,31 +5,47 @@ export const sections: TabsItem[] = [
   {
     label: "Профиль",
     icon: 'i-lucide-user',
-    value: EProfileNavigation.Overview
+    value: EProfileNavigation.profile
   },
   {
     label: "История",
-    value: EProfileNavigation.History,
+    value: EProfileNavigation.history,
     icon: 'material-symbols-history',
   },
   {
     label: "Подписки",
-    value: EProfileNavigation.Subscriptions,
+    value: EProfileNavigation.subscriptions,
     icon: 'hugeicons-favourite-square',
   },
   {
     label: "Оплата",
-    value: EProfileNavigation.Payment,
+    value: EProfileNavigation.payment,
     icon: 'ic-baseline-payment',
   },
   {
     label: "Геймастер",
-    value: EProfileNavigation.GameMaster,
+    value: EProfileNavigation['game-master'],
     icon: 'i-game-icons-cubes',
     ui: {
       root: '!bg-red',
       content: '!bg-info',
-      
+
     }
   },
 ];
+
+// type guard
+function isProfileNavigationKey(key: string): key is EProfileNavigation {
+  return Object.values(EProfileNavigation).includes(key as EProfileNavigation);
+}
+
+export function getLastNavigationSegment(path: string): EProfileNavigation | null {
+  const match = path.match(/([^/]+)\/?$/);
+  const segment = match ? match[1] : "";
+
+  if (segment && isProfileNavigationKey(segment)) {
+    return segment;
+  }
+
+  return null;
+}
