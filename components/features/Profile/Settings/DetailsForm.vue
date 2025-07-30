@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
+import {
+  EDays,
+  type TDataAvaCalendar,
+} from "@/components/globals/AvailibilityCalendar/types";
 // 	 type TSettingsDetailsForm = {
 
 // 	}
@@ -11,6 +15,7 @@ type TSettingsDetailsForm = {
   timezone: string;
   email: string;
   about: string | number;
+  availableDays: TDataAvaCalendar;
 };
 
 defineOptions({
@@ -23,6 +28,7 @@ const state = reactive<TSettingsDetailsForm>({
   timezone: "",
   email: "",
   about: "",
+  availableDays: null,
 });
 
 const validate = (state: any): FormError[] => {
@@ -75,8 +81,16 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 
       <PopupDatePicker />
     </div>
+    <UFormField label="О себе" name="about">
+      <UTextarea class="w-full" v-model="state.about" />
+    </UFormField>
 
-    <UTextarea class="w-full" v-model="state.about" />
+    <div>
+      <span class="mb-3 block text-center text-xl">
+        Доступное время для игр
+      </span>
+      <AvailibilityCalendar v-model="state.availableDays" />
+    </div>
 
     <Button type="submit"> Сохранить изменения </Button>
   </UForm>
