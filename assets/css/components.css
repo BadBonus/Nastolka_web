@@ -3,4 +3,10 @@
     width: 1px;
     background: var(--color-text);
   }
+
+  .avatar {
+    border-radius: 100px;
+    border: 2px solid var(--color-border);
+    object-fit: cover;
+  }
 }

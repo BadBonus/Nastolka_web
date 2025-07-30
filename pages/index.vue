@@ -7,5 +7,5 @@ defineOptions({
 </script>
 
 <template>
-  <div></div>
+  <div><gm-card /></div>
 </template>
