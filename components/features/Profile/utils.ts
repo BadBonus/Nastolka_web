@@ -39,12 +39,12 @@ function isProfileNavigationKey(key: string): key is EProfileNavigation {
   return Object.values(EProfileNavigation).includes(key as EProfileNavigation);
 }
 
-export function getLastNavigationSegment(path: string): EProfileNavigation | null {
-  const match = path.match(/([^/]+)\/?$/);
-  const segment = match ? match[1] : "";
+export function urlTabsCoordination(path: string): EProfileNavigation | null {
+  // const match = path.match(/([^/]+)\/?$/);
+  // const segment = match ? match[1] : "";
 
-  if (segment && isProfileNavigationKey(segment)) {
-    return segment;
+  if (path && isProfileNavigationKey(path)) {
+    return path;
   }
 
   return null;

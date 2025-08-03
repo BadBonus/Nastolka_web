@@ -1,7 +1,7 @@
 export enum EProfileNavigation {
-  profile = "./",
-  history = "./history",
-  subscriptions = "./subscriptions",
-  payment = "./payment",
-  'game-master' = "./game-master",
+  profile = "/profile",
+  history = "/profile/history",
+  subscriptions = "/profile/subscriptions",
+  payment = "/profile/payment",
+  'game-master' = "/profile/game-master",
 }

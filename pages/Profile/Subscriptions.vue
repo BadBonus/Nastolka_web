@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { gms } from "@/shared/demo/favorites";
-// 	 type TProfileSubscriptions = {
-
-// 	}
-
 defineOptions({
   name: "ProfileSubscriptions",
 });
+
+const tabs = [
+  { value: "game-master", label: "Гм-ы" },
+  { value: "other", label: "Игры" },
+];
+const selectedTab = ref<string | number>(tabs[0].value);
 </script>
 <template>
   <section class="ProfileSubscriptions">
-    <ul class="mt-1 flex flex-col gap-1.5">
-      <li v-for="(gm, index) in gms" :key="index">
-        <GmCard v-bind="gm" />
-      </li>
-    </ul>
+    <h1 class="text-center font-bold">Ваши подписки</h1>
+    <UTabs
+      :content="false"
+      v-model="selectedTab"
+      :items="tabs"
+      class="ProfileNavigation w-full"
+    />
+    <ProfileSubscriptionsGms v-if="selectedTab === tabs[0].value" />
+    <ProfileSubscriptionsGames v-if="selectedTab === tabs[1].value" />
   </section>
 </template>
 

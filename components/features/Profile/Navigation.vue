@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { EProfileNavigation } from "./types";
-import { sections, getLastNavigationSegment } from "./utils";
+import { sections, urlTabsCoordination } from "./utils";
 
 defineOptions({
   name: "ProfileNavigation",
 });
 
 const route = useRoute();
+
+console.log(route.path);
 const currentTab =
-  getLastNavigationSegment(route.path) ?? EProfileNavigation.profile;
+  urlTabsCoordination(route.path) ?? EProfileNavigation.profile;
 
 const selectedTab = ref<string | number>(currentTab);
 const router = useRouter();
 
 watch(selectedTab, (newTab) => {
-  router.push(`${newTab}`);
+  router.push(String(newTab));
 });
 </script>
 
