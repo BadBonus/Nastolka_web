@@ -8,7 +8,10 @@ defineOptions({
 });
 </script>
 <template>
-  <section class="ProfileGame-master">game-master</section>
+  <section class="ProfileGame-master">
+    <h1 class="text-center font-bold">Настройка профиля гейм-мастера</h1>
+    <profile-settings-g-m-form />
+  </section>
 </template>
 
 <!--<style lang="scss"></style>-->

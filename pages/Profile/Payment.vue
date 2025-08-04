@@ -9,7 +9,9 @@ defineOptions({
 </script>
 
 <template>
-  <section class="Payment">Payment</section>
+  <section class="Payment">
+    <nuxt-img src="/images/coming-soon.png" alt="Payment Image" />
+  </section>
 </template>
 
 <!-- <style lang="scss"></style> -->
