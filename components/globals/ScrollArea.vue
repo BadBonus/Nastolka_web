@@ -54,7 +54,7 @@ watch(isAtBottom, (newVal) => {
     style="--scrollbar-size: 10px"
     ref="rootRef"
   >
-    <ScrollAreaViewport ref="viewportRef" class="h-full w-full rounded py-1.5">
+    <ScrollAreaViewport ref="viewportRef" class="h-full w-full rounded p-2.5">
       <div class="relative">
         <slot />
       </div>

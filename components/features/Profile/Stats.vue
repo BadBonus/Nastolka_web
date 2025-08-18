@@ -24,7 +24,6 @@ const modifiedSkills = computed(() => {
 <template>
   <article class="ProfileStatsComments">
     <section class="mb-4">
-      <h2 class="mb-3 text-xl font-semibold">Оценки навыков</h2>
       <ul
         class="bg-elements-surface border-border shadow-element flex justify-evenly rounded-sm border-2 p-1"
       >

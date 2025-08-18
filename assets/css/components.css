@@ -9,4 +9,8 @@
     border: 2px solid var(--color-border);
     object-fit: cover;
   }
+
+  .rating {
+    @apply mt-2 flex items-center justify-center gap-1.5 text-xl font-semibold;
+  }
 }
