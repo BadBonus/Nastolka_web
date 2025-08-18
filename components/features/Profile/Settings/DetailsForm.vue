@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
 import {
@@ -16,6 +17,8 @@ type TSettingsDetailsForm = {
   email: string;
   about: string | number;
   availableDays: TDataAvaCalendar;
+  // tabletop_exp_age: EExpYears;
+  gm_style?: string;
 };
 
 defineOptions({
@@ -29,6 +32,8 @@ const state = reactive<TSettingsDetailsForm>({
   email: "",
   about: "",
   availableDays: null,
+  // tabletop_exp_age: EExpYears.less,
+  gm_style: "",
 });
 
 const validate = (state: any): FormError[] => {

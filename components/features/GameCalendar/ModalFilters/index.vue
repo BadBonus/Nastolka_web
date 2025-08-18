@@ -35,18 +35,9 @@ const masterRating = ref<number>();
 const typeOfAdventure = ref<string>(typesOfCompany[0]);
 const typeOfPlatform = ref<string>(typesOfPlatformGame[0].id);
 const places = ref<string[]>([]);
+const platformes = ref<string[]>([]);
 const genres = ref<string[]>([]);
 const statusGame = ref<string>(statusesOfGame[0]);
-
-const placesVariants = computed(() => {
-  const placesObj: Record<string, string[]> = {
-    [EtypesOfPlatformGame.nvm]: [...cities, ...webPlatforms],
-    [EtypesOfPlatformGame.live]: cities,
-    [EtypesOfPlatformGame.online]: webPlatforms,
-  };
-
-  return placesObj[typeOfPlatform.value as string] ?? [];
-});
 
 // FIXME: почему модификаторы на инпутах v-model.number не работают - надо иным способом ограничить ввод значений
 // FIXME: для каждого бэйджа фильтра свой цвет - для начала надо понять сколько категорий будет
@@ -76,6 +67,16 @@ const placesVariants = computed(() => {
               <p class="text-muted text-sm">До:</p>
             </template>
           </UInput>
+        </div>
+        <div class="mt-3">
+          <span class="block text-center text-xl"> Место игры</span>
+
+          <USelectMenu
+            multiple
+            v-model="places"
+            :items="cities"
+            class="mt-2 w-full"
+          />
         </div>
         <div class="mt-3">
           <span class="mb-2 block text-xl"> Игра </span>
@@ -193,13 +194,19 @@ const placesVariants = computed(() => {
             />
           </div>
 
-          <div class="mt-3">
-            <span class="block text-xl"> Место проведения игры </span>
+          <div
+            class="mt-3"
+            v-if="
+              typeOfPlatform === typesOfPlatformGame[0].id ||
+              typeOfPlatform === typesOfPlatformGame[1].id
+            "
+          >
+            <span class="block text-xl"> Платформа </span>
 
             <USelectMenu
               multiple
-              v-model="places"
-              :items="placesVariants"
+              v-model="platformes"
+              :items="webPlatforms"
               class="mt-2 w-full"
             />
           </div>

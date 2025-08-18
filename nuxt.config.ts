@@ -17,7 +17,8 @@ export default defineNuxtConfig({
     // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
     'nuxt-auth-utils',
     '@nuxtjs/fontaine',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@nuxt/test-utils/module'
   ],
 
   vite: {

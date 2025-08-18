@@ -3,6 +3,7 @@ import {
   typesOfPlatformGame,
   typesOfCompany,
   statusesOfGame,
+  cities,
 } from "@/components/features/GameCalendar/ModalFilters/demoData";
 import type { TModalFiltersFilterBadge } from "@/components/globals/FilterBadges.vue";
 
@@ -28,9 +29,21 @@ const isFreeGames = ref<boolean>(false);
 const typeOfAdventure = ref<CheckboxGroupItem[]>([]);
 const typeOfPlatform = ref<string>(typesOfPlatformGame[0].id);
 const statusGame = ref<string>(statusesOfGame[0]);
+const places = ref<string[]>([]);
 </script>
 <template>
   <div class="HeaderFilterRow">
+    <div class="mt-3">
+      <span class="block text-center text-xl"> Место игры</span>
+
+      <USelectMenu
+        multiple
+        v-model="places"
+        :items="cities"
+        class="mt-2 w-full"
+      />
+    </div>
+
     <div class="mt-3">
       <span class="block text-center text-xl"> Тип компании</span>
 

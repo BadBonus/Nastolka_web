@@ -1,14 +1,34 @@
 <script setup lang="ts">
+import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
+import { countries } from "~/shared/countries";
 
-type TSettingsGMForm = {};
+type TSettingsGMForm = {
+  nickname?: string;
+  city?: string;
+  country?: string;
+  zipcode?: string;
+  about?: string;
+  background?: string;
+  avatar?: string;
+  gm_exp_age: EExpYears;
+};
 
 defineOptions({
   name: "GMForm",
 });
 
 const toast = useToast();
-const state = reactive<TSettingsGMForm>({});
+const state = reactive<TSettingsGMForm>({
+  nickname: "",
+  city: "",
+  country: "",
+  zipcode: "",
+  about: "",
+  background: "",
+  avatar: "",
+  gm_exp_age: EExpYears.less,
+});
 
 const validate = (state: any): FormError[] => {
   const errors = [];
@@ -26,9 +46,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   console.log(event.data);
 }
 
-const editorContent = ref(
-  "<h1>Привет, Nuxt 3 и TipTap!</h1><p>Это пример интеграции.</p>",
-);
+const editorContent = ref("");
 </script>
 <template>
   <UForm
@@ -37,6 +55,25 @@ const editorContent = ref(
     class="w-full space-y-4"
     @submit="onSubmit"
   >
+    <UFormField label="Ник мастера" name="nickname">
+      <UInput class="w-full" type="text" v-model="state.nickname" />
+    </UFormField>
+
+    <div class="text-center">
+      <h2 class="text-2xl font-bold">Изменить Аватар мастера</h2>
+      <modals-change-img title="Смена аватара">
+        <button
+          class="canEditWrapper shadow-element border-border rounded-full border-2"
+        >
+          <NuxtImg
+            class="bg-brown h-36 w-full min-w-36 rounded-full object-cover"
+            src="https://github.com/benjamincanac.png"
+            alt="Ваш аватар"
+          />
+        </button>
+      </modals-change-img>
+    </div>
+
     <div class="text-center">
       <h2 class="text-2xl font-bold">Изменить бэк</h2>
       <modals-change-img title="Смена бэка">
@@ -50,14 +87,29 @@ const editorContent = ref(
           />
         </button>
       </modals-change-img>
-
-      <tiptap v-model="editorContent" />
-      <pre>{{ editorContent }}</pre>
-
-      <h3>Предпросмотр:</h3>
-      <div v-html="editorContent" class="prose-mirror-preview"></div>
     </div>
+
+    <div class="flex items-end gap-4">
+      <UFormField label="Страна" name="country">
+        <USelectMenu
+          class="w-full"
+          v-model="state.country"
+          value-key="name"
+          :items="countries"
+        />
+      </UFormField>
+
+      <UFormField label="Город" name="city">
+        <UInput class="w-full" v-model="state.city as string" type="text" />
+      </UFormField>
+    </div>
+
+    <UFormField label="Почтовый код" name="zipcode">
+      <UInput class="w-full" v-model="state.zipcode as string" type="text" />
+    </UFormField>
+
+    <UFormField label="О себе как о гм-е" name="about">
+      <UTextarea class="w-full" v-model="state.about as string" />
+    </UFormField>
   </UForm>
 </template>
-
-<!--<style lang="scss"></style>-->

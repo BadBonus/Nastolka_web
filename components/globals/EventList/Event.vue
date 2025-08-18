@@ -69,7 +69,10 @@ const formatDate = (date: Date | string): string | undefined => {
     </div>
 
     <template #footer>
-      <NuxtLink :to="org.link" class="flex items-center justify-between">
+      <NuxtLink
+        :to="'/gm/' + org.link"
+        class="flex items-center justify-between"
+      >
         <div class="-truncate text-text flex items-center gap-1 pr-1">
           <UAvatar src="/images/wod_1.png" class="border-secondary border-2" />
           <span class="-truncate ml-1 inline-block font-semibold">{{

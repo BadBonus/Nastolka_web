@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { useEditor, EditorContent, type Content } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
+import underline, { Underline } from "@tiptap/extension-underline";
+import {
+  Details,
+  DetailsContent,
+  DetailsSummary,
+} from "@tiptap/extension-details";
+import emoji from "@tiptap/extension-emoji";
+import { BulletList } from "@tiptap/extension-list";
+import blockquote from "@tiptap/extension-blockquote";
+import { HorizontalRule } from "@tiptap/extension-horizontal-rule";
+import { Placeholder } from "@tiptap/extensions";
 
 defineOptions({
   name: "Tiptap",
@@ -9,11 +20,27 @@ defineOptions({
 const model = defineModel<string>();
 const editor = useEditor({
   content: model.value,
-
   extensions: [
     StarterKit.configure({
       heading: {
-        levels: [1, 2, 3],
+        levels: [1, 2, 3, 4],
+      },
+    }),
+    underline,
+    emoji,
+    BulletList,
+    blockquote,
+    HorizontalRule,
+    DetailsSummary,
+    DetailsContent,
+    Placeholder.configure({
+      includeChildren: true,
+      placeholder: ({ node }) => {
+        if (node.type.name === "detailsSummary") {
+          return "Summary";
+        }
+
+        return null;
       },
     }),
   ],
@@ -74,6 +101,21 @@ onBeforeUnmount(() => {
         >
           H2
         </button>
+        <button
+          type="button"
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        >
+          H1
+        </button>
+
+        <button
+          type="button"
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        >
+          H1
+        </button>
       </div>
 
       <!-- Компонент, который рендерит сам редактируемый контент -->
@@ -85,10 +127,11 @@ onBeforeUnmount(() => {
 <style>
 /* Базовые стили для редактора TipTap */
 .ProseMirror {
-  border: 1px solid #ccc;
+  border: 2px solid var(--color-border);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   min-height: 150px;
+  background: var(--color-elements-surface);
 }
 .ProseMirror:focus {
   outline: 2px solid #68b1f8;
@@ -99,7 +142,6 @@ onBeforeUnmount(() => {
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
-  border: 1px solid #ccc;
   padding: 0.5rem;
   border-radius: 4px;
 }

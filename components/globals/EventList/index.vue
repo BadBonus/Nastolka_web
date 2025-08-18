@@ -13,7 +13,7 @@ defineProps<TEventListIndex>();
 <template>
   <ul class="EventList flex flex-col gap-3">
     <li v-for="event in items" :key="event.id">
-      <NuxtLink :to="event.link">
+      <NuxtLink :to="'/game' + event.link">
         <article>
           <Event v-bind="event" />
         </article>

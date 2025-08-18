@@ -32,7 +32,7 @@ export const typesOfPlatformGame = [
     id: EtypesOfPlatformGame['live']
   }] as {name: string, id: EtypesOfPlatformGame}[];
 
-export const cities = ['Минск', 'Москва', 'Астана'];
+export const cities = ['Online', 'Минск', 'Москва', 'Астана'];
 export const webPlatforms = ['Discord', 'Skype', 'Telegram'];
 
 export const typesOfGenres = ['Триллер', 'хардкор', 'фан-приключение'];
