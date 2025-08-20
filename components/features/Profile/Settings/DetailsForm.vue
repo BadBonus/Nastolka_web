@@ -6,6 +6,8 @@ import {
   EDays,
   type TDataAvaCalendar,
 } from "@/components/globals/AvailibilityCalendar/types";
+import type { TSoclinksObject } from "~/types/global";
+import { initSocLinks } from "~/utils/soclinks";
 // 	 type TSettingsDetailsForm = {
 
 // 	}
@@ -19,6 +21,7 @@ type TSettingsDetailsForm = {
   availableDays: TDataAvaCalendar;
   // tabletop_exp_age: EExpYears;
   gm_style?: string;
+  social_links: TSoclinksObject;
 };
 
 defineOptions({
@@ -34,6 +37,7 @@ const state = reactive<TSettingsDetailsForm>({
   availableDays: null,
   // tabletop_exp_age: EExpYears.less,
   gm_style: "",
+  social_links: initSocLinks,
 });
 
 const validate = (state: any): FormError[] => {
@@ -98,6 +102,8 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     </div>
 
     <Button type="submit"> Сохранить изменения </Button>
+
+    <SocLinksInput v-model="state.social_links" />
   </UForm>
 </template>
 

@@ -2,6 +2,9 @@
 import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { countries } from "~/shared/countries";
+import game_platforms from "~/shared/gamePlatforms";
+import game_Systems from "~/shared/gameSystems";
+import { initSocLinks } from "~/utils/soclinks";
 
 type TSettingsGMForm = {
   nickname?: string;
@@ -12,6 +15,10 @@ type TSettingsGMForm = {
   background?: string;
   avatar?: string;
   gm_exp_age: EExpYears;
+  gameStyle?: string;
+  social_links: Record<ESocLinks, string | undefined>;
+  game_platforms: string[];
+  game_systems: string[];
 };
 
 defineOptions({
@@ -28,6 +35,10 @@ const state = reactive<TSettingsGMForm>({
   background: "",
   avatar: "",
   gm_exp_age: EExpYears.less,
+  gameStyle: "",
+  social_links: initSocLinks,
+  game_platforms: [],
+  game_systems: [],
 });
 
 const validate = (state: any): FormError[] => {
@@ -89,6 +100,26 @@ const editorContent = ref("");
       </modals-change-img>
     </div>
 
+    <u-form-field label="Предпочитаемые системы" name="timezone">
+      <USelectMenu
+        class="w-full"
+        multiple
+        v-model="state.game_systems"
+        value-key="offset"
+        :items="game_Systems"
+      />
+    </u-form-field>
+
+    <u-form-field label="Предпочитаемые платформы" name="timezone">
+      <USelectMenu
+        multiple
+        class="w-full"
+        v-model="state.game_platforms"
+        value-key="offset"
+        :items="game_platforms"
+      />
+    </u-form-field>
+
     <div class="flex items-end gap-4">
       <UFormField label="Страна" name="country">
         <USelectMenu
@@ -111,5 +142,11 @@ const editorContent = ref("");
     <UFormField label="О себе как о гм-е" name="about">
       <UTextarea class="w-full" v-model="state.about as string" />
     </UFormField>
+
+    <UFormField label="Как вы проводите игры" name="about">
+      <UTextarea class="w-full" v-model="state.gameStyle as string" />
+    </UFormField>
+
+    <SocLinksInput v-model="state.social_links" />
   </UForm>
 </template>
