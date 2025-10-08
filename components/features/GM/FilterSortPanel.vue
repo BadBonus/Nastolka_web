@@ -26,15 +26,16 @@ const demo = [
 
 const demoRadio = [
   {
-    label: "1",
     value: 123,
+    label: "mask",
   },
   {
-    label: "2",
     value: "a",
+    maskIndicator: "game-icons:duality-mask",
+    label: "mask",
   },
   {
-    label: "3",
+    maskIndicator: "game-icons:duality-mask",
     value: "b",
   },
 ];
@@ -50,18 +51,7 @@ const model = ref(demoRadio[0]);
         class="w-full justify-center"
         v-model="model"
         :items="demoRadio"
-      />
-
-      <URadioGroup
-        size="sm"
-        orientation="horizontal"
-        label-key="name"
-        value-key="id"
-        v-model="typeOfSort"
-        :items="demo"
-        :ui="{
-          fieldset: 'justify-center',
-        }"
+        bottom-labels
       />
     </div>
   </section>
