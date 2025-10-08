@@ -19,6 +19,7 @@ type TSettingsGMForm = {
   social_links: Record<ESocLinks, string | undefined>;
   game_platforms: string[];
   game_systems: string[];
+  languages: string[];
 };
 
 defineOptions({
@@ -27,6 +28,7 @@ defineOptions({
 
 const toast = useToast();
 const state = reactive<TSettingsGMForm>({
+  languages: [],
   nickname: "",
   city: "",
   country: "",
@@ -100,6 +102,16 @@ const editorContent = ref("");
       </modals-change-img>
     </div>
 
+    <u-form-field label="Языки на котором вы можете вести игры" name="timezone">
+      <USelectMenu
+        class="w-full"
+        multiple
+        v-model="state.languages"
+        value-key="offset"
+        :items="['русский', 'английский']"
+      />
+    </u-form-field>
+
     <u-form-field label="Предпочитаемые системы" name="timezone">
       <USelectMenu
         class="w-full"
@@ -148,5 +160,7 @@ const editorContent = ref("");
     </UFormField>
 
     <SocLinksInput v-model="state.social_links" />
+
+    <Button class="mx-auto block" type="submit"> Сохранить изменения </Button>
   </UForm>
 </template>

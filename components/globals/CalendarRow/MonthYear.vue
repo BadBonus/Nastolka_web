@@ -37,7 +37,7 @@ const changeMonth = (prev: boolean): void => {
   <div
     class="CalendarRowMonthYear flex items-center justify-between text-sm font-semibold"
   >
-    <div>
+    <div class="flex">
       <Button @click="changeYear(true)" class="mr-3" variant="filled" size="md">
         <Icon name="mdi:chevron-double-left" />
       </Button>
@@ -50,7 +50,7 @@ const changeMonth = (prev: boolean): void => {
       {{ formattedDate(model ?? new Date()) }}
     </span>
 
-    <div>
+    <div class="flex">
       <Button
         @click="changeMonth(false)"
         variant="filled"

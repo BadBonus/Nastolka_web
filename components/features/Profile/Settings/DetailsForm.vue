@@ -101,9 +101,9 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
       <AvailibilityCalendar v-model="state.availableDays" />
     </div>
 
-    <Button type="submit"> Сохранить изменения </Button>
-
     <SocLinksInput v-model="state.social_links" />
+
+    <Button class="mx-auto" type="submit"> Сохранить изменения </Button>
   </UForm>
 </template>
 

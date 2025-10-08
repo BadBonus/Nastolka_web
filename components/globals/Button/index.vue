@@ -29,7 +29,7 @@ const slots = useSlots();
 
 const buttonClasses = computed(() => {
   const baseClasses = [
-    "inline-flex items-center justify-center font-semibold",
+    "flex items-center justify-center font-semibold",
     "focus:outline-none",
     "transition-all duration-200 ease-in-out",
     props.block ? "w-full" : "",
