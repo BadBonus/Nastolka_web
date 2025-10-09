@@ -16,7 +16,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: "Мой календарь",
     icon: "i-lucide-calendar",
-    to: "/gmsearch",
+    to: "/gm",
   },
   {
     label: "Подписки",

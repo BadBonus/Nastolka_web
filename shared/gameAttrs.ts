@@ -1,4 +1,38 @@
-export default [
+export const game_adv_types = [{id: "company", name: "Компания"}, {id: "short", name: "Шорт"}];
+
+export const game_platforms = [
+  "Above VTT",
+  "Alchemy",
+  "Arkenforge",
+  "Bag of Mapping",
+  "D&D Beyond",
+  "D&D Beyond Maps",
+  "Demiplane",
+  "Discord",
+  "Fantasy Grounds",
+  "Foundry VTT",
+  "Google Meet",
+  "MapTool",
+  "Microsoft Teams",
+  "One More Multiverse",
+  "Owlbear Rodeo",
+  "Physical Battlemap",
+  "Quest Portal",
+  "Role",
+  "Roleplay.tv",
+  "Roll20",
+  "RPG Sessions",
+  "Shard Tabletop",
+  "Sigil",
+  "Tableplop",
+  "Tabletop Simulator",
+  "Tale Spire",
+  "Tarrasque.io",
+  "Text/Play by Post",
+  "Zoom"
+];
+
+export const game_systems = [
   "Dungeons & Dragons 5e",
   "Pathfinder 2e",
   "Daggerheart",

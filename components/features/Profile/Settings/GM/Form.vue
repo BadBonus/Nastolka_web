@@ -2,8 +2,8 @@
 import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { countries } from "~/shared/countries";
-import game_platforms from "~/shared/gamePlatforms";
-import game_Systems from "~/shared/gameSystems";
+import { game_platforms, game_systems } from "~/shared/gameAttrs";
+import type { ESocLinks } from "~/shared/socLinks";
 import { initSocLinks } from "~/utils/soclinks";
 
 type TSettingsGMForm = {
@@ -118,7 +118,7 @@ const editorContent = ref("");
         multiple
         v-model="state.game_systems"
         value-key="offset"
-        :items="game_Systems"
+        :items="game_systems"
       />
     </u-form-field>
 

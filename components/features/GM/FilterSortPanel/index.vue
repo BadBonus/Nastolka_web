@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import SortViaAttrsPanel from "./SortViaAttrsPanel.vue";
+import { game_adv_types } from "@/shared/gameAttrs";
 // 	 type TGMFilterSortPanel = {
 
 // 	}
@@ -9,20 +11,10 @@ defineOptions({
 
 const typeOfSort = ref("rating");
 
-const demo = [
-  {
-    name: "Не важно",
-    id: 123,
-  },
-  {
-    name: "A",
-    id: 3,
-  },
-  {
-    name: "B",
-    id: 12223,
-  },
-];
+const typesOfGame = game_adv_types.map((el) => ({
+  value: el.id,
+  label: el.name,
+}));
 
 const demoRadio = [
   {
@@ -40,7 +32,10 @@ const demoRadio = [
   },
 ];
 
-const model = ref(demoRadio[0]);
+const filters = ref({
+  typeOfGame: undefined,
+  sortWith: undefined,
+});
 </script>
 <template>
   <section class="GMFilterSortPanel">
@@ -48,12 +43,15 @@ const model = ref(demoRadio[0]);
       <span class="block text-center text-xl"> Тип ведения игры </span>
 
       <Radiogroup
-        class="w-full justify-center"
-        v-model="model"
-        :items="demoRadio"
+        class="mt-2 w-full justify-evenly"
+        v-model="filters.typeOfGame"
+        :items="typesOfGame"
         bottom-labels
+        only-value
       />
     </div>
+    <SortViaAttrsPanel v-model="filters.sortWith" class="mt-2.5" />
+    <mark>{{ filters }}</mark>
   </section>
 </template>
 

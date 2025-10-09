@@ -17,7 +17,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: "Найти гм-мастера",
     icon: "fluent-people-search-20-filled",
-    to: "/gmsearch",
+    to: "/gm",
   },
   {
     label: "Новости",

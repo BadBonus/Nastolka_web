@@ -11,7 +11,7 @@ export type TGamesCalendarOrg = {
     count: number;
     value: number;
   };
-}
+};
 
 export type TGamesCalendarEvent = {
   id: string;

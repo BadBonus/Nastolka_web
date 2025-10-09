@@ -9,36 +9,60 @@ export type TRadioGroupItem = {
   label?: string;
   icon?: string;
   maskIndicator?: string;
+} & Record<string, unknown>;
+
+type TWithOnlyValue = {
+  modelValue: number | string | undefined;
+  onlyValue: true;
 };
 
-const props = defineProps<
-  {
-    modelValue: (TRadioGroupItem & Record<string, unknown>) | undefined;
-    items: (TRadioGroupItem & Record<string, unknown>)[];
-    vertical?: boolean;
-    bottomLabels?: boolean;
-  } & RadioGroupRootProps
->();
-
-const emit = defineEmits(["update:modelValue"]);
-
-// const model = defineModel<number | string | undefined>();
-const update = (id: TRadioGroupItem["value"]) => {
-  const foundedItem = props.items.find((item) => item.value === id);
-  emit("update:modelValue", foundedItem);
+type TPropsWithOnlyValue = {
+  onlyValue: true;
+  modelValue: number | string | undefined;
 };
+
+type TPropsWithoutOnlyValue = {
+  onlyValue?: false;
+  modelValue: TRadioGroupItem;
+};
+
+type TProps = (TPropsWithOnlyValue | TPropsWithoutOnlyValue) & {
+  items: TRadioGroupItem[];
+  vertical?: boolean;
+  bottomLabels?: boolean;
+} & RadioGroupRootProps;
+
+const props = defineProps<TProps>();
 
 const colorItemsStyles =
   "border shadow-sm outline-none focus:shadow-[0_0_0_2px] h-4.5 w-4.5";
 
 const colorItemsStylesIfIconIndicator =
   "data-[state=checked]:bg-dark-brown data-[state=checked]:text-[white]";
+
+const emit = defineEmits(["update:modelValue"]);
+
+// const model = defineModel<number | string | undefined>();
+const update = (id: TRadioGroupItem["value"]) => {
+  const foundedItem = props.items.find((item) => item.value === id);
+
+  const same = props.onlyValue
+    ? foundedItem?.value === props.modelValue
+    : foundedItem?.value === props.modelValue?.value;
+
+  if (same) {
+    emit("update:modelValue", undefined);
+    return;
+  }
+
+  emit("update:modelValue", props.onlyValue ? foundedItem?.value : foundedItem);
+};
 </script>
 
 <template>
   <!-- NOTE: Reka Ui не поддерживает стандартный аттрибут tabindex, чтобы warning-a от ts не было я определил эти аттрибут через v-bind -->
   <RadioGroupRoot
-    :modelValue="modelValue?.value"
+    :modelValue="props.onlyValue ? modelValue : modelValue?.value"
     @update:modelValue="update"
     class="flex gap-2.5"
     :class="{
@@ -50,9 +74,10 @@ const colorItemsStylesIfIconIndicator =
       :class="{ 'flex-col': bottomLabels }"
       class="flex items-center gap-1"
       v-for="item in items"
+      :key="item.value"
     >
       <RadioGroupItem
-        :id="'' + item.value"
+        :id="String(item.value)"
         class="Radiogroup__item flex cursor-pointer items-center rounded-full p-1"
         :class="{
           [colorItemsStyles]: !item.maskIndicator,
@@ -60,6 +85,7 @@ const colorItemsStylesIfIconIndicator =
         }"
         :value="item.value"
         v-bind="{ tabindex: 0 }"
+        :onSelect="() => update(item.value)"
       >
         <RadioGroupIndicator
           class="after:bg-dark-brown relative flex h-full w-full items-center justify-center after:block after:h-2 after:w-2 after:rounded-[50%]"
@@ -73,7 +99,7 @@ const colorItemsStylesIfIconIndicator =
         />
       </RadioGroupItem>
 
-      <label class="flex cursor-pointer items-center" :for="'' + item.value">
+      <label class="flex cursor-pointer items-center" :for="String(item.value)">
         {{ item.label }}
 
         <Icon
@@ -85,12 +111,3 @@ const colorItemsStylesIfIconIndicator =
     </div>
   </RadioGroupRoot>
 </template>
-
-<style>
-.Radiogroup__item[aria-checked="true"] {
-  /* background: var(--color-dark-brown); */
-  /* .Radiogroup__iconIndicator {
-    color: var(--color-white);
-  } */
-}
-</style>
