@@ -7,7 +7,7 @@ defineOptions({
 </script>
 <template>
   <div class="GameGM">
-    <ProfileHeader>
+    <ProfileHeader :link="`/gm/${'demo_link'}`">
       <template #topPart>
         <Button
           class="absolute top-3 right-3 z-10 rounded-full p-2!"
@@ -72,7 +72,7 @@ defineOptions({
       <UserComments :comments="demoComments">
         <template #additional>
           <ModalsAllComments title="Оценка и отзывы">
-            <Button class="my-4" color="info">Изучить все отзывы</Button>
+            <Button class="my-4 w-full" color="info">Изучить все отзывы</Button>
           </ModalsAllComments>
         </template>
       </UserComments>
