@@ -32,7 +32,7 @@ const demodata = [
 <template>
   <section class="GmPage">
     <g-m-filter-sort-panel />
-    <ul class="flex flex-col gap-2.5">
+    <ul class="mt-4 flex flex-col gap-2.5">
       <li v-for="item in demodata" :key="item.id">
         <nuxt-link :to="`/gm/${item.link}`"
           ><gm-card v-bind="item"

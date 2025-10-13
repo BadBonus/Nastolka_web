@@ -87,9 +87,10 @@ onUnmounted(() => {
         >
 
         <Button
-          class="inline-block px-3"
+          only-icon
+          class="flex w-auto justify-center px-1"
           variant="filled"
-          :icon="`lucide:arrow-${sortFromTopTobottom ? 'down' : 'up'}-narrow-wide`"
+          icon="heroicons-solid:bars-arrow-up"
         />
       </div>
     </div>
