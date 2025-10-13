@@ -1,25 +1,11 @@
 <script setup lang="ts">
-import { skillItems, type ESkillGameMaster } from "@/shared/skills/index";
-import type { TRadioGroupItem } from "@/components/globals/Radiogroup/index.vue";
-type TFilterSortPanelSortViaAttrsPanel = {};
-
-const props = defineProps<{ modelValue: string | undefined }>();
+import { radioBtns } from "./utils";
 
 defineOptions({
   name: "FilterSortPanelSortViaAttrsPanel",
 });
 
-const radioBtns = [
-  ...skillItems["gamemaster"].map((item) => ({
-    maskIndicator: item.icon,
-    value: item.id,
-  })),
-  {
-    value: "popularity",
-    maskIndicator: "i-material-symbols:star",
-  },
-] as TRadioGroupItem[];
-
+const props = defineProps<{ modelValue: string | undefined }>();
 const radioBtnModelValue = computed(() =>
   radioBtns.find((item) => item.value === props.modelValue),
 );
@@ -45,5 +31,3 @@ const updateModelValue = (value: string | undefined) => {
     />
   </div>
 </template>
-
-<!--<style lang="scss"></style>-->
