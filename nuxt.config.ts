@@ -36,7 +36,8 @@ export default defineNuxtConfig({
   },
   css: [
     '~/assets/css/main.css',
-    '~/public/fonts/fonts.css'
+    '~/public/fonts/fonts.css',
+    '@splidejs/splide/dist/css/splide.min.css'
   ],
   fonts: {
     defaults: {

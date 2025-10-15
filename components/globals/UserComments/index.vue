@@ -35,6 +35,8 @@ defineSlots<{ additional(): any }>();
           </li>
         </ul>
 
+        <CarouselsSimple :items="['123', '321']" />
+
         <slot name="additional" />
       </template>
     </UCollapsible>

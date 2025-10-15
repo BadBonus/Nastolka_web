@@ -20,7 +20,6 @@ const localSelect = (index: number) => emit("change", props.items[index]);
     class="border-accented rounded-md border border-solid p-2"
     v-slot="{ item }"
     :items="items"
-    arrows
     :startIndex="startIndex"
     @select="localSelect"
     loop
