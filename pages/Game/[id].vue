@@ -19,6 +19,8 @@ const route = useRoute();
       <game-common-attrs class="mt-4" />
     </section>
 
+    <Button class="mt-4 w-full"> Записаться на игру </Button>
+
     <section class="text-center">
       <h1 class="text-3xl font-semibold">Место проведения</h1>
       <GamePlaceAndToolls class="mt-4" />
@@ -33,6 +35,7 @@ const route = useRoute();
       <h1 class="text-3xl font-semibold">Гейм-мастер</h1>
       <GameGM class="mt-4" />
     </section>
+    <Button class="mt-4 w-full"> Записаться на игру </Button>
   </article>
 </template>
 
