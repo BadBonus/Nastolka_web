@@ -27,6 +27,10 @@ defineOptions({
         <Icon class="text-lg" name="game-icons:flying-flag" />
         <span class="text-base"> 11 сессий</span>
       </div>
+      <div class="flex items-center text-lg">
+        <Icon class="text-lg" name="i-mdi:currency-usd" />
+        <span class="text-base"> 11</span>
+      </div>
     </section>
 
     <ProfileStats class="mt-2" :skills="skillItems.gamemaster" />

@@ -15,31 +15,23 @@ defineSlots<{ additional(): any }>();
 
 <template>
   <div>
-    <UCollapsible v-if="comments.length" class="flex flex-col gap-2">
-      <template #default="{ open }">
-        <Button
-          class="group w-full"
-          color="secondary"
-          variant="ghost"
-          :icon="open ? 'i-lucide-chevron-down' : 'i-lucide-chevron-up'"
-          icon-pos="right"
-        >
-          <span class="text-2xl">{{ title ?? "Отзывы" }}</span>
-        </Button>
+    <Splide
+      :slides="comments"
+      :options="{
+        type: 'loop',
+        autoplay: true,
+        perPage: 1,
+        gap: '1rem',
+      }"
+    >
+      <template #slide="{ slide }">
+        <UserCommentsComment class="shadow-element" v-bind="slide" />
       </template>
+    </Splide>
 
-      <template #content>
-        <ul class="Index flex flex-col gap-3.5 p-1">
-          <li v-for="item in comments">
-            <UserCommentsComment class="shadow-element" v-bind="item" />
-          </li>
-        </ul>
-
-        <CarouselsSimple :items="['123', '321']" />
-
-        <slot name="additional" />
-      </template>
-    </UCollapsible>
+    <ModalsAllComments title="Оценка и отзывы">
+      <Button class="my-4 w-full" color="info">Изучить все отзывы</Button>
+    </ModalsAllComments>
   </div>
 </template>
 

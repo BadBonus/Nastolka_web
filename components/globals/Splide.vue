@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="relative">
+  <section class="splide__wrapper relative mb-8">
     <div ref="splideRoot" class="splide min-h-6 w-full">
       <div class="splide__track w-full">
         <ul class="splide__list">
@@ -67,6 +67,13 @@ onMounted(() => {
 </template>
 
 <style>
+.splide__wrapper {
+  &:hover {
+    .custom-arrow {
+      opacity: 0.25;
+    }
+  }
+}
 .custom-arrow {
   position: absolute;
   height: 100%;
@@ -77,13 +84,32 @@ onMounted(() => {
   top: 0;
   color: var(--color-white);
   transition: 0.15s;
+  z-index: 9999999;
+  background: var(--color-brown-hover);
+  opacity: 0.05;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    /* background: rgba(255, 255, 255, 0.1); */
+    opacity: 0.5 !important;
+  }
+
+  &.-prev {
+    border-radius: 8px 0 0 8px;
+  }
+  &.-next {
+    border-radius: 0 8px 8px 0;
   }
 }
 
 .splide__pagination {
   bottom: -1.5rem;
+}
+
+.splide__pagination__page {
+  background: var(--color-brown-hover);
+
+  &.is-active {
+    background: var(--color-dark-brown);
+  }
 }
 </style>

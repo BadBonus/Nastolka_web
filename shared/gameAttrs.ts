@@ -1,4 +1,4 @@
-export const game_adv_types = [{id: "company", name: "Компания"}, {id: "short", name: "Шорт"}];
+export const game_adv_types = [{id: "company", name: "Компания"}, {id: "one-short", name: "Ваншот"}];
 
 export const game_genres = [
   'Фэнтези',

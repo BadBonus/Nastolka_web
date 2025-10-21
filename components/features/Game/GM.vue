@@ -63,19 +63,13 @@ defineOptions({
     <section>
       <h2 class="text-xl font-semibold">Оценка и отзывы</h2>
       <div
-        class="mt-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
+        class="my-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
       >
         <Star />
         <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
         <span> 5.0 (29) </span>
       </div>
-      <UserComments :comments="demoComments">
-        <template #additional>
-          <ModalsAllComments title="Оценка и отзывы">
-            <Button class="my-4 w-full" color="info">Изучить все отзывы</Button>
-          </ModalsAllComments>
-        </template>
-      </UserComments>
+      <UserComments :comments="demoComments" />
     </section>
   </div>
 </template>
