@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ADVICE } from "@/shared/messagesToUsers";
+
 defineOptions({
   name: "ProfileHeader",
 });
@@ -25,12 +27,21 @@ defineOptions({
           size="sm"
         />
 
-        <Button
-          class="rounded-full p-2!"
-          color="info"
-          icon="streamline-freehand:messages-bubble-menu"
-          size="lg"
-        />
+        <ChatModal
+          :advice="ADVICE"
+          :title="'Диалог с мастером Васей'"
+          :user="{
+            name: 'Вася',
+            avatar: 'https://github.com/benjamincanac.png',
+          }"
+        >
+          <Button
+            class="rounded-full p-2!"
+            color="info"
+            icon="streamline-freehand:messages-bubble-menu"
+            size="lg"
+          />
+        </ChatModal>
       </div>
     </div>
 

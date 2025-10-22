@@ -101,4 +101,5 @@
   --ui-text-dimmed: var(--color-text);
   --text-base--line-height: "initial";
   --ui-bg-elevated: var(--color-dark-brown);
+  --ui-text-highlighted: var(--color-dark-brown);
 }

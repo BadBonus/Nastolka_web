@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { demoComments } from "@/shared/demo/comments";
+import { ADVICE } from "@/shared/messagesToUsers";
 
 defineOptions({
   name: "GameGM",
@@ -16,12 +17,21 @@ defineOptions({
           size="sm"
         />
 
-        <Button
-          class="absolute right-3 bottom-3 z-10 rounded-full p-2!"
-          color="secondary"
-          icon="ic:baseline-message"
-          size="lg"
-        />
+        <ChatModal
+          :advice="ADVICE"
+          :title="'Диалог с мастером Васей'"
+          :user="{
+            name: 'Вася',
+            avatar: 'https://github.com/benjamincanac.png',
+          }"
+        >
+          <Button
+            class="absolute right-3 bottom-3 z-10 rounded-full p-2!"
+            color="info"
+            icon="streamline-freehand:messages-bubble-menu "
+            size="lg"
+          />
+        </ChatModal>
       </template>
     </ProfileHeader>
     <USeparator class="py-2" color="primary" type="solid" />

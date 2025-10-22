@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ADVICE } from "@/shared/messagesToUsers";
 import { NuxtImg } from "#components";
 
 export type TGmCard = {
@@ -29,7 +30,7 @@ defineEmits<{
   <article
     class="GmCard bg-dark-brown border-border shadow-element flex items-center gap-2 rounded-lg border-2 p-2 text-white"
   >
-    <NuxtLink>
+    <NuxtLink :to="link">
       <NuxtImg class="avatar h-25 w-25" :src="avatar || '/images/wod_1.png'" />
     </NuxtLink>
     <div>
@@ -59,12 +60,18 @@ defineEmits<{
         size="sm"
       />
 
-      <Button
-        class="rounded-full p-2!"
-        color="info"
-        icon="ic:baseline-message"
-        size="lg"
-      />
+      <ChatModal
+        :advice="ADVICE"
+        :title="'Диалог с мастером Васей'"
+        :user="{ name: 'Вася', avatar: 'https://github.com/benjamincanac.png' }"
+      >
+        <Button
+          class="rounded-full p-2!"
+          color="info"
+          icon="ic:baseline-message"
+          size="lg"
+        />
+      </ChatModal>
     </div>
   </article>
 </template>
