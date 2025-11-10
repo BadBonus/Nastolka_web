@@ -4,6 +4,7 @@ export type TChatItem = {
   lastTime: Date;
   lastMessage?: string;
   avatar?: string;
+  role?: string;
 };
 
 defineOptions({
@@ -13,15 +14,21 @@ defineOptions({
 defineProps<TChatItem>();
 </script>
 <template>
-  <article class="ChatItem flex items-center justify-between gap-3">
+  <article
+    class="ChatItem bg-primary/10 flex items-center justify-between gap-3 rounded-xl p-1.5"
+  >
     <nuxt-img
       class="size-10 shrink-0 rounded-full border object-cover"
       :src="avatar"
     />
     <div class="w-full truncate">
-      <b class="text-text truncate">
-        {{ title }}
-      </b>
+      <div class="text-text flex items-center gap-1 truncate">
+        <b class="truncate">{{ title }}</b>
+        &middot;
+        <i class="shrink-0 text-xs" v-if="role">
+          {{ role }}
+        </i>
+      </div>
       <span class="text-text-80 block truncate text-xs">{{ lastMessage }}</span>
     </div>
 

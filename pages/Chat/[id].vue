@@ -1,15 +1,11 @@
 <script setup lang="ts">
-// 	 type TDirect = {
-//
-// 	}
-
 defineOptions({
-  name: "ChatDirect",
+  name: "Chat_id",
 });
 </script>
 
 <template>
-  <div class="Direct"></div>
+  <div class="Chat_id">123</div>
 </template>
 
 <!-- <style lang="scss"></style> -->
