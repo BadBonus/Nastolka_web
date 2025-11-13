@@ -22,7 +22,7 @@ defineProps<TChatItem>();
       :src="avatar"
     />
     <div class="w-full truncate">
-      <div class="text-text flex items-center gap-1 truncate">
+      <div class="text-text flex items-center gap-1 truncate text-sm">
         <b class="truncate">{{ title }}</b>
         &middot;
         <i class="shrink-0 text-xs" v-if="role">

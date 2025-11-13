@@ -34,24 +34,35 @@ const demoUsers = [
 <template>
   <section class="Chat_id">
     <header>
-      <NuxtLink to="/chat">
+      <div class="flex justify-between">
         <Button
+          rounded
           onlyIcon
-          icon="material-symbols:keyboard-return-rounded"
-          class="mx-auto"
+          icon="material-symbols:report"
+          color="danger"
         />
-      </NuxtLink>
-      <h1 class="mb-0 text-center text-2xl font-semibold">
+        <NuxtLink to="/chat">
+          <Button
+            onlyIcon
+            icon="material-symbols:keyboard-return-rounded"
+            class="mx-auto"
+          />
+        </NuxtLink>
+      </div>
+
+      <h1 class="mb-0 text-center text-xl font-semibold">
         GM Rah - Bear and Артур Есипов
       </h1>
 
       <PopupUsersList :users="demoUsers">
-        <button class="mx-auto flex items-center text-3xl">
+        <button class="mx-auto flex items-center text-2xl">
           <Icon name="ic:baseline-people-outline" />
-          <span class="text-2xl">:22</span>
+          <span class="text-xl">:22</span>
         </button>
       </PopupUsersList>
     </header>
+
+    <ChatWindow />
   </section>
 </template>
 

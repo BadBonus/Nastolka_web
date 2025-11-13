@@ -56,7 +56,7 @@
   --color-text-inverted: var(--color-white);
   --color-inverted-hover: var(--color-neutral-light);
   --color-text-secondary: var(--color-brown);
-  --color-shadow: oklch(0.3329 0 0 / 55%);
+  --color-shadow: oklch(0.3329 0 0 / 30%);
   --color-border: var(--color-neutral-medium);
   /* --color-focus-state: var(--color-secondary-hover); */
   --color-focus-state: var(--color-brown);
@@ -76,7 +76,7 @@
 
   /* Почему-то переменные некореектно работают будучи 4ым значением цвета тени */
   --shadow-box-text: 1px 1px 0px oklch(0.3329 0 0 / 55%);
-  --shadow-box-elements: 2px 2px 0px oklch(0.3329 0 0 / 55%);
+  --shadow-box-elements: 2px 2px 0px oklch(0.3329 0 0 / 20%);
 
   /* Новая цветовая гамма - end*/
 
@@ -102,4 +102,5 @@
   --text-base--line-height: "initial";
   --ui-bg-elevated: var(--color-dark-brown);
   --ui-text-highlighted: var(--color-dark-brown);
+  --ui-bg-accented: var(--color-brown);
 }
