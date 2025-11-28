@@ -33,8 +33,8 @@ const demodata = [
   <section class="GmPage">
     <g-m-filter-sort-panel />
     <ul class="mt-4 flex flex-col gap-2.5">
-      <li v-for="item in demodata" :link="`/gm/${item.link}`" :key="item.id">
-        <gm-card v-bind="item" />
+      <li v-for="item in demodata" :key="item.id">
+        <gm-card v-bind="item" :link="`/gm/${item.link}`" />
       </li>
     </ul>
   </section>
