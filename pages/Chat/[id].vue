@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { input } from "#build/ui";
+import type { TModalsDialog } from "@/components/globals/modals/Dialog.client.vue";
+
 defineOptions({
   name: "Chat_id",
 });
@@ -29,18 +32,43 @@ const demoUsers = [
     slug: "blablabl6a",
   },
 ];
+
+const reportDialogOpts: TModalsDialog = {
+  title: "Пожаловаться",
+  descr: "Через эту форму вы можете передать жалобу на гейм-мастера",
+  actionText: "Отправить",
+};
+
+const state = reactive({
+  text: undefined,
+});
+
+const onSubmit = () => {
+  // TODO: логика отправки жалобы на сервер
+  console.log("запрос отправлен");
+};
 </script>
 
 <template>
   <section class="Chat_id">
     <header>
       <div class="flex justify-between">
-        <Button
-          rounded
-          onlyIcon
-          icon="material-symbols:report"
-          color="danger"
-        />
+        <ModalsDialog v-bind="reportDialogOpts">
+          <Button
+            rounded
+            onlyIcon
+            icon="material-symbols:report"
+            color="danger"
+          />
+
+          <template #inContent>
+            <UForm :state="state" class="space-y-4" @submit="onSubmit">
+              <UFormField name="text">
+                <UInput class="w-full" v-model="state.text" type="text" />
+              </UFormField>
+            </UForm>
+          </template>
+        </ModalsDialog>
         <NuxtLink to="/chat">
           <Button
             onlyIcon
