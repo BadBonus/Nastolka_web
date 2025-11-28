@@ -7,6 +7,9 @@ defineOptions({
 });
 
 const model = defineModel<TDataAvaCalendar>();
+defineProps<{
+  blocked?: boolean;
+}>();
 
 const addTiming = (day: EDays, timePeriod: ETimePeriods) => {
   const initValue = model.value ? { ...model.value } : {};
@@ -61,12 +64,13 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
         >
           <button
             type="button"
-            @click="() => addTiming(day.id, tp.id)"
+            @click="() => !blocked && addTiming(day.id, tp.id)"
             class="AvailibilityCalendar__button"
             v-for="day in daysConfig"
             :key="day.id"
             :class="{
               active: isSlotActive(day.id, tp.id),
+              'pointer-events-none': blocked,
             }"
           ></button>
         </li>
