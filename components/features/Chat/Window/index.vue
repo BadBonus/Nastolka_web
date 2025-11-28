@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Message from "./Message.vue";
+import InputForm from "./InputForm.vue";
 
 // 	 type TChatWindow = {
 
@@ -134,7 +135,7 @@ const demoMessages = [
 </script>
 <template>
   <section
-    class="shadow-element ChatWindow border-border h-[100%] rounded border-2 bg-white"
+    class="shadow-element ChatWindow border-border h-[100%] rounded border-2 bg-white pb-2"
   >
     <ScrollArea class="h-150 border-none p-0">
       <ul class="flex flex-col gap-3">
@@ -149,6 +150,7 @@ const demoMessages = [
         <li v-for="m in demoMessages" :key="m.id"><Message v-bind="m" /></li>
       </ul>
     </ScrollArea>
+    <InputForm class="mx-auto mt-4 block w-[90%]" />
   </section>
 </template>
 
