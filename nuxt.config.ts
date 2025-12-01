@@ -6,6 +6,11 @@ export default defineNuxtConfig({
     baseURL: '/Nastolka_web/',
     buildAssetsDir: 'assets',
   },
+  nitro: {
+    prerender: {
+      failOnError: false,
+    }
+  },
   compatibilityDate: '2024-11-01',
   devtools: {enabled: true},
   modules: [

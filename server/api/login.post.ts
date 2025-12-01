@@ -12,9 +12,9 @@ export default defineEventHandler(async (event) => {
   // set the user session in the cookie
   // this server util is auto-imported by the auth-utils module
   const demo_bearer = '1234567890987'
-  await setUserSession(event, {
-    token: demo_bearer
-  });
+  // await setUserSession(event, {
+  //   token: demo_bearer
+  // });
   return {
     name: 'John Doe',
     email: "test@gmail.com",
