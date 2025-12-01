@@ -40,7 +40,7 @@ const reportDialogOpts: TModalsDialog = {
 };
 
 const state = reactive({
-  text: undefined,
+  text: "",
 });
 
 const onSubmit = () => {
@@ -64,7 +64,11 @@ const onSubmit = () => {
           <template #inContent>
             <UForm :state="state" class="space-y-4" @submit="onSubmit">
               <UFormField name="text">
-                <UInput class="w-full" v-model="state.text" type="text" />
+                <UInput
+                  class="w-full"
+                  v-model="state.text as string"
+                  type="text"
+                />
               </UFormField>
             </UForm>
           </template>

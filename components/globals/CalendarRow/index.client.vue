@@ -72,9 +72,9 @@ watch(choosedDate, (newD) => {
 
 <template>
   <div class="CalendarRow max-w-[360px]">
-    <MonthYear v-model="choosedDate as Date" />
+    <MonthYear v-model="choosedDate" />
     <ItemsPickSelector
-      @changeViaArrow="changeWeek"
+      @change-via-arrow="changeWeek"
       @change="changeDate"
       :items="days"
       class="mt-4"

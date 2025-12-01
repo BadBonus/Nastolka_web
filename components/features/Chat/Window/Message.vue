@@ -66,7 +66,7 @@ const styles = computed(() => {
         {{ props.message }}
       </div>
     </div>
-    <NuxtLink :to="'/profile/' + props.user.slug">
+    <NuxtLink :to="'/user/' + props.user.slug">
       <u-avatar
         :class="styles.avatar"
         class="absolute bottom-0 size-6"

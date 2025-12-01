@@ -11,7 +11,7 @@ const tabs = [
   { value: "events", name: "События" },
 ];
 
-const currentTab = ref<string>(tabs[0].value);
+const currentTab = ref<string>("direct");
 
 const messages = demoArrayOfInitMessages;
 
@@ -21,7 +21,7 @@ const messages = demoArrayOfInitMessages;
 <template>
   <section class="Index">
     <header>
-      <Tabs v-model="currentTab as string" class="text-center" :tabs="tabs" />
+      <Tabs v-model="currentTab" class="text-center" :tabs="tabs" />
     </header>
     <section class="mt-5">
       <ul class="flex flex-col gap-2.5">
