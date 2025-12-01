@@ -2,6 +2,10 @@ import tailwindcss from "@tailwindcss/vite";
 import Inspect from 'vite-plugin-inspect';
 
 export default defineNuxtConfig({
+  app: {
+    baseURL: '/Nastolka_web/',
+    buildAssetsDir: 'assets',
+  },
   compatibilityDate: '2024-11-01',
   devtools: {enabled: true},
   modules: [
