@@ -30,6 +30,14 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module'
   ],
 
+  icon: {
+    serverBundle: false,
+    clientBundle: {
+      scan: true,
+      sizeLimitKb: 256,
+    },
+  },
+
   vite: {
     plugins: [
       tailwindcss(),
