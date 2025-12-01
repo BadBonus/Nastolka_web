@@ -21,6 +21,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./.output/public
+        env:
+          NUXT_SESSION_PASSWORD: "12345678901234567890123456789012"
   # Deployment job
   deploy:
     # Add a dependency to the build job

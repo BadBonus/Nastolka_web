@@ -8,7 +8,7 @@ defineOptions({
 </script>
 <template>
   <div class="GameGM">
-    <ProfileHeader :link="`/gm/${'demo_link'}`">
+    <ProfileHeader :link="`/gm/123`">
       <template #topPart>
         <Button
           class="absolute top-3 right-3 z-10 rounded-full p-2!"
