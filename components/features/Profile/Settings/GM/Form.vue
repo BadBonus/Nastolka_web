@@ -44,7 +44,7 @@ const state = reactive<TSettingsGMForm>({
 });
 
 const validate = (state: any): FormError[] => {
-  const errors = [];
+  const errors: FormError<string>[] = [];
   // if (!state.name) errors.push({ name: "email", message: "Required" });
   // if (!state.password) errors.push({ name: "password", message: "Required" });
   return errors;

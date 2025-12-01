@@ -33,9 +33,7 @@ const items = ref<NavigationMenuItem[]>([
 </script>
 <template>
   <div>
-    <h2 class="text-highlighted font-main mb-3 text-4xl font-bold">
-      Навигация
-    </h2>
+    <h2 class="font-main mb-3 text-4xl font-bold text-white">Навигация</h2>
 
     <nav class="MainNavigation">
       <UNavigationMenu

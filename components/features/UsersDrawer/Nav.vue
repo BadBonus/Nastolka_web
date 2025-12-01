@@ -29,9 +29,9 @@ const items = ref<NavigationMenuItem[]>([
     to: "/becomegm",
   },
   {
-    label: "Настройки профиля",
-    icon: "material-symbols-light-settings-outline-rounded",
-    to: "/settings",
+    label: "Стать гм-ом",
+    icon: "arcticons:dice-1",
+    to: "/becomegm",
   },
   {
     label: "Выйти из аккаунта",

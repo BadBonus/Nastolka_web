@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
 import {
@@ -17,7 +16,7 @@ type TSettingsDetailsForm = {
   fio: string;
   timezone: string;
   email: string;
-  about: string | number;
+  gameStyle: string | number;
   availableDays: TDataAvaCalendar;
   // tabletop_exp_age: EExpYears;
   gm_style?: string;
@@ -25,7 +24,7 @@ type TSettingsDetailsForm = {
 };
 
 defineOptions({
-  name: "SettingsDetailsForm",
+  name: "PagesBecomegm",
 });
 
 const state = reactive<TSettingsDetailsForm>({
@@ -33,7 +32,7 @@ const state = reactive<TSettingsDetailsForm>({
   fio: "",
   timezone: "",
   email: "",
-  about: "",
+  gameStyle: "",
   availableDays: null,
   // tabletop_exp_age: EExpYears.less,
   gm_style: "",
@@ -41,7 +40,7 @@ const state = reactive<TSettingsDetailsForm>({
 });
 
 const validate = (state: any): FormError[] => {
-  const errors: FormError[] = [];
+  const errors = [];
   // if (!state.name) errors.push({ name: "email", message: "Required" });
   // if (!state.password) errors.push({ name: "password", message: "Required" });
   return errors;
@@ -57,6 +56,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   console.log(event.data);
 }
 </script>
+
 <template>
   <UForm
     :validate="validate"
@@ -64,13 +64,9 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     class="w-full space-y-4"
     @submit="onSubmit"
   >
-    <div class="flex gap-4">
-      <UFormField label="Ник" name="nickname">
+    <div class="flex">
+      <UFormField class="w-full" label="Ник" name="nickname">
         <UInput class="w-full" type="text" v-model="state.nickname" />
-      </UFormField>
-
-      <UFormField label="ФИО" name="fio">
-        <UInput class="w-full" v-model="state.fio" type="text" />
       </UFormField>
     </div>
 
@@ -83,23 +79,9 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
       />
     </u-form-field>
 
-    <div class="flex items-end gap-4">
-      <UFormField label="Email" name="email">
-        <UInput class="w-full" v-model="state.email" type="text" />
-      </UFormField>
-
-      <PopupDatePicker />
-    </div>
-    <UFormField label="О себе" name="about">
-      <UTextarea class="w-full" v-model="state.about" />
+    <UFormField label="Как вы проводите игры?" name="gameStyle">
+      <UTextarea class="w-full" v-model="state.gameStyle" />
     </UFormField>
-
-    <div>
-      <span class="mb-3 block text-center text-xl">
-        Доступное время для игр
-      </span>
-      <AvailibilityCalendar v-model="state.availableDays" />
-    </div>
 
     <SocLinksInput v-model="state.social_links" />
 
@@ -107,4 +89,4 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   </UForm>
 </template>
 
-<!--<style lang="scss"></style>-->
+<!-- <style lang="scss"></style> -->
