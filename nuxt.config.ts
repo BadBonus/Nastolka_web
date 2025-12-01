@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     'nuxt-svgo',
     'reka-ui/nuxt',
     // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
-    'nuxt-auth-utils',
+    // 'nuxt-auth-utils',
     '@nuxtjs/fontaine',
     '@nuxt/ui',
     '@nuxt/test-utils/module'
