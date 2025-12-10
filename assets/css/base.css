@@ -18,4 +18,9 @@
     cursor: pointer;
     /* color: var(--color-link); */
   }
+
+  body {
+    background-repeat: repeat;
+    background-image: url("/images/bg_decors/stena.webp");
+  }
 }
