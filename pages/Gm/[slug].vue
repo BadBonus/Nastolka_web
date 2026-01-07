@@ -14,10 +14,11 @@ const demoTags = ref<string[]>(["test"]);
     <GMProfileBasicInfo class="mt-1.5" />
     <section>
       <h2 class="text-center text-xl font-semibold">Оценка и отзывы</h2>
-      <div
-        class="my-2 flex items-center justify-center gap-1.5 text-xl font-semibold"
-      >
-        <Star />
+      <div class="my-2 flex items-center justify-center gap-1.5 text-xl">
+        <Icon
+          class="text-3xl"
+          name="material-symbols-light:star-shine-outline-rounded"
+        />
         <!-- <Icon class="text-amber-300" name="material-symbols:star" /> -->
         <span> 5.0 (29) </span>
       </div>

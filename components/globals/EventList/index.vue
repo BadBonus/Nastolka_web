@@ -11,15 +11,18 @@ defineOptions({
 defineProps<TEventListIndex>();
 </script>
 <template>
-  <ul class="EventList flex flex-col gap-3">
-    <li v-for="event in items" :key="event.id">
-      <NuxtLink :to="'/game' + event.link">
-        <article>
-          <Event v-bind="event" />
-        </article>
-      </NuxtLink>
-    </li>
-  </ul>
+  <!-- FIXME: потом избавиться от clientOnly -->
+  <ClientOnly>
+    <ul class="EventList flex flex-col gap-3">
+      <li v-for="event in items" :key="event.id">
+        <NuxtLink :to="'/game' + '/' + event.link">
+          <article>
+            <Event v-bind="event" />
+          </article>
+        </NuxtLink>
+      </li>
+    </ul>
+  </ClientOnly>
 </template>
 
 <!--<style lang="scss"></style>-->

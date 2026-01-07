@@ -10,7 +10,7 @@ const authStore = useAuthStore();
 </script>
 <template>
   <header
-    class="MainHeader bg-bg-header border-b-brown relative h-16 border-b-4 px-4"
+    class="MainHeader bg-bg-header border-b-brown relative z-10 h-16 border-b-4 px-4"
   >
     <div class="MainHeader__decore"></div>
     <div class="relative z-10 flex h-full w-full items-center justify-between">

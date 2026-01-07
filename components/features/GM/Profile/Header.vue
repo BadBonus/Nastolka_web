@@ -9,7 +9,7 @@ defineOptions({
   <header class="ProfileHeader">
     <div class="relative">
       <NuxtImg
-        class="h-35 w-full rounded-lg object-cover"
+        class="border-border h-35 w-full rounded-md border-2 object-cover"
         src="images/wod_1.png"
       />
       <NuxtImg

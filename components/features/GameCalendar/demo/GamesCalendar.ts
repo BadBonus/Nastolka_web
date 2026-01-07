@@ -6,7 +6,7 @@ export const organizers = [
     id: 'Tech Innovators Inc.',
     name: 'Tech Innovators Inc.',
     ava: 'https://github.com/benjamincanac.png',
-    link: '/organizers/tech-innovators',
+    link: 'organizers/tech-innovators',
     rating: {
       count: 100,
       value: 4.8,
@@ -16,7 +16,7 @@ export const organizers = [
     id: 'Artistic Minds Studio',
     name: 'Artistic Minds Studio',
     ava: 'https://github.com/benjamincanac.png',
-    link: '/organizers/artistic-minds',
+    link: 'organizers/artistic-minds',
     rating: {
       count: 100,
       value: 4.8,
@@ -26,7 +26,7 @@ export const organizers = [
     id: 'Green Thumb Community',
     name: 'Green Thumb Community',
     ava: 'https://github.com/benjamincanac.png',
-    link: '/organizers/green-thumb',
+    link: 'organizers/green-thumb',
     rating: {
       count: 100,
       value: 4.8,
@@ -36,7 +36,7 @@ export const organizers = [
     id: 'Fitness Fanatics Club',
     name: 'Fitness Fanatics Club',
     ava: 'https://github.com/benjamincanac.png',
-    link: '/organizers/fitness-fanatics',
+    link: 'organizers/fitness-fanatics',
     rating: {
       count: 100,
       value: 4.8,
@@ -58,7 +58,7 @@ export const events = [
     currentUsers: 75,
     cost: '€199',
     time: '2025-08-10 09:00',
-    link: '/techInnovators',
+    link: 'techInnovators',
     org: techInnovators,
   },
   {
@@ -68,7 +68,7 @@ export const events = [
     currentUsers: 40,
     cost: '€250',
     time: '2025-08-15 14:00',
-    link: '/techInnovators',
+    link: 'techInnovators',
     org: techInnovators,
   },
   {
@@ -77,7 +77,7 @@ export const events = [
     currentUsers: 30,
     cost: 'Free',
     time: '2025-08-20 18:00',
-    link: '/techInnovators',
+    link: 'techInnovators',
     org: techInnovators,
   },
   {
@@ -88,7 +88,7 @@ export const events = [
     currentUsers: 60,
     cost: '€150',
     time: '2025-08-25 10:00',
-    link: '/techInnovators',
+    link: 'techInnovators',
     org: techInnovators,
   },
   {
@@ -97,7 +97,7 @@ export const events = [
     currentUsers: 25,
     cost: '€99',
     time: '2025-09-01 11:00',
-    link: '/techInnovators',
+    link: 'techInnovators',
     org: techInnovators,
   },
   {
@@ -108,7 +108,7 @@ export const events = [
     currentUsers: 28,
     cost: '€120',
     time: '2025-09-05 09:00',
-    link: '/artisticMinds',
+    link: 'artisticMinds',
     org: artisticMinds,
   },
   {
@@ -118,7 +118,7 @@ export const events = [
     currentUsers: 15,
     cost: '€80',
     time: '2025-09-10 17:00',
-    link: '/artisticMinds',
+    link: 'artisticMinds',
     org: artisticMinds,
   },
   {
@@ -127,7 +127,7 @@ export const events = [
     currentUsers: 10,
     cost: '€70',
     time: '2025-09-12 19:00',
-    link: '/artisticMinds',
+    link: 'artisticMinds',
     org: artisticMinds,
   },
   {
@@ -138,7 +138,7 @@ export const events = [
     currentUsers: 20,
     cost: '€110',
     time: '2025-09-18 10:00',
-    link: '/artisticMinds',
+    link: 'artisticMinds',
     org: artisticMinds,
   },
   {
@@ -147,7 +147,7 @@ export const events = [
     currentUsers: 8,
     cost: '€90',
     time: '2025-09-22 14:00',
-    link: '/artisticMinds',
+    link: 'artisticMinds',
     org: artisticMinds,
   },
   {
@@ -158,7 +158,7 @@ export const events = [
     currentUsers: 35,
     cost: 'Free',
     time: '2025-10-01 16:00',
-    link: '/greenThumb',
+    link: 'greenThumb',
     org: greenThumb,
   },
   {
@@ -167,7 +167,7 @@ export const events = [
     currentUsers: 20,
     cost: 'Free',
     time: '2025-10-05 11:00',
-    link: '/greenThumb',
+    link: 'greenThumb',
     org: greenThumb,
   },
   {
@@ -177,7 +177,7 @@ export const events = [
     currentUsers: 180,
     cost: 'Free',
     time: '2025-10-10 09:00',
-    link: '/greenThumb',
+    link: 'greenThumb',
     org: greenThumb,
   },
   {
@@ -187,7 +187,7 @@ export const events = [
     currentUsers: 50,
     cost: '€50',
     time: '2025-10-15 13:00',
-    link: '/greenThumb',
+    link: 'greenThumb',
     org: greenThumb,
   },
   {
@@ -197,7 +197,7 @@ export const events = [
     currentUsers: 12,
     cost: '€75',
     time: '2025-10-20 18:00',
-    link: '/greenThumb',
+    link: 'greenThumb',
     org: greenThumb,
   },
   {
@@ -208,7 +208,7 @@ export const events = [
     currentUsers: 18,
     cost: '€20',
     time: '2025-11-01 08:00',
-    link: '/fitnessFanatics',
+    link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
   {
@@ -217,7 +217,7 @@ export const events = [
     currentUsers: 25,
     cost: '€15',
     time: '2025-11-05 19:00',
-    link: '/fitnessFanatics',
+    link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
   {
@@ -227,7 +227,7 @@ export const events = [
     currentUsers: 22,
     cost: '€100',
     time: '2025-11-10 07:00',
-    link: '/fitnessFanatics',
+    link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
   {
@@ -237,7 +237,7 @@ export const events = [
     currentUsers: 15,
     cost: '€60',
     time: '2025-11-15 16:00',
-    link: '/fitnessFanatics',
+    link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
   {
@@ -247,7 +247,7 @@ export const events = [
     currentUsers: 10,
     cost: '€25',
     time: '2025-11-20 12:00',
-    link: '/fitnessFanatics',
+    link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
 ] as TGamesCalendarEvent[];

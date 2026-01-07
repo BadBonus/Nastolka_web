@@ -30,7 +30,7 @@
   box-shadow: var(--shadow-box-text);
 }
 @utility shadow-button {
-  box-shadow: 2px 2px 0 var(--color-shadow);
+  box-shadow: 2px 2px 2px oklch(0.1504 0.0251 124.13 / 30%);
 }
 
 @utility canEditWrapper {

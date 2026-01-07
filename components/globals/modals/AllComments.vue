@@ -30,7 +30,10 @@ defineProps<TModalsAllComments>();
         src="/images/ava.jpg"
       />
       <div class="rating mb-2">
-        <Star />
+        <Icon
+          class="text-2xl"
+          name="material-symbols-light:star-shine-outline-rounded"
+        />
         <span> 5.0 (29) </span>
       </div>
       <ProfileStats :skills="skillItems.gamemaster" />

@@ -33,22 +33,28 @@ const formatDate = (date: Date | string): string | undefined => {
 </script>
 <template>
   <UCard
-    class="bg-elements-surface border-dark-brown shadow-element text-text border-2 p-1"
+    class="shadow-element text-text relative border-2 border-[text] bg-[#f5e8d1] p-1"
     variant="outline"
   >
+    <nuxt-img
+      class="absolute top-0 left-0 z-0 h-full w-full opacity-30"
+      src="images/bg_decors/kraftPaper.webp"
+    />
     <template #header>
-      <span class="block text-center text-xl">
-        {{ name }}
-      </span>
-      <span
-        v-if="addInfo"
-        class="text-bla block text-center text-sm font-bold italic"
-      >
-        {{ addInfo }}
-      </span>
+      <div class="relative z-10">
+        <span class="block text-center text-xl font-bold">
+          {{ name }}
+        </span>
+        <span
+          v-if="addInfo"
+          class="text-bla block text-center text-sm font-bold italic"
+        >
+          {{ addInfo }}
+        </span>
+      </div>
     </template>
 
-    <div class="relative flex justify-between">
+    <div class="relative z-10 flex justify-between">
       <div class="flex items-center gap-1">
         <Icon name="lucide:users-round" />
         <span>{{ currentUsers }}{{ maxUsers ? "/" : "" }}{{ maxUsers }}</span>
@@ -69,25 +75,28 @@ const formatDate = (date: Date | string): string | undefined => {
     </div>
 
     <template #footer>
-      <NuxtLink
-        :to="'/gm/' + org.link"
-        class="flex items-center justify-between"
-      >
-        <div class="-truncate text-text flex items-center gap-1 pr-1">
-          <UAvatar src="/images/wod_1.png" class="border-secondary border-2" />
-          <span class="-truncate ml-1 inline-block font-semibold">{{
-            org.name
-          }}</span>
-        </div>
-        <div class="text-text flex items-center gap-1">
-          <Icon
-            class="text-xl text-amber-300"
-            name="material-symbols:star-rate"
-          />
-          <span class="font-bold">{{ org.rating.value }}</span>
-          <span class="inline-block">({{ org.rating.count }})</span>
-        </div>
-      </NuxtLink>
+      <div class="relative z-10">
+        <NuxtLink
+          :to="'/gm/' + org.link"
+          class="flex items-center justify-between"
+        >
+          <div class="-truncate text-text flex items-center gap-1 pr-1">
+            <UAvatar
+              src="/images/wod_1.png"
+              class="border-secondary rounded-xs border-2"
+            />
+            <span class="-truncate ml-1 inline-block">{{ org.name }}</span>
+          </div>
+          <div class="text-text flex items-center gap-1">
+            <Icon
+              class="text-2xl"
+              name="material-symbols-light:star-shine-outline-rounded"
+            />
+            <span class="font-bold">{{ org.rating.value }}</span>
+            <span class="inline-block">({{ org.rating.count }})</span>
+          </div>
+        </NuxtLink>
+      </div>
     </template>
   </UCard>
 </template>

@@ -25,8 +25,11 @@ defineOptions({
       <div>
         <span class="font-bold">{{ name }}</span>
         <div class="flex items-center gap-1">
-          <Star />
-          <span class="font-semibold">{{ rating.toFixed(1) }}</span>
+          <Icon
+            class="text-2xl"
+            name="material-symbols-light:star-shine-outline-rounded"
+          />
+          <span>{{ rating.toFixed(1) }}</span>
         </div>
       </div>
     </div>

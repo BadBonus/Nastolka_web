@@ -57,9 +57,9 @@ export default defineAppConfig({
     },
     card: {
       slots: {
-        root: 'rounded-lg overflow-hidden',
-        header: 'p-2 sm:p-1',
-        body: 'p-3 sm:py-2 sm:px-1',
+        root: 'overflow-hidden',
+        header: 'p-2 sm:p-1 border-text border-b-2',
+        body: 'p-3 sm:py-2 sm:px-1 border-text border-b-2',
         footer: 'p-2 sm:p-1'
       },
 

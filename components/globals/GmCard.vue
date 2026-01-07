@@ -36,10 +36,11 @@ defineEmits<{
     <div>
       <span class="block text-xl">{{ name }}</span>
       <div class="flex flex-col items-start gap-1">
-        <div
-          class="flex items-center justify-center gap-1.5 text-sm font-semibold"
-        >
-          <Star />
+        <div class="flex items-center justify-center gap-1.5 text-sm">
+          <Icon
+            class="text-2xl"
+            name="material-symbols-light:star-shine-outline-rounded"
+          />
           <span> {{ rating?.value }} ({{ rating?.count }}) </span>
         </div>
 

@@ -22,7 +22,7 @@ const props = defineProps<TSocLinks>();
 </script>
 
 <template>
-  <ul class="border-brown flex w-fit items-center gap-5 rounded border-2 p-1.5">
+  <ul class="border-text flex w-fit items-center gap-5 rounded border-2 p-1.5">
     <li v-for="link in data" :key="link.name" class="h-8 text-3xl">
       <nuxt-link><Icon :name="iconsOfSoc[link.name]" /></nuxt-link>
     </li>

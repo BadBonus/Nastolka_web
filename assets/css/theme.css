@@ -17,6 +17,7 @@
   --color-red: oklch(0.5555 0.1429 26.42);
   --color-red-hover: oklch(71% 0.05 45);
   --color-neutral-dark: oklch(0.3132 0 0);
+  --color-neutral-dark-soft: oklch(0.3132 0 0 / 95%);
   --color-neutral-dark-hover: oklch(0.6128 0 0);
   --color-brown: oklch(0.5114 0.0833 55.39);
   --color-brown-hover: oklch(0.5875 0.0833 55.39);
@@ -46,18 +47,19 @@
   --color-info: var(--color-blue);
   --color-info-hover: var(--color-blue-hover);
 
-  --color-border: var(--color-neutral-dark);
+  --color-border: var(--color-neutral-dark-soft);
   --color-text-secondary: var(--color-brown);
   --color-text-primary: var(--color-neutral-dark);
   --color-text-primary-inverted: var(--color-white);
   --color-primary-background: oklch(0.9151 0.006 5);
+  --color-primary-background-2: #e8d19f4a;
   --color-elements-surface: var(--color-white);
   --color-text: var(--color-neutral-dark);
+  --color-text-2: #090d03;
   --color-text-inverted: var(--color-white);
   --color-inverted-hover: var(--color-neutral-light);
   --color-text-secondary: var(--color-brown);
   --color-shadow: oklch(0.3329 0 0 / 30%);
-  --color-border: var(--color-neutral-medium);
   /* --color-focus-state: var(--color-secondary-hover); */
   --color-focus-state: var(--color-brown);
   --color-bg-footer: var(--color-dark-brown);
@@ -75,8 +77,8 @@
   --color-link-visited: var(--color-blue-600);
 
   /* Почему-то переменные некореектно работают будучи 4ым значением цвета тени */
-  --shadow-box-text: 1px 1px 0px oklch(0.3329 0 0 / 55%);
-  --shadow-box-elements: 2px 2px 0px oklch(0.3329 0 0 / 20%);
+  --shadow-box-text: 1px 1px 4px oklch(0.3329 0 0 / 55%);
+  --shadow-box-elements: 2px 2px 2px oklch(0.1504 0.0251 124.13 / 30%);
 
   /* Новая цветовая гамма - end*/
 
@@ -85,7 +87,7 @@
   --color-bg-secondary: oklch(0.3126 0.014 211.12 / 70%);
 
   /* NUXT_UI_VARS */
-  --ui-bg: var(--color-primary-background);
+  --ui-bg: var(--color-primary-background-2);
   --ui-secondary: var(--color-secondary);
   --ui-success: var(--color-success);
   --ui-primary: var(--color-primary);
@@ -94,11 +96,11 @@
   --ui-error: var(--color-error);
   --ui-primary: var(--color-elements-surface);
 
-  --ui-text: var(--color-text);
+  --ui-text: var(--color-text-2);
   --ui-text-inverted: var(--color-white);
   --tw-ring-color: var(--color-border);
   --ui-border: var(--color-border);
-  --ui-text-dimmed: var(--color-text);
+  --ui-text-dimmed: var(--color-text-2);
   --text-base--line-height: "initial";
   --ui-bg-elevated: var(--color-dark-brown);
   --ui-text-highlighted: var(--color-dark-brown);

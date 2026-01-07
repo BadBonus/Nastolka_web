@@ -11,12 +11,12 @@ defineOptions({
 <template>
   <section>
     <section class="ProfileBasicInfo flex justify-between gap-1">
-      <div class="flex gap-1">
-        <div
-          class="Star bg-secondary flex h-fit w-fit items-center justify-center rounded-full p-0.5"
-        >
-          <Star />
-        </div>
+      <div class="flex items-center gap-1">
+        <Icon
+          class="text-2xl"
+          name="material-symbols-light:star-shine-outline-rounded"
+        />
+
         <span class="text-base"> 5.0 (29) </span>
       </div>
       <div class="flex items-center gap-1 text-lg">
