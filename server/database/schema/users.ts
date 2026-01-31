@@ -6,12 +6,11 @@ import type {TSoclinksObject, TGameHistory} from "~/shared/types/global";
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
-  fullName: text('full_name').notNull(),
+  fullName: text('full_name'),
   nickname: text('nickname').notNull(),
   email: text('email').notNull().unique(),
   description: text('description'),
   birthdate: timestamp('birthdate', {mode: 'date'}),
-  createdAt: timestamp('created_at').defaultNow(),
   slug: varchar('slug', {length: 256}).notNull().unique(),
   avatar: text('avatar_url'),
   gamemaster: jsonb('gamemaster').default(null),
@@ -25,8 +24,4 @@ export const users = pgTable('users', {
 });
 
 // Тип для чтения пользователя (то, что возвращает SELECT)
-export type User = typeof users.$inferSelect;
-
-// Тип для создания пользователя (то, что нужно для INSERT)
-// Drizzle поймет, что 'id' и 'createdAt' можно не указывать, так как они генерируются базой
-export type NewUser = typeof users.$inferInsert;
+export type TUser = typeof users.$inferSelect;
