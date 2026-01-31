@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TGamesCalendarEvent } from "@/types/GamesCalendar";
+import type { TGamesCalendarEvent } from "~/shared/types/gamesCalendar";
 defineProps<TGamesCalendarEvent>();
 
 defineOptions({

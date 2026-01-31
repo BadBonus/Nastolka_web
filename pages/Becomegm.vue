@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
-import {
-  EDays,
-  type TDataAvaCalendar,
-} from "@/components/globals/AvailibilityCalendar/types";
-import type { TSoclinksObject } from "~/types/global";
+import { EDays, type TDataAvaCalendar } from "@/shared/types/gameShedule";
+import type { TSoclinksObject } from "~/shared/types/global";
 import { initSocLinks } from "~/utils/soclinks";
 // 	 type TSettingsDetailsForm = {
 

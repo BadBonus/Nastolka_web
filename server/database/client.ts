@@ -1,6 +1,6 @@
 import {drizzle} from 'drizzle-orm/node-postgres';
 import pg from 'pg';
-import * as schema from '../../database/schema';
+import * as schema from '~/server/database/schema';
 
 // Создаем пул соединений
 const pool = new pg.Pool({

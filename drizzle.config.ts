@@ -1,7 +1,7 @@
 import {defineConfig} from 'drizzle-kit';
 
 export default defineConfig({
-  schema: './server/database/schema.ts', // Где лежат описания таблиц
+  schema: './server/database/schema/index.ts', // Где лежат описания таблиц
   out: './server/database/migrations',   // Куда сохранять историю изменений
   dialect: 'postgresql',
   dbCredentials: {

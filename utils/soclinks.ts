@@ -1,5 +1,5 @@
 import {ESocLinks} from "~/shared/socLinks";
-import type {TSoclinksObject} from "~/types/global";
+import type {TSoclinksObject} from "~/shared/types/global";
 
 
 

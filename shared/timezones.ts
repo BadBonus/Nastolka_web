@@ -1,4 +1,14 @@
-export const popularTimezones = [
+export type TTimezone_custom = {
+  name: string;
+  offset: string;
+  longName: string;
+  label: string;
+};
+
+export const ALL_TIMEZONES = Intl.supportedValuesOf('timeZone');
+export type TTimezone = typeof ALL_TIMEZONES[number];
+
+export const popularTimezones: TTimezone_custom[] = [
   {
     label: "(GMT-11:00) Coordinated Universal Time-11",
     longName: "Coordinated Universal Time-11",
@@ -149,9 +159,4 @@ export const popularTimezones = [
     name: "Pacific/Auckland",
     offset: "UTC+12:00",
   },
-] as {
-  name: string;
-  offset: string;
-  longName: string;
-  label: string;
-}[];
+];

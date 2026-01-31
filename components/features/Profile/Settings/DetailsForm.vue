@@ -2,12 +2,9 @@
 // import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
-import {
-  EDays,
-  type TDataAvaCalendar,
-} from "@/components/globals/AvailibilityCalendar/types";
-import type { TSoclinksObject } from "~/types/global";
-import { initSocLinks } from "~/utils/soclinks";
+import { EDays, type TDataAvaCalendar } from "@/shared/types/gameShedule";
+import type { TSoclinksObject } from "~/shared/types/global";
+import { initSocLinks } from "~/utils/soclinks.ts";
 // 	 type TSettingsDetailsForm = {
 
 // 	}

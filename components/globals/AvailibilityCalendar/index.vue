@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { daysConfig, timePeriodsConfig } from "./utils";
-import { EDays, ETimePeriods, type TDataAvaCalendar } from "./types";
+import {
+  EDays,
+  ETimePeriods,
+  type TDataAvaCalendar,
+} from "@/shared/types/gameShedule";
 
 defineOptions({
   name: "AvailibilityCalendar",

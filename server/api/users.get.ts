@@ -1,4 +1,4 @@
-import {db} from "./utils/db";
+import {db} from "@/server/database/client";
 
 export default defineEventHandler(async (event) => {
   try {

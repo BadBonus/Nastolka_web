@@ -1,4 +1,4 @@
-import {EDays, ETimePeriods} from "./types";
+import {EDays, ETimePeriods} from "@/shared/types/gameShedule";
 
 export const daysConfig = [
   {id: EDays.monday, shortName: "Пн"},
