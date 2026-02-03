@@ -2,7 +2,7 @@
 // import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
 import { popularTimezones } from "~/shared/timezones";
-import { EDays, type TDataAvaCalendar } from "@/shared/types/gameShedule";
+import type { TDataAvaCalendar } from "@/shared/types/gameShedule";
 import type { TSoclinksObject } from "~/shared/types/global";
 import { initSocLinks } from "~/utils/soclinks.ts";
 // 	 type TSettingsDetailsForm = {
@@ -63,11 +63,11 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   >
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
-        <UInput class="w-full" type="text" v-model="state.nickname" />
+        <UInput class="w-full" type="text" v-model="state.nickname as string" />
       </UFormField>
 
       <UFormField label="ФИО" name="fio">
-        <UInput class="w-full" v-model="state.fio" type="text" />
+        <UInput class="w-full" v-model="state.fio as string" type="text" />
       </UFormField>
     </div>
 
@@ -82,7 +82,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 
     <div class="flex items-end gap-4">
       <UFormField label="Email" name="email">
-        <UInput class="w-full" v-model="state.email" type="text" />
+        <UInput class="w-full" v-model="state.email as string" type="text" />
       </UFormField>
 
       <PopupDatePicker />
@@ -95,7 +95,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
       <span class="mb-3 block text-center text-xl">
         Доступное время для игр
       </span>
-      <AvailibilityCalendar v-model="state.availableDays" />
+      <AvailibilityCalendar v-model="state.availableDays as TDataAvaCalendar" />
     </div>
 
     <SocLinksInput v-model="state.social_links" />

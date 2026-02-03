@@ -10,9 +10,9 @@ const props = withDefaults(defineProps<{ isAuth?: boolean }>(), {
 
 const open = ref<boolean>(false);
 const route = useRoute();
-const bodyComponent = computed(() => {
-  return props.isAuth ? UsersDrawerNav : AuthForm;
-});
+const bodyComponent = computed(() =>
+  props.isAuth ? UsersDrawerNav : AuthForm,
+);
 
 watch(
   () => route.name,

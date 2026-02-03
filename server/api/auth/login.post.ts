@@ -2,18 +2,21 @@ import argon2 from 'argon2';
 import {eq, and} from 'drizzle-orm';
 import {db} from '~/server/database/client';
 import {users, accounts, sessions} from '~/server/database/schema';
+import {loginUserSchema} from "@/shared/validationSchemas/login";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const {email, password} = body;
+  const result = loginUserSchema.safeParse(body);
 
   // 1. Базовая валидация входных данных
-  if (!email || !password) {
+  if (!result.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Email и пароль обязательны',
+      statusMessage: result.error.errors[0].message,
     });
   }
+
+  const {email, password} = result.data;
 
   try {
     // 2. Ищем аккаунт по email и провайдеру

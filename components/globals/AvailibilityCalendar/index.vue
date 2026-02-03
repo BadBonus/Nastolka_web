@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { daysConfig, timePeriodsConfig } from "./utils";
-import {
+import type {
   EDays,
   ETimePeriods,
-  type TDataAvaCalendar,
+  TDataAvaCalendar,
 } from "@/shared/types/gameShedule";
 
 defineOptions({
@@ -53,7 +53,7 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
     <div class="flex gap-1.5">
       <ul class="flex flex-col gap-1">
         <li
-          v-for="(day, index) in daysConfig"
+          v-for="day in daysConfig"
           :key="day.shortName"
           class="AvailibilityCalendar__nameDays"
         >

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { TButton } from "./button.types";
 import { variantColorClasses, sizeClasses, sizeClassesOnlyIcon } from "./utils";
-import type { ButtonHTMLAttributes, ReservedProps } from "vue";
+import type { ButtonHTMLAttributes } from "vue";
 
 defineOptions({
-  name: "Button",
+  name: "CustomButton",
 });
 
 const props = withDefaults(
@@ -33,7 +33,9 @@ const buttonClasses = computed(() => {
     "focus:outline-none",
     "transition-all duration-200 ease-in-out",
     props.block ? "w-full" : "",
-    props.disabled || props.loading ? "opacity-60 cursor-not-allowed" : "",
+    props.disabled || props.loading
+      ? "opacity-60 cursor-not-allowed pointer-events-none"
+      : "",
   ];
 
   const roundedClass = props.rounded ? "rounded-full" : "rounded";

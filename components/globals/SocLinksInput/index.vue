@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ESocLinks } from "~/shared/socLinks";
 import { initSocLinks, socLinkKeys } from "~/utils/soclinks";
 
 defineOptions({
@@ -14,7 +15,7 @@ withDefaults(
   },
 );
 
-const model = defineModel<Record<ESocLinks, string | undefined>>({
+const model = defineModel<Partial<Record<ESocLinks, string>>>({
   default: initSocLinks,
 });
 </script>

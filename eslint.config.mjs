@@ -12,5 +12,6 @@ export default withNuxt({
     "@typescript-eslint/no-import-type-side-effects": "warn",
     "no-empty": "warn",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
   },
 });

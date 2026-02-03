@@ -5,8 +5,10 @@ import RegForm from "./Reg.vue";
 const isReg = ref<boolean>(false);
 </script>
 <template>
-  <RegForm v-if="isReg" />
-  <AuthForm v-else />
+  <KeepAlive>
+    <RegForm v-if="isReg" />
+    <AuthForm v-else />
+  </KeepAlive>
   <Button
     @click="isReg = !isReg"
     type="button"

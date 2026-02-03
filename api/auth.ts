@@ -1,0 +1,1 @@
+export const urlAuthUser = 'api/auth/login';

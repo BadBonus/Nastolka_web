@@ -16,7 +16,7 @@ type TSettingsGMForm = {
   avatar?: string;
   gm_exp_age: EExpYears;
   gameStyle?: string;
-  social_links: Record<ESocLinks, string | undefined>;
+  social_links: Partial<Record<ESocLinks, string | undefined>>;
   game_platforms: string[];
   game_systems: string[];
   languages: string[];
@@ -69,7 +69,7 @@ const editorContent = ref("");
     @submit="onSubmit"
   >
     <UFormField label="Ник мастера" name="nickname">
-      <UInput class="w-full" type="text" v-model="state.nickname" />
+      <UInput class="w-full" type="text" v-model="state.nickname as string" />
     </UFormField>
 
     <div class="text-center">

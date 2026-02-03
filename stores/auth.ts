@@ -1,22 +1,25 @@
+import {urlAuthUser} from "@/api";
+import type {TLoginUserSchema} from "@/shared/validationSchemas/login";
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: {
       name: '',
       email: ''
     },
-    isAuthenticated: true,
+    isAuthenticated: false,
     token: null,
   }),
   getters: {
     isUserAuth: (state) => state.isAuthenticated
   },
   actions: {
-    async login(email: string, pass: string): Promise<boolean> {
-      // const data = await $fetch('/api/login', {
-      //   method: 'POST',
-      //   body: {email, pass}
-      // });
-      // console.log(data);
+    async login(body: TLoginUserSchema): Promise<boolean> {
+      const data = await $fetch(urlAuthUser, {
+        method: 'POST',
+        body
+      });
+      console.log(data);
 
       // if (data) {
       //   const fakeToken = `Bearer fake-jwt-token-${Date.now()}`;
@@ -31,10 +34,10 @@ export const useAuthStore = defineStore('auth', {
       // }
 
       // return false;
-      this.user.name = 'Jhone Dow';
-      this.user.email = 'johndow@example.com';
-      this.isAuthenticated = true;
-      return true;
+      // this.user.name = 'Jhone Dow';
+      // this.user.email = 'johndow@example.com';
+      // this.isAuthenticated = true;
+      // return true;
     },
 
     // fetchUser() {

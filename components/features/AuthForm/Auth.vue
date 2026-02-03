@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import * as z from "zod";
+import {
+  loginUserSchema,
+  type TLoginUserSchema,
+} from "@/shared/validationSchemas/login";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 defineOptions({
@@ -7,22 +10,24 @@ defineOptions({
 });
 
 const authStore = useAuthStore();
-
-const schema = z.object({
-  email: z.string().email("Неккоректный имейл"),
-  password: z.string().min(8, "Минимум 8 символов"),
-});
-
-type Schema = z.output<typeof schema>;
-
-const state = reactive<Partial<Schema>>({
+const toast = useToast();
+const isLoading = ref(false);
+const state = reactive<Partial<TLoginUserSchema>>({
   email: undefined,
   password: undefined,
 });
+const isFormValid = computed(() => loginUserSchema.safeParse(state).success);
 
-const toast = useToast();
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  authStore.login(state.email, state.password);
+async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
+  isLoading.value = true;
+  try {
+    await authStore.login(event.data);
+  } catch (error) {
+    return;
+  } finally {
+    isLoading.value = false;
+  }
+
   toast.add({
     title: "Успех",
     description: "Авторизован",
@@ -33,19 +38,31 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm
+    :schema="loginUserSchema"
+    :state="state"
+    class="space-y-4"
+    @submit="onSubmit"
+  >
     <UFormField label="Email" name="email">
-      <UInput class="w-full" v-model="state.email" />
+      <UInput class="w-full" v-model="state.email as string" />
     </UFormField>
 
     <UFormField label="Password" name="password">
-      <UInput class="w-full" v-model="state.password" type="password" />
+      <UInput
+        class="w-full"
+        v-model="state.password as string"
+        type="password"
+      />
     </UFormField>
 
-    <Button class="w-full justify-center font-semibold" type="submit">
+    <Button
+      :loading="isLoading"
+      class="w-full justify-center font-semibold"
+      type="submit"
+      :disabled="!isFormValid"
+    >
       Авторизоваться
     </Button>
   </UForm>
 </template>
-
-<!-- <style lang="scss"></style> -->
