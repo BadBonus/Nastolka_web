@@ -3,8 +3,9 @@ import {db} from '~/server/database/client';
 import {users, accounts, sessions} from '~/server/database/schema';
 import {registerUserSchema} from '@/shared/validationSchemas/user';
 import {generateUniqueSlug} from "./utils";
+import {TOKEN_LIFE as TL} from '~/shared/utils/auth.constants';
 
-const TOKEN_LIFE = 7 * 24 * 60 * 60 * 1000;
+const TOKEN_LIFE = TL * 1000;
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -50,7 +51,7 @@ export default defineEventHandler(async (event) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60
+        maxAge: TL
       });
 
       // Возвращаем профиль и Access Token

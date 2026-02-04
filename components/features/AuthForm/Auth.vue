@@ -3,36 +3,27 @@ import {
   loginUserSchema,
   type TLoginUserSchema,
 } from "@/shared/validationSchemas/login";
+import { useLoginFlow } from "@/composables/use-cases/useLoginFlow";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 defineOptions({
   name: "AuthForm",
 });
 
-const authStore = useAuthStore();
-const toast = useToast();
-const isLoading = ref(false);
 const state = reactive<Partial<TLoginUserSchema>>({
-  email: undefined,
-  password: undefined,
+  email: "gggggg@gmail.com",
+  password: "testesttest",
 });
 const isFormValid = computed(() => loginUserSchema.safeParse(state).success);
+const { execute, isLoading } = useLoginFlow();
 
 async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
-  isLoading.value = true;
   try {
-    await authStore.login(event.data);
+    console.log("object");
+    await execute(event.data);
   } catch (error) {
     return;
-  } finally {
-    isLoading.value = false;
   }
-
-  toast.add({
-    title: "Успех",
-    description: "Авторизован",
-    color: "success",
-  });
   console.log(event.data);
 }
 </script>

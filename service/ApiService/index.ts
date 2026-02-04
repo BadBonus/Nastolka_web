@@ -1,4 +1,4 @@
-import type {IApiRepository} from '@/shared/repoitories/interfaces/IApiRep';
+import type {IApiRepository} from '~/shared/repositories/interfaces/IApiRep';
 
 export class ApiClient implements IApiRepository {
   private readonly whitelistedRoute = ['/auth/sign-in'];
@@ -8,6 +8,8 @@ export class ApiClient implements IApiRepository {
     this.mutateOptions(options);
 
     const token = useCookie('token');
+
+    console.log(token);
 
     //   try {
     //     return await $fetch<T>(url, {

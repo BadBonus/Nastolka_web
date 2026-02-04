@@ -1,76 +1,25 @@
-import {urlAuthUser} from "@/api";
-import type {TLoginUserSchema} from "@/shared/validationSchemas/login";
+import type {TUser} from "~/shared/types/global";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: {
-      name: '',
-      email: ''
-    },
+    user: null as null | TUser,
     isAuthenticated: false,
-    token: null,
+    accessToken: null as string | null,
   }),
   getters: {
     isUserAuth: (state) => state.isAuthenticated
   },
   actions: {
-    async login(body: TLoginUserSchema): Promise<boolean> {
-      const data = await $fetch(urlAuthUser, {
-        method: 'POST',
-        body
-      });
-      console.log(data);
-
-      // if (data) {
-      //   const fakeToken = `Bearer fake-jwt-token-${Date.now()}`;
-      //   this.isAuthenticated = true;
-      //   this.user = data;
-
-      //   if (import.meta.client) {
-      //     localStorage.setItem('auth-token', fakeToken);
-      //   }
-
-      //   return true;
-      // }
-
-      // return false;
-      // this.user.name = 'Jhone Dow';
-      // this.user.email = 'johndow@example.com';
-      // this.isAuthenticated = true;
-      // return true;
+    setUser(user: TUser) {
+      this.user = user;
+      this.isAuthenticated = true;
     },
-
-    // fetchUser() {
-    //   if (this.token) {
-    //     this.user = {
-    //       name: 'john doe',
-    //       email: 'user@example.com',
-    //     };
-    //     this.isAuthenticated = true;
-    //   }
-    // },
-
-
+    setAccessToken(token: string) {
+      this.accessToken = token;
+    },
     logout() {
-      // this.user = null;
-      // this.isAuthenticated = false;
-      // this.token = null;
-
-      // if (import.meta.client) {
-      //   localStorage.removeItem('auth-token');
-      //   localStorage.removeItem('auth-user');
-      // }
       this.isAuthenticated = false;
     },
 
-    initialize() {
-      // if (import.meta.client) {
-      //   const storedToken = localStorage.getItem('auth-token');
-      //   if (storedToken) {
-      //     this.token = storedToken;
-      //     this.fetchUser();
-      //   }
-      // }
-    },
   },
 });

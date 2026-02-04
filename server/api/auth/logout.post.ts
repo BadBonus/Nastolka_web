@@ -1,9 +1,11 @@
 import {db} from '~/server/database/client';
 import {sessions} from '~/server/database/schema';
 import {eq} from 'drizzle-orm';
+import {AUTH_COOKIE_TOKEN_NAME} from '~/shared/utils/auth.constants';
+
 
 export default defineEventHandler(async (event) => {
-  const refreshToken = getCookie(event, 'refresh_token');
+  const refreshToken = getCookie(event, AUTH_COOKIE_TOKEN_NAME);
 
   if (refreshToken) {
     try {
@@ -15,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   // 3. Стираем HttpOnly куку на стороне клиента
   // Важно передать те же параметры (path, domain), если они задавались при установке
-  deleteCookie(event, 'refresh_token', {
+  deleteCookie(event, AUTH_COOKIE_TOKEN_NAME, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
