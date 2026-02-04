@@ -12,7 +12,13 @@ export default defineNuxtConfig({
     }
   },
   compatibilityDate: '2024-11-01',
-  devtools: {enabled: true},
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -70,6 +76,12 @@ export default defineNuxtConfig({
     families: [{
       name: 'Rubik Doodle Shadow', provider: 'google'
     }]
+  },
+
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_URL,
+    },
   },
 
   components: [

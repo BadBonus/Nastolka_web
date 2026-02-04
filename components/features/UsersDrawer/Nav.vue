@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import { useAuthFlow } from "~/composables/use-cases/useAuthFlow";
+import useAuthFlow from "~/composables/use-cases/useAuthFlow";
 
 defineOptions({
   name: "UsersDrawerHeader",
@@ -54,5 +54,3 @@ const items = ref<NavigationMenuItem[]>([
     />
   </nav>
 </template>
-
-<!--<style lang="scss"></style>-->

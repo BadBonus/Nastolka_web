@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
     };
 
   } catch (error: any) {
-    // В любой непонятной ситуации — логаут
     deleteCookie(event, AUTH_COOKIE_TOKEN_NAME);
     throw createError({
       statusCode: 401,

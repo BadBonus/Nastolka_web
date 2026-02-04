@@ -10,7 +10,18 @@ export default defineAppConfig({
     },
     popover: {
       slots: {
-        content: 'border-2 '
+        content: 'border-2'
+      }
+    },
+    toast: {
+      variants: {
+        color: {
+          error: {
+            root: 'bg-danger text-white border-dark-brown border-2',
+            title: 'text-white font-bold',
+            description: 'text-white',
+          }
+        }
       }
     },
     chip: {

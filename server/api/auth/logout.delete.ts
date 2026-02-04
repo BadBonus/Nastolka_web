@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
     sameSite: 'lax',
   });
 
+
   return {
     success: true,
     message: 'Выход успешен'

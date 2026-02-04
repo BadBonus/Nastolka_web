@@ -1,8 +1,8 @@
 
-import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout} from "@/api";
+import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout, urlUserMe} from "@/api";
 import type {TLoginUserSchema} from "@/shared/validationSchemas/login";
-import type {TLoginPostFB} from "~/shared/types/serverFB/auth";
-
+import type {TRefreshTokenFB, TLoginPostFB} from "@/shared/types/serverFB";
+import type {TUser} from "@/shared/types/global";
 
 export const useAuthActions = () => {
   const error = ref<string | null>(null)
@@ -19,11 +19,11 @@ export const useAuthActions = () => {
     }
   }
 
-  const refreshAction = async () => {
+  const refreshAction = async (): Promise<TRefreshTokenFB> => {
     error.value = null
 
     try {
-      const data = await $fetch(urlAuthRefresh, {method: 'POST'})
+      const data = await $fetch<TRefreshTokenFB>(urlAuthRefresh, {method: 'POST'})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка обновления токена'
@@ -42,10 +42,22 @@ export const useAuthActions = () => {
     }
   }
 
+  const getUserMeAction = async () => {
+    error.value = null
+    try {
+      const data = await useApi<TUser>(urlUserMe, {method: 'GET', silent: true})
+      return data
+    } catch (err: any) {
+      error.value = err.statusMessage || 'Ошибка получения данных пользователя'
+      throw err
+    }
+  }
+
   return {
     loginAction,
     refreshAction,
     logoutAction,
+    getUserMeAction,
     error
   }
 }

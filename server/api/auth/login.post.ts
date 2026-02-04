@@ -81,6 +81,7 @@ export default defineEventHandler(async (event) => {
   } catch (error: any) {
     if (error.statusCode) throw error;
 
+    // Иначе логируем и отдаем 500
     console.error('Login error:', error);
     throw createError({
       statusCode: 500,

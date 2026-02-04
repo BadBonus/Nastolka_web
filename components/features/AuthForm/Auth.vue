@@ -3,7 +3,7 @@ import {
   loginUserSchema,
   type TLoginUserSchema,
 } from "@/shared/validationSchemas/login";
-import { useAuthFlow } from "~/composables/use-cases/useAuthFlow";
+import useAuthFlow from "~/composables/use-cases/useAuthFlow";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 defineOptions({

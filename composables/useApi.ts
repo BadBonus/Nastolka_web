@@ -1,14 +1,21 @@
-import type {FetchError, FetchContext} from 'ofetch';
+import type {FetchContext} from 'ofetch';
+import useAuthFlow from '@/composables/use-cases/useAuthFlow';
 
-export const useApi = <T>(request: Parameters<typeof $fetch<T>>[0], opts?: Parameters<typeof $fetch<T>>[1]) => {
+type TExtParamsRequest = {silent?: boolean}
+
+const API_BASE = '/api';
+
+export const useApi = <T>(request: Parameters<typeof $fetch<T>>[0], opts?: Parameters<typeof $fetch<T>>[1] & TExtParamsRequest) => {
+
+  const toast = useToast();
   const authStore = useAuthStore();
+  const {refreshToken} = useAuthFlow();
   const config = useRuntimeConfig();
 
   return $fetch<T>(request, {
-    baseURL: config.public.apiBase,
+    baseURL: config.public.apiBase ?? API_BASE,
     ...opts,
 
-    // 1. ПЕРЕД ЗАПРОСОМ: Добавляем токен
     onRequest({options}) {
       const accessToken = authStore.accessToken;
       if (accessToken) {
@@ -18,28 +25,28 @@ export const useApi = <T>(request: Parameters<typeof $fetch<T>>[0], opts?: Param
       }
     },
 
-    // 2. ПРИ ОШИБКЕ: Ловим 401
     async onResponseError(context: FetchContext & {response: {status: number}}) {
       const {response, options} = context;
 
-      // Если ошибка 401 (Unauthorized) И мы еще не пытались обновить токен для этого запроса
-      if (response.status === 401 && !options._retry) {
-        // Ставим флаг, чтобы не попасть в бесконечный цикл, 
-        // если refresh тоже вернет 401
-        options._retry = true;
+      if (!opts?.silent) {
+        toast.add({
+          title: 'ошибка ' + response.status,
+          description: response.statusText,
+          color: "error",
+          duration: 50000
+        });
+      }
+
+
+      if (response.status === 401 && !options.retry) {
+        options.retry = 0;
 
         try {
-          // Вызываем метод обновления токенов в сторе
-          await authStore.refresh();
-
-          // Если обновление прошло успешно — повторяем ИЗНАЧАЛЬНЫЙ запрос
-          // Важно: мы должны вернуть результат нового вызова
-          // Мы используем тот же $fetch, но уже с обновленным токеном (он возьмется в onRequest)
+          await refreshToken();
           return $fetch(request, options as any);
         } catch (error) {
-          // Если refresh не удался (например, токен протух окончательно)
-          // Разлогиниваем пользователя и редиректим
           authStore.logout();
+          navigateTo('/');
           return Promise.reject(error);
         }
       }

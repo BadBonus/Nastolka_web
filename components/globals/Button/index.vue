@@ -63,6 +63,7 @@ const iconSpacingClasses = computed(() => {
   <button
     :type="type"
     :disabled="disabled || loading"
+    :inert="disabled || loading"
     :class="buttonClasses"
     v-bind="$attrs"
   >
