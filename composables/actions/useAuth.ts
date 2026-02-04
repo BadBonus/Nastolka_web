@@ -1,15 +1,13 @@
 
-import {urlAuthUserLogin, urlAuthRefresh} from "@/api";
+import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout} from "@/api";
 import type {TLoginUserSchema} from "@/shared/validationSchemas/login";
 import type {TLoginPostFB} from "~/shared/types/serverFB/auth";
 
 
 export const useAuthActions = () => {
-  const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  const login = async (body: TLoginUserSchema) => {
-    isLoading.value = true
+  const loginAction = async (body: TLoginUserSchema) => {
     error.value = null
 
     try {
@@ -18,13 +16,10 @@ export const useAuthActions = () => {
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка входа'
       throw err
-    } finally {
-      isLoading.value = false
     }
   }
 
-  const refresh = async () => {
-    isLoading.value = true
+  const refreshAction = async () => {
     error.value = null
 
     try {
@@ -33,15 +28,24 @@ export const useAuthActions = () => {
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка обновления токена'
       throw err
-    } finally {
-      isLoading.value = false
+    }
+  }
+
+  const logoutAction = async () => {
+    error.value = null
+
+    try {
+      await $fetch(urlAuthLogout, {method: 'DELETE'})
+    } catch (err: any) {
+      error.value = err.statusMessage || 'Ошибка выхода'
+      throw err
     }
   }
 
   return {
-    login,
-    refresh,
-    isLoading,
+    loginAction,
+    refreshAction,
+    logoutAction,
     error
   }
 }

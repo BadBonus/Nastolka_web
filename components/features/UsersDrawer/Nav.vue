@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+import { useAuthFlow } from "~/composables/use-cases/useAuthFlow";
 
 defineOptions({
   name: "UsersDrawerHeader",
 });
 
-const authStore = useAuthStore();
+const { logout } = useAuthFlow();
 
 const items = ref<NavigationMenuItem[]>([
   {
@@ -37,9 +38,7 @@ const items = ref<NavigationMenuItem[]>([
     label: "Выйти из аккаунта",
     icon: "material-symbols-logout",
     class: "my-1 hover:bg-brown-hover rounded cursor-pointer rounded-lg",
-    onSelect: () => {
-      authStore.logout();
-    },
+    onSelect: () => logout(),
   },
 ]);
 </script>

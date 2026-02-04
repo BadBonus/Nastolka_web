@@ -15,15 +15,12 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // 3. Стираем HttpOnly куку на стороне клиента
-  // Важно передать те же параметры (path, domain), если они задавались при установке
   deleteCookie(event, AUTH_COOKIE_TOKEN_NAME, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
   });
 
-  // 4. Возвращаем успешный статус
   return {
     success: true,
     message: 'Выход успешен'

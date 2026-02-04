@@ -3,7 +3,7 @@ import {
   loginUserSchema,
   type TLoginUserSchema,
 } from "@/shared/validationSchemas/login";
-import { useLoginFlow } from "@/composables/use-cases/useLoginFlow";
+import { useAuthFlow } from "~/composables/use-cases/useAuthFlow";
 import type { FormSubmitEvent } from "@nuxt/ui";
 
 defineOptions({
@@ -15,12 +15,11 @@ const state = reactive<Partial<TLoginUserSchema>>({
   password: "testesttest",
 });
 const isFormValid = computed(() => loginUserSchema.safeParse(state).success);
-const { execute, isLoading } = useLoginFlow();
+const { login, isLoading } = useAuthFlow();
 
 async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
   try {
-    console.log("object");
-    await execute(event.data);
+    await login(event.data);
   } catch (error) {
     return;
   }
