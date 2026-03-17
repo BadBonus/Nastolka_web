@@ -50,7 +50,6 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     description: "Форма была успешно отправлена.",
     color: "success",
   });
-  console.log(event.data);
 }
 </script>
 

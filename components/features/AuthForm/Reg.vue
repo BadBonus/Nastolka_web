@@ -1,48 +1,53 @@
 <script setup lang="ts">
-import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { registerUserSchema } from "~/shared/validationSchemas/user";
+import {
+  registerUserSchema,
+  type TRegisterUserSchema,
+} from "~/shared/validationSchemas/auth/user";
+import useAuthFlow from "~/composables/use-cases/useAuthFlow";
 
-type Schema = z.output<typeof schema>;
-defineOptions({
-  name: "MainRegForm",
-});
-
-const schema = registerUserSchema;
-const state = reactive<Partial<Schema>>({
+const state = reactive<Partial<TRegisterUserSchema>>({
   nickname: undefined,
   email: undefined,
   password: undefined,
   confirmPassword: undefined,
 });
+const { registerUser } = useAuthFlow();
 
-const toast = useToast();
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  toast.add({
-    title: "Успех",
-    description: "Авторизован",
-    color: "success",
-  });
-  console.log(event.data);
+async function onSubmit(event: FormSubmitEvent<TRegisterUserSchema>) {
+  await registerUser(event.data);
 }
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm
+    :schema="registerUserSchema"
+    :state="state"
+    class="space-y-4"
+    @submit="onSubmit"
+  >
     <UFormField label="Nickname" name="nickname">
-      <UInput class="w-full" v-model="state.nickname" />
+      <UInput class="w-full" v-model="state.nickname as string" />
     </UFormField>
 
     <UFormField label="Email" name="email">
-      <UInput class="w-full" v-model="state.email" />
+      <UInput class="w-full" v-model="state.email as string" />
     </UFormField>
 
     <UFormField label="Password" name="password">
-      <UInput class="w-full" v-model="state.password" type="password" />
+      <UInput
+        class="w-full"
+        v-model="state.password as string"
+        type="password"
+      />
     </UFormField>
 
     <UFormField label="Repeat Password" name="confirmPassword">
-      <UInput class="w-full" v-model="state.confirmPassword" type="password" />
+      <UInput
+        class="w-full"
+        v-model="state.confirmPassword as string"
+        type="password"
+      />
     </UFormField>
 
     <Button class="w-full justify-center font-semibold" type="submit">

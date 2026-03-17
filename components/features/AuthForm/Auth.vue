@@ -2,7 +2,7 @@
 import {
   loginUserSchema,
   type TLoginUserSchema,
-} from "@/shared/validationSchemas/login";
+} from "~/shared/validationSchemas/auth/login";
 import useAuthFlow from "~/composables/use-cases/useAuthFlow";
 import type { FormSubmitEvent } from "@nuxt/ui";
 

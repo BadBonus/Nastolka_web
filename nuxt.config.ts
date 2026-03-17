@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     enabled: true,
 
     timeline: {
-      enabled: true,
+      enabled: false,
     },
   },
   modules: [
@@ -80,7 +80,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_URL,
+      apiBase: '',
     },
   },
 
@@ -90,4 +90,8 @@ export default defineNuxtConfig({
     "~/components/globals",
     "~/components/features",
   ],
+
+  alias: {
+    '@urlsApi': './shared/constants/'
+  }
 })

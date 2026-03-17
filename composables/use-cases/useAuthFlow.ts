@@ -1,4 +1,4 @@
-import type {TLoginUserSchema} from "~/shared/validationSchemas/login";
+import type {TLoginUserSchema, TRegisterUserSchema} from "~/shared/validationSchemas/auth";
 import {useAuthActions} from "@/composables/actions/useAuth";
 
 export default function useAuthFlow() {
@@ -6,7 +6,8 @@ export default function useAuthFlow() {
     loginAction,
     refreshAction,
     logoutAction,
-    getUserMeAction
+    getUserMeAction,
+    registerUserAction
   } = useAuthActions();
   const store = useAuthStore()
   const isLoading = ref(false)
@@ -20,7 +21,7 @@ export default function useAuthFlow() {
       return data
     }
     catch (error) {
-      console.log(error);
+      console.error(error);
     }
     finally {
       isLoading.value = false
@@ -34,7 +35,7 @@ export default function useAuthFlow() {
       store.setAccessToken(data.accessToken);
       store.setUser(data.user);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw error;
     }
 
@@ -60,12 +61,28 @@ export default function useAuthFlow() {
       store.setUser(data);
       return data
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     finally {
       isLoading.value = false
     }
   }
 
-  return {login, logout, refreshToken, getUserMe, isLoading}
+  const registerUser = async (credentials: TRegisterUserSchema) => {
+    isLoading.value = true
+    try {
+      const data = await registerUserAction(credentials)
+      store.setUser(data.user);
+      store.setAccessToken(data.accessToken);
+      return data
+    }
+    catch (error) {
+      console.error(error);
+    }
+    finally {
+      isLoading.value = false
+    }
+  }
+
+  return {login, logout, refreshToken, getUserMe, registerUser, isLoading}
 }

@@ -3,11 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --logLevel verbose",
+    "build": "pnpm types:generate && nuxt build",
+    "dev": "pnpm types:generate && nuxt dev --logLevel verbose",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "types:generate": "node --env-file=.env scripts/generate-types.mjs"
   },
   "dependencies": {
     "@nuxt/eslint": "1.3.0",
@@ -71,6 +72,7 @@
     "@vue/test-utils": "^2.4.6",
     "drizzle-kit": "^0.31.8",
     "happy-dom": "^18.0.1",
+    "openapi-typescript": "^7.13.0",
     "playwright-core": "^1.54.2",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

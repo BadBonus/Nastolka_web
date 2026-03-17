@@ -2,6 +2,7 @@
 import type { TButton } from "./button.types";
 import { variantColorClasses, sizeClasses, sizeClassesOnlyIcon } from "./utils";
 import type { ButtonHTMLAttributes } from "vue";
+import Loader from "./Loader.vue";
 
 defineOptions({
   name: "CustomButton",
@@ -31,7 +32,7 @@ const buttonClasses = computed(() => {
   const baseClasses = [
     "flex items-center justify-center font-semibold",
     "focus:outline-none",
-    "transition-all duration-200 ease-in-out",
+    "transition-all duration-200 ease-in-out relative",
     props.block ? "w-full" : "",
     props.disabled || props.loading
       ? "opacity-60 cursor-not-allowed pointer-events-none"
@@ -69,11 +70,11 @@ const iconSpacingClasses = computed(() => {
   >
     <div
       v-if="loading"
-      class="inset-0 flex items-center justify-center"
+      class="absolute inset-0 flex h-full w-full items-center justify-center"
       aria-label="Загрузка"
       role="status"
     >
-      <NuxtImg src="./loader.svg" />
+      <Loader />
     </div>
 
     <span :class="{ invisible: loading }" class="inline-flex items-center">

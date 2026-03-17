@@ -21,3 +21,5 @@ export const registerUserSchema =
       message: "Пароли не совпадают",
       path: ["confirmPassword"],
     });
+
+export type TRegisterUserSchema = z.output<typeof registerUserSchema>;

@@ -9,7 +9,6 @@ export class ApiClient implements IApiRepository {
 
     const token = useCookie('token');
 
-    console.log(token);
 
     //   try {
     //     return await $fetch<T>(url, {

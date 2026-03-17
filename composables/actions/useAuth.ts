@@ -1,6 +1,7 @@
 
-import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout, urlUserMe} from "@/api";
-import type {TLoginUserSchema} from "@/shared/validationSchemas/login";
+import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout, urlUserMe, urlAuthRegister} from "@/api";
+import {API_ENDPOINTS} from "@/shared/constants/api-endpoints"
+import type {TLoginUserSchema, TRegisterUserSchema} from "~/shared/validationSchemas";
 import type {TRefreshTokenFB, TLoginPostFB} from "@/shared/types/serverFB";
 import type {TUser} from "@/shared/types/global";
 
@@ -11,7 +12,7 @@ export const useAuthActions = () => {
     error.value = null
 
     try {
-      const data = await $fetch<TLoginPostFB>(urlAuthUserLogin, {method: 'POST', body})
+      const data = await useApi<TLoginPostFB>(API_ENDPOINTS.AUTH.LOGIN, {method: 'POST', body, noControle: true})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка входа'
@@ -23,7 +24,7 @@ export const useAuthActions = () => {
     error.value = null
 
     try {
-      const data = await $fetch<TRefreshTokenFB>(urlAuthRefresh, {method: 'POST'})
+      const data = await useApi<TRefreshTokenFB>(urlAuthRefresh, {method: 'POST', noControle: true})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка обновления токена'
@@ -35,7 +36,7 @@ export const useAuthActions = () => {
     error.value = null
 
     try {
-      await $fetch(urlAuthLogout, {method: 'DELETE'})
+      await useApi(urlAuthLogout, {method: 'DELETE', noControle: true})
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка выхода'
       throw err
@@ -45,10 +46,22 @@ export const useAuthActions = () => {
   const getUserMeAction = async () => {
     error.value = null
     try {
-      const data = await useApi<TUser>(urlUserMe, {method: 'GET', silent: true})
+      const data = await useApi<TUser>(urlUserMe, {method: 'GET', silent: true, noControle: true})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка получения данных пользователя'
+      throw err
+    }
+  }
+
+  const registerUserAction = async (body: TRegisterUserSchema): Promise<TLoginPostFB> => {
+    error.value = null
+
+    try {
+      const data = await useApi<TLoginPostFB>(urlAuthRegister, {method: 'POST', body, noControle: true})
+      return data
+    } catch (err: any) {
+      error.value = err.statusMessage || 'Ошибка регистрации'
       throw err
     }
   }
@@ -58,6 +71,7 @@ export const useAuthActions = () => {
     refreshAction,
     logoutAction,
     getUserMeAction,
+    registerUserAction,
     error
   }
 }
