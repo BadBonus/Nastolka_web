@@ -1,5 +1,6 @@
-import type {TLoginUserSchema, TRegisterUserSchema} from "~/shared/validationSchemas/auth";
+import {type TApiPayloads} from "@/shared/constants/api-endpoints"
 import {useAuthActions} from "@/composables/actions/useAuth";
+import type {TRegisterUserSchema} from "~/shared/types/validationSchemas/auth/user";
 
 export default function useAuthFlow() {
   const {
@@ -12,7 +13,7 @@ export default function useAuthFlow() {
   const store = useAuthStore()
   const isLoading = ref(false)
 
-  const login = async (credentials: TLoginUserSchema) => {
+  const login = async (credentials: TApiPayloads['AUTH']['LOGIN']['POST']['req']) => {
     isLoading.value = true
     try {
       const data = await loginAction(credentials)

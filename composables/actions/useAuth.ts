@@ -1,18 +1,23 @@
 
-import {urlAuthUserLogin, urlAuthRefresh, urlAuthLogout, urlUserMe, urlAuthRegister} from "@/api";
-import {API_ENDPOINTS} from "@/shared/constants/api-endpoints"
+import {API_ENDPOINTS, type TApiPayloads} from "@/shared/constants/api-endpoints"
 import type {TLoginUserSchema, TRegisterUserSchema} from "~/shared/validationSchemas";
 import type {TRefreshTokenFB, TLoginPostFB} from "@/shared/types/serverFB";
 import type {TUser} from "@/shared/types/global";
 
+const urlAuthUserLogin = API_ENDPOINTS.AUTH.LOGIN;
+const urlAuthRefresh = API_ENDPOINTS.AUTH.REFRESH;
+const urlAuthLogout = API_ENDPOINTS.AUTH.LOGOUT;
+const urlUserMe = API_ENDPOINTS.AUTH.ME;
+const urlAuthRegister = API_ENDPOINTS.AUTH.REGISTER;
+
 export const useAuthActions = () => {
   const error = ref<string | null>(null)
 
-  const loginAction = async (body: TLoginUserSchema) => {
+  const loginAction = async (body: TApiPayloads['AUTH']['LOGIN']['POST']['req']) => {
     error.value = null
 
     try {
-      const data = await useApi<TLoginPostFB>(API_ENDPOINTS.AUTH.LOGIN, {method: 'POST', body, noControle: true})
+      const data = await useApi<TApiPayloads['AUTH']['LOGIN']['POST']['res']>(API_ENDPOINTS.AUTH.LOGIN, {method: 'POST', body, noControle: true})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка входа'

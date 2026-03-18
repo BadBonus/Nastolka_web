@@ -97,7 +97,7 @@ export const API_ENDPOINTS = {
 ${generateEndpointsObject()}
 } as const;
 
-export type ApiPayloads = {
+export type TApiPayloads = {
 ${generateSchemaTypes()}
 };
 

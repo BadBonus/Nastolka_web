@@ -1,5 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 import Inspect from 'vite-plugin-inspect';
+import {fileURLToPath} from 'node:url'
 
 export default defineNuxtConfig({
   app: {
@@ -92,6 +93,9 @@ export default defineNuxtConfig({
   ],
 
   alias: {
-    '@urlsApi': './shared/constants/'
+    '@': fileURLToPath(new URL('./', import.meta.url)),
+    '@types': fileURLToPath(new URL('./shared/types', import.meta.url)),
+    '@consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
+    '@apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
   }
 })

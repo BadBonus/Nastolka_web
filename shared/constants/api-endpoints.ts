@@ -14,7 +14,7 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-export type ApiPayloads = {
+export type TApiPayloads = {
   AUTH: {
     LOGIN: {
       POST: {

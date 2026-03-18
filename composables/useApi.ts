@@ -30,11 +30,12 @@ export const useApi = async <T>(
         headers,
         retry: 0,
       });
-    } catch (error: any) {
-      const response = error.response;
+    } catch (err) {
+      const error = err as TBackendError;
+      const response = error;
 
 
-      if (response?.status === 401 && !opts?.noControle && !isRetry) {
+      if (response?.statusCode === 401 && !opts?.noControle && !isRetry) {
         try {
           await refreshToken();
           return await callApi(true);
@@ -46,10 +47,10 @@ export const useApi = async <T>(
       }
 
       if (!opts?.silent && import.meta.client) {
-        if (response?.status !== 401 || isRetry) {
+        if (response?.statusCode !== 401 || isRetry) {
           toast.add({
-            title: `Ошибка ${response?.status || ''}`,
-            description: response?._data?.statusMessage || 'Произошла ошибка запроса',
+            title: `Ошибка ${response?.statusCode || ''}`,
+            description: response?.message || 'Произошла ошибка запроса',
             color: "error",
             duration: 3000
           });

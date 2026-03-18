@@ -1,4 +1,4 @@
 export enum EAccProviders {
-  emeail = "email",
+  email = "email",
   google = "google",
 }

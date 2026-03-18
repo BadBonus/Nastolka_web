@@ -14,5 +14,3 @@ export enum ETimePeriods {
   evening = "17-22",
   night = "22-8"
 }
-
-export type TDataAvaCalendar = Partial<Record<EDays, ETimePeriods[]>> | null;

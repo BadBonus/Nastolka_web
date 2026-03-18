@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ESocLinks } from "@/shared/socLinks";
+import { ESocLinks } from "@/shared/constants/socLinks";
 
 defineOptions({
   name: "UsersPage",

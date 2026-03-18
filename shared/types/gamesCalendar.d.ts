@@ -1,6 +1,3 @@
-// enums
-
-// types
 
 export type TGamesCalendarOrg = {
   id: string;

@@ -3,7 +3,7 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 import {
   registerUserSchema,
   type TRegisterUserSchema,
-} from "~/shared/validationSchemas/auth/user";
+} from "~/shared/types/validationSchemas/auth/user";
 import useAuthFlow from "~/composables/use-cases/useAuthFlow";
 
 const state = reactive<Partial<TRegisterUserSchema>>({
