@@ -21,7 +21,6 @@ export const useApi = async <T>(
     if (accessToken && !opts?.noControle) {
       headers.set('Authorization', `Bearer ${accessToken}`);
     }
-
     try {
       return await $fetch<T>(request, {
         baseURL: config.public.apiBase,
@@ -31,11 +30,18 @@ export const useApi = async <T>(
         retry: 0,
       });
     } catch (err) {
-      const error = err as TBackendError;
-      const response = error;
 
+      if (!isBackendError(err)) {
+        toast.add({
+          title: "Системная ошибка",
+          description: "Не удалось связаться с сервером",
+          color: "error"
+        });
+        console.error("Non-backend error:", err);
+        throw err
+      }
 
-      if (response?.statusCode === 401 && !opts?.noControle && !isRetry) {
+      if (err?.statusCode === 401 && !opts?.noControle && !isRetry) {
         try {
           await refreshToken();
           return await callApi(true);
@@ -47,17 +53,17 @@ export const useApi = async <T>(
       }
 
       if (!opts?.silent && import.meta.client) {
-        if (response?.statusCode !== 401 || isRetry) {
+        if (err?.statusCode !== 401 || isRetry) {
           toast.add({
-            title: `Ошибка ${response?.statusCode || ''}`,
-            description: response?.message || 'Произошла ошибка запроса',
+            title: `Ошибка ${err?.statusCode || ''}`,
+            description: err?.message || 'Произошла ошибка запроса',
             color: "error",
             duration: 3000
           });
         }
       }
 
-      throw error;
+      throw err;
     }
   };
 
