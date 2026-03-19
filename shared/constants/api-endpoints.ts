@@ -1,4 +1,4 @@
-import type {paths} from '../types/api';
+import type { paths } from '../types/api';
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -17,59 +17,59 @@ export const API_ENDPOINTS = {
 export type TApiPayloads = {
   AUTH: {
     LOGIN: {
-      POST: {
+      POST: { 
         req: paths["/auth/login"]["post"]["requestBody"]["content"]["application/json"];
         res: paths["/auth/login"]["post"]["responses"]["201"]["content"]["application/json"];
       };
     };
     REGISTER: {
-      POST: {
+      POST: { 
         req: paths["/auth/register"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     VERIFY_EMAIL: {
-      POST: {
+      POST: { 
         req: paths["/auth/verify-email"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     ME: {
-      GET: {
+      GET: { 
         req?: never;
         res?: void;
       };
-      DELETE: {
+      DELETE: { 
         req?: never;
         res?: void;
       };
     };
     LOGOUT: {
-      POST: {
+      POST: { 
         req?: never;
         res?: void;
       };
     };
     REFRESH: {
-      POST: {
+      POST: { 
         req?: never;
         res?: void;
       };
     };
     RESET_PASSWORD_REQUEST: {
-      POST: {
+      POST: { 
         req: paths["/auth/reset-password/request"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     RESET_PASSWORD_VALIDATE: {
-      GET: {
+      GET: { 
         req?: never;
         res?: void;
       };
     };
     RESET_PASSWORD_CONFIRM: {
-      POST: {
+      POST: { 
         req: paths["/auth/reset-password/confirm"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };

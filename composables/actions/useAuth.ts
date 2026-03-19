@@ -1,6 +1,6 @@
 
-import {API_ENDPOINTS, type TApiPayloads} from "@/shared/constants/api-endpoints"
-import type {TLoginUserSchema, TRegisterUserSchema} from "~/shared/validationSchemas";
+import {API_ENDPOINTS, type TApiPayloads} from "@consts/api-endpoints"
+import type {TLoginUserSchema, TRegisterUserSchema} from "@valSchemas";
 import type {TRefreshTokenFB, TLoginPostFB} from "@/shared/types/serverFB";
 import type {TUser} from "@/shared/types/global";
 

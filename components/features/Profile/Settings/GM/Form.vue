@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
-import { countries } from "~/shared/countries";
-import { game_platforms, game_systems } from "~/shared/gameAttrs";
-import type { ESocLinks } from "~/shared/socLinks";
+import { countries } from "@consts/countries";
+import { game_platforms, game_systems } from "@consts/gameAttrs";
+import type { ESocLinks } from "@consts/socLinks";
 import { initSocLinks } from "~/utils/soclinks";
 
 type TSettingsGMForm = {

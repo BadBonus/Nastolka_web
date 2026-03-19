@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import SortViaAttrsPanel from "./SortViaAttrsPanel.vue";
 import SearchSort from "./SearchSort.vue";
-import { game_adv_types } from "@/shared/gameAttrs";
+import {
+  game_adv_types,
+  game_platforms,
+  game_systems,
+  game_genres,
+} from "@consts/gameAttrs";
 import { titles } from "./utils";
-import { game_platforms, game_systems, game_genres } from "@/shared/gameAttrs";
 import { radioBtns } from "./utils";
 
 defineOptions({
