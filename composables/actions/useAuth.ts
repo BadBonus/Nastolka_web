@@ -1,8 +1,12 @@
 
 import {API_ENDPOINTS, type TApiPayloads} from "@consts/api-endpoints"
-import type {TLoginUserSchema, TRegisterUserSchema} from "@valSchemas";
-import type {TRefreshTokenFB, TLoginPostFB} from "@/shared/types/serverFB";
-import type {TUser} from "@/shared/types/global";
+
+type TLoginReq = TApiPayloads['AUTH']['LOGIN']['POST']['req'];
+type TLoginRes = TApiPayloads['AUTH']['LOGIN']['POST']['res'];
+type TRefreshRes = TApiPayloads['AUTH']['REFRESH']['POST']['res'];
+type TRegReq = TApiPayloads['AUTH']['REGISTER']['POST']['req'];
+type TRegRes = TApiPayloads['AUTH']['REGISTER']['POST']['res'];
+type TMeRes = TApiPayloads['AUTH']['ME']['GET']['res'];
 
 const urlAuthUserLogin = API_ENDPOINTS.AUTH.LOGIN;
 const urlAuthRefresh = API_ENDPOINTS.AUTH.REFRESH;
@@ -12,12 +16,13 @@ const urlAuthRegister = API_ENDPOINTS.AUTH.REGISTER;
 
 export const useAuthActions = () => {
   const error = ref<string | null>(null)
+  const config = useRuntimeConfig();
 
-  const loginAction = async (body: TApiPayloads['AUTH']['LOGIN']['POST']['req']) => {
+  const loginAction = async (body: TLoginReq) => {
     error.value = null
 
     try {
-      const data = await useApi<TApiPayloads['AUTH']['LOGIN']['POST']['res']>(API_ENDPOINTS.AUTH.LOGIN, {method: 'POST', body, noControle: true})
+      const data = await useApi<TLoginRes>(urlAuthUserLogin, {method: 'POST', body, noControle: true, credentials: 'include'})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка входа'
@@ -25,23 +30,28 @@ export const useAuthActions = () => {
     }
   }
 
-  const refreshAction = async (): Promise<TRefreshTokenFB> => {
+  const refreshAction = async (): Promise<TRefreshRes> => {
     error.value = null
-
+    const headers = useRequestHeaders(['cookie']);
+    console.log('HEADERS TO NEST:', headers);
     try {
-      const data = await useApi<TRefreshTokenFB>(urlAuthRefresh, {method: 'POST', noControle: true})
-      return data
+      const data = await $fetch<TRefreshRes>(urlAuthRefresh, {
+        method: 'POST',
+        baseURL: config.public.apiBase,
+        credentials: 'include',
+        headers
+      });
+      return data;
     } catch (err: any) {
-      error.value = err.statusMessage || 'Ошибка обновления токена'
-      throw err
+      error.value = err.statusMessage || 'Ошибка обновления токена';
+      throw err;
     }
   }
 
   const logoutAction = async () => {
     error.value = null
-
     try {
-      await useApi(urlAuthLogout, {method: 'DELETE', noControle: true})
+      await useApi(urlAuthLogout, {method: 'DELETE'})
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка выхода'
       throw err
@@ -51,7 +61,7 @@ export const useAuthActions = () => {
   const getUserMeAction = async () => {
     error.value = null
     try {
-      const data = await useApi<TUser>(urlUserMe, {method: 'GET', silent: true, noControle: true})
+      const data = await useApi<TMeRes>(urlUserMe, {method: 'GET', credentials: 'include'})
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка получения данных пользователя'
@@ -59,11 +69,16 @@ export const useAuthActions = () => {
     }
   }
 
-  const registerUserAction = async (body: TRegisterUserSchema): Promise<TLoginPostFB> => {
+  const registerUserAction = async (body: TRegReq): Promise<TRegRes> => {
     error.value = null
 
     try {
-      const data = await useApi<TLoginPostFB>(urlAuthRegister, {method: 'POST', body, noControle: true})
+      const data = await useApi<TRegRes>(urlAuthRegister, {
+        method: 'POST', body, noControle: true, successMessage: {
+          title: "Вы зарегистрированы",
+          descr: "Письмо для подтверждения отправлено на почту"
+        }
+      })
       return data
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка регистрации'

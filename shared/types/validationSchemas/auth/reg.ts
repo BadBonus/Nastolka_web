@@ -1,6 +1,9 @@
 import {z} from 'zod';
+import type {TApiPayloads} from "@consts/api-endpoints";
 
-export const registerUserSchema =
+type TREQ = TApiPayloads['AUTH']['REGISTER']['POST']['req'];
+
+export const registerUserSchema: z.ZodType<TREQ> =
   z.object({
     nickname: z
       .string()
@@ -15,7 +18,7 @@ export const registerUserSchema =
     // .regex(/[a-z]/, "Нужна хотя бы одна строчная буква")
     // .regex(/[A-Z]/, "Нужна хотя бы одна заглавная буква")
     // .regex(/[0-9]/, "Нужна хотя бы одна цифра"),
-    confirmPassword: z.string().min(8, "Минимум 8 символов"),
+    confirmPassword: z.string().min(8, "Пароли не совпадают"),
   })
     .refine((data) => data.password === data.confirmPassword, {
       message: "Пароли не совпадают",

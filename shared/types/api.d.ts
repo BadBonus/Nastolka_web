@@ -93,7 +93,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_refreshTokens"];
+        post: operations["AuthController_refreshToken"];
         delete?: never;
         options?: never;
         head?: never;
@@ -159,9 +159,9 @@ export interface components {
             password: string;
         };
         User: {
+            id: number;
             nickname: string;
             email: string;
-            id: number;
         };
         LoginResponse: {
             user: components["schemas"]["User"];
@@ -171,6 +171,7 @@ export interface components {
             /** Format: email */
             email: string;
             password: string;
+            confirmPassword: string;
             nickname: string;
         };
         VerifyEmailDto: {
@@ -270,11 +271,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Получения текущих д-х юзера */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["User"];
+                };
             };
         };
     };
@@ -291,7 +295,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": boolean;
+                };
             };
         };
     };
@@ -312,7 +318,7 @@ export interface operations {
             };
         };
     };
-    AuthController_refreshTokens: {
+    AuthController_refreshToken: {
         parameters: {
             query?: never;
             header?: never;
@@ -321,11 +327,14 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            201: {
+            /** @description Обновление сессии и получение данных пользователя */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
             };
         };
     };

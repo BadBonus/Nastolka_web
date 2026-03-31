@@ -1,6 +1,6 @@
 import {type TApiPayloads} from "@/shared/constants/api-endpoints"
 import {useAuthActions} from "@/composables/actions/useAuth";
-import type {TRegisterUserSchema} from "~/shared/types/validationSchemas/auth/user";
+import type {TRegisterUserSchema} from "~/shared/types/validationSchemas/auth/reg";
 
 export default function useAuthFlow() {
   const {
@@ -33,14 +33,14 @@ export default function useAuthFlow() {
     isLoading.value = true
     try {
       const data = await refreshAction()
-      store.setAccessToken(data.accessToken);
-      store.setUser(data.user);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-
-    finally {
+      if (data) {
+        store.setAccessToken(data.accessToken)
+        store.setUser(data.user)
+      }
+    } catch (err) {
+      console.error(err)
+      throw err
+    } finally {
       isLoading.value = false
     }
   }
@@ -72,10 +72,7 @@ export default function useAuthFlow() {
   const registerUser = async (credentials: TRegisterUserSchema) => {
     isLoading.value = true
     try {
-      const data = await registerUserAction(credentials)
-      store.setUser(data.user);
-      store.setAccessToken(data.accessToken);
-      return data
+      await registerUserAction(credentials)
     }
     catch (error) {
       console.error(error);

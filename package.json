@@ -5,6 +5,7 @@
   "scripts": {
     "build": "pnpm types:generate && nuxt build",
     "dev": "pnpm types:generate && nuxt dev --logLevel verbose",
+    "dev_simple": "nuxt dev --logLevel verbose",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

@@ -37,11 +37,11 @@ export type TApiPayloads = {
     ME: {
       GET: { 
         req?: never;
-        res?: void;
+        res: paths["/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
       };
       DELETE: { 
         req?: never;
-        res?: void;
+        res: paths["/auth/me"]["delete"]["responses"]["200"]["content"]["application/json"];
       };
     };
     LOGOUT: {
@@ -53,7 +53,7 @@ export type TApiPayloads = {
     REFRESH: {
       POST: { 
         req?: never;
-        res?: void;
+        res: paths["/auth/refresh"]["post"]["responses"]["200"]["content"]["application/json"];
       };
     };
     RESET_PASSWORD_REQUEST: {
