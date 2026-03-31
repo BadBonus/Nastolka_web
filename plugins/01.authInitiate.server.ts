@@ -1,6 +1,6 @@
-import {useAuthActions} from "@/composables/actions/useAuth";
-import {config} from "process";
-import {appendResponseHeader, setCookie} from 'h3'
+
+import {appendResponseHeader} from 'h3'
+import type {TUser} from '~/shared/types/global'
 
 export default defineNuxtPlugin(async () => {
   const event = useRequestEvent()
@@ -17,17 +17,14 @@ export default defineNuxtPlugin(async () => {
         headers: useRequestHeaders(['cookie']),
       })
 
-      // Явно парсим и пробрасываем каждую Set-Cookie
       const rawSetCookie = response.headers.getSetCookie?.()
         ?? [response.headers.get('set-cookie')].filter(Boolean)
-
-      console.log('RAW SET-COOKIE ARRAY:', rawSetCookie)
 
       for (const cookieStr of rawSetCookie) {
         appendResponseHeader(event, 'set-cookie', cookieStr)
       }
 
-      const data = response._data as {accessToken: string; user: any}
+      const data = response._data as {accessToken: string; user: TUser}
       if (data) {
         authStore.setAccessToken(data.accessToken)
         authStore.setUser(data.user)

@@ -33,7 +33,6 @@ export const useAuthActions = () => {
   const refreshAction = async (): Promise<TRefreshRes> => {
     error.value = null
     const headers = useRequestHeaders(['cookie']);
-    console.log('HEADERS TO NEST:', headers);
     try {
       const data = await $fetch<TRefreshRes>(urlAuthRefresh, {
         method: 'POST',

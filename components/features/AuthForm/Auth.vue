@@ -23,7 +23,6 @@ async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
   } catch (error) {
     return;
   }
-  console.log(event.data);
 }
 </script>
 
