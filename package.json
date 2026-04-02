@@ -12,7 +12,8 @@
     "types:generate": "node --env-file=.env scripts/generate-types.mjs",
     "vmd:analyze": "npx vue-mess-detector analyze ./components --group=rule",
     "vmd:full-report": "node scripts/vmd-report.js",
-    "vmd:diff": "node scripts/vmd-diff.js"
+    "vmd:diff": "node scripts/vmd-diff.js",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nuxt/eslint": "1.3.0",
@@ -45,6 +46,7 @@
     "drizzle-orm": "^0.45.1",
     "element-plus": ">=2",
     "eslint": "^9.0.0",
+    "husky": "^9.1.7",
     "inversify": "^7.11.0",
     "jose": "^6.1.3",
     "lodash": "^4.17.21",
