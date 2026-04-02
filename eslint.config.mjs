@@ -1,7 +1,11 @@
 // @ts-check
+import cspellPlugin from "@cspell/eslint-plugin";
 import withNuxt from "./.nuxt/eslint.config.mjs"; //eslint-plugin-vue
 
 export default withNuxt({
+  plugins: {
+    "@cspell": cspellPlugin,
+  },
   rules: {
     "no-console": ["warn", { allow: ["error", "warn", "info"] }],
     "@typescript-eslint/ban-ts-comment": "off",
@@ -13,5 +17,14 @@ export default withNuxt({
     "no-empty": "warn",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "warn",
+    "@cspell/spellchecker": [
+      "warn",
+      {
+        language: "en,ru",
+        checkIdentifiers: true, // Проверка имен переменных/функций
+        checkStrings: true,
+        checkTemplates: true, // Проверка шаблонных строк
+      },
+    ],
   },
 });

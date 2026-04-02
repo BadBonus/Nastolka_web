@@ -1,0 +1,18 @@
+version: "0.2"
+import:
+  - "@cspell/dict-russian/cspell-ext.json"
+language: "en"
+words:
+  - nuxt
+  - pinia
+  - uizard
+  - nastolka
+  - typesafe
+  - fsd
+  - vmd
+ignorePaths:
+  - ".reports/**"
+  - ".nuxt/**"
+  - ".output/**"
+  - "dist/**"
+language: en,ru
