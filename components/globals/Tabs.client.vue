@@ -30,7 +30,6 @@ function updateIndicator() {
       const { left = 0, width = 0 } = activeTab?.getBoundingClientRect() ?? {};
       const containerLeft =
         tabsContainer.value?.getBoundingClientRect().left || 0;
-
       indicatorStyle.value = {
         transform: `translateX(${left - containerLeft}px)`,
         width: `${width}px`,

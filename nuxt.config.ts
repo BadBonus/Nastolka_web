@@ -34,7 +34,8 @@ export default defineNuxtConfig({
     // 'nuxt-auth-utils',
     '@nuxtjs/fontaine',
     '@nuxt/ui',
-    '@nuxt/test-utils/module'
+    '@nuxt/test-utils/module',
+    'vue-mess-detector-nuxt-devtools'
   ],
 
   icon: {

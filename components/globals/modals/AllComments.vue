@@ -40,7 +40,7 @@ defineProps<TModalsAllComments>();
 
       <ScrollArea class="h-60">
         <ul class="flex flex-col gap-3.5 p-1">
-          <li v-for="item in demoComments">
+          <li v-for="item in demoComments" :key="item.name">
             <UserCommentsComment class="shadow-element" v-bind="item" />
           </li>
         </ul>

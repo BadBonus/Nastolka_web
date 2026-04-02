@@ -1,0 +1,23 @@
+{
+  "level": "error",
+  "fileIgnoreRules": {
+    "*": "ifWithoutCurlyBraces, singleNameComponent, globalStyle, computedSideEffects, elseCondition"
+  },
+  "override": {
+    "maxExpressionLength": 40,
+    "maxComputedLength": 5,
+    "minimumConsonantCount": 3,
+    "maxPropsCount": 5,
+    "minVariableName": 4,
+    "maxParameterCount": 3,
+    "maxTabs": 5,
+    "maxVshowLines": 10,
+    "maxVifLines": 25,
+    "complexityModerate": 5,
+    "warningThreshold": 4,
+    "maxFunctionSize": 20,
+    "maxScriptLength": 150,
+    "maxFileSize": 300,
+    "topLevelElementOrder": "template-script-style"
+  }
+}
