@@ -48,8 +48,9 @@ export default function useAuthFlow() {
   const logout = async () => {
     isLoading.value = true
     try {
+      await logoutAction();
       store.logout();
-      await logoutAction()
+
     } finally {
       isLoading.value = false
     }

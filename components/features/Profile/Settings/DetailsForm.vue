@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from "@nuxt/ui";
-import { popularTimezones } from "@consts/timezones";
+import { popularTimezones } from "#consts/timezones";
 import type { TDataAvaCalendar } from "~/shared/types/gameShedule";
 import type { TSoclinksObject } from "~/shared/types/global";
 import { initSocLinks } from "~/utils/soclinks.ts";

@@ -1,4 +1,4 @@
-import {ERoles} from "@consts/roles"
+import {ERoles} from "#consts/roles"
 
 export type TSkillItem = {
   id: ESkillPlayer | ESkillGameMaster;

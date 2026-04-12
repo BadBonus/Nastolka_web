@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { game_adv_types } from "@consts/gameAttrs";
+import { game_adv_types } from "#consts/gameAttrs";
 import { events } from "@/shared/demo/events";
 
 const ALL_EVENTS_ID = "all";

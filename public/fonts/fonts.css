@@ -4,6 +4,7 @@
     format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: block;
   /* Потом расширить шрифт на другие форматы */
   /* src: url('@/assets/fonts/artist_nouveau.woff2') format('woff2'),
          url('@/assets/fonts/artist_nouveau.woff') format('woff'),
@@ -17,7 +18,7 @@
     /* Обратите внимание на "-Regular" */ format("truetype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 /* --- Rubik --- */
@@ -27,7 +28,7 @@
     format("truetype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -36,5 +37,5 @@
     format("truetype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }

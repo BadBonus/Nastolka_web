@@ -1,6 +1,6 @@
 // @ts-check
 import cspellPlugin from "@cspell/eslint-plugin";
-import withNuxt from "./.nuxt/eslint.config.mjs"; //eslint-plugin-vue
+import withNuxt from "./.nuxt/eslint.config.mjs";
 
 export default withNuxt({
   plugins: {

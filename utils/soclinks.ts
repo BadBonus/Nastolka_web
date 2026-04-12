@@ -1,4 +1,4 @@
-import {ESocLinks} from "@consts/socLinks";
+import {ESocLinks} from "#consts/socLinks";
 import type {TSoclinksObject} from "~/shared/types/global";
 
 export const initSocLinks = Object.values(ESocLinks).reduce(

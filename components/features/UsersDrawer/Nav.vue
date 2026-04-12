@@ -38,7 +38,7 @@ const items = ref<NavigationMenuItem[]>([
     label: "Выйти из аккаунта",
     icon: "material-symbols-logout",
     class: "my-1 hover:bg-brown-hover rounded cursor-pointer rounded-lg",
-    onSelect: () => logout(),
+    onSelect: async () => await logout(),
   },
 ]);
 </script>

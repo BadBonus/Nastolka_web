@@ -19,6 +19,7 @@ logs
 .idea
 .reports
 
+
 # Local env files
 .env
 .env.*

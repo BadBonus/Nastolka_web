@@ -2,7 +2,39 @@ import tailwindcss from "@tailwindcss/vite";
 import Inspect from 'vite-plugin-inspect';
 import {fileURLToPath} from 'node:url'
 
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    '@nuxt/fonts',
+    '@nuxt/icon',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
+    '@nuxtjs/fontaine',
+    'nuxt-tiptap-editor',
+    '@vueuse/nuxt',
+    'reka-ui/nuxt',
+    'vue-mess-detector-nuxt-devtools',
+    'shadcn-nuxt'
+  ],
+
+  shadcn: {
+    /**
+     * Prefix for all the imported component.
+     * @default "Ui"
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * Will respect the Nuxt aliases.
+     * @link https://nuxt.com/docs/api/nuxt-config#alias
+     * @default "@/components/ui"
+     */
+    componentDir: '@/components/ui'
+  },
+
   app: {
     baseURL: '/Nastolka_web/',
     buildAssetsDir: 'assets',
@@ -12,32 +44,6 @@ export default defineNuxtConfig({
       failOnError: false,
     }
   },
-  compatibilityDate: '2024-11-01',
-  devtools: {
-    enabled: true,
-
-    timeline: {
-      enabled: false,
-    },
-  },
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/icon',
-    '@nuxt/image',
-    '@nuxt/test-utils',
-    '@vueuse/nuxt',
-    '@pinia/nuxt',
-    'nuxt-svgo',
-    'reka-ui/nuxt',
-    // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
-    // 'nuxt-auth-utils',
-    '@nuxtjs/fontaine',
-    '@nuxt/ui',
-    '@nuxt/test-utils/module',
-    'vue-mess-detector-nuxt-devtools'
-  ],
-
   icon: {
     serverBundle: false,
     clientBundle: {
@@ -45,25 +51,26 @@ export default defineNuxtConfig({
       sizeLimitKb: 256,
     },
   },
-
-  vite: {
-    plugins: [
-      tailwindcss(),
-      Inspect(),
-    ],
-  },
   devServer: {
     port: 3000,
     host: '0.0.0.0',
   },
-  imports: {
-    dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
+  runtimeConfig: {
+    public: {
+      apiBase: '',
+    },
   },
+
+  devtools: {
+    enabled: true
+  },
+
   css: [
-    '~/assets/css/main.css',
-    '~/public/fonts/fonts.css',
+    '@/assets/css/main.css',
+    './public/fonts/fonts.css',
     '@splidejs/splide/dist/css/splide.min.css'
   ],
+
   fonts: {
     defaults: {
       weights: [400, 500, 600, 700, 800, 900],
@@ -73,31 +80,59 @@ export default defineNuxtConfig({
         'system-ui': ['Roboto', 'system-ui'],
         'sans-serif': ['Pangolin'],
       },
+      preload: true
 
     },
     families: [{
       name: 'Rubik Doodle Shadow', provider: 'google'
-    }]
+    }],
   },
 
-  runtimeConfig: {
-    public: {
-      apiBase: '',
-    },
+  routeRules: {
+    '/': {prerender: true}
   },
 
-  components: [
-    "~/components",
-    "~/components/ui",
-    "~/components/globals",
-    "~/components/features",
-  ],
+  compatibilityDate: '2025-01-15',
 
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
+      }
+    }
+  },
+
+  vite: {
+    plugins: [
+      tailwindcss(),
+      Inspect(),
+    ],
+  },
+
+  typescript: {
+    tsConfig: {
+      include: ["./app/shared/types/**/*.d.ts"]
+    }
+  },
   alias: {
-    '@': fileURLToPath(new URL('./', import.meta.url)),
-    '@types': fileURLToPath(new URL('./shared/types', import.meta.url)),
-    '@consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
-    '@apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
-    '@valSchemas': fileURLToPath(new URL('./shared/types/validationSchemas', import.meta.url))
+    // В Nuxt 4 '@' и '~' по умолчанию указывают на папку <root>/app/
+    // Если нужно оставить привязку к корню проекта:
+    '#src': fileURLToPath(new URL('./', import.meta.url)),
+
+    // Для папок вне /app (например, shared в корне)
+    '#types': fileURLToPath(new URL('./shared/types', import.meta.url)),
+    '#consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
+    '#apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
+    '#valSchemas': fileURLToPath(new URL('./shared/types/validationSchemas', import.meta.url))
+  },
+  components: [
+    {path: '~/components/ui'},
+    {path: '~/components/globals'},
+    {path: '~/components/features'},
+    '~/components'
+  ],
+  ui: {
+    colorMode: false
   }
 })

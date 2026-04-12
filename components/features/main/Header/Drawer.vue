@@ -24,19 +24,26 @@ watch(
 <template>
   <UDrawer
     v-model:open="open"
+    :transition="false"
+    description="Навигация сайта"
     :ui="{
       header: 'flex items-center justify-between',
       content: 'min-w-[320px]',
     }"
     direction="right"
+    id="reka-dialog-content-v-0-1"
   >
+    <template #title>
+      <VisuallyHidden> </VisuallyHidden>
+    </template>
+
     <UButton color="primary">
       <Icon name="ci:hamburger-lg" />
     </UButton>
 
     <template #header>
-      <h2 v-if="!isAuth" class="text-highlighted font-main text-4xl font-bold">
-        Hi!
+      <h2 v-if="!isAuth" class="font-main text-4xl font-bold text-white">
+        Авторизация
       </h2>
       <UsersDrawerBaseInfo v-else />
 
@@ -49,6 +56,7 @@ watch(
       />
     </template>
 
+    <template aria-describedby="undefined" #content></template>
     <template #body>
       <component :is="bodyComponent" />
       <USeparator class="mt-4" color="primary" type="solid" />
@@ -57,4 +65,8 @@ watch(
   </UDrawer>
 </template>
 
-<!--<style lang="scss"></style>-->
+<style>
+#reka-dialog-content-v-0-1 {
+  font-family: "ShantellSans", "Roboto";
+}
+</style>

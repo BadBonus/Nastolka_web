@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import type {TApiPayloads} from "@consts/api-endpoints";
+import type {TApiPayloads} from "#consts/api-endpoints";
 
 type TREQ = TApiPayloads['AUTH']['REGISTER']['POST']['req'];
 

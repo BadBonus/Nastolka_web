@@ -31,6 +31,7 @@ export const useApi = async <T>(
         ...opts,
         headers,
         retry: 0,
+        credentials: opts?.noControle ? 'omit' : 'include'
       });
 
       if (opts?.successMessage && !opts?.silent && import.meta.client) {

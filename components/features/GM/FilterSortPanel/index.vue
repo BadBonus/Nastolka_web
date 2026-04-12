@@ -6,7 +6,7 @@ import {
   game_platforms,
   game_systems,
   game_genres,
-} from "@consts/gameAttrs";
+} from "#consts/gameAttrs";
 import { titles } from "./utils";
 import { radioBtns } from "./utils";
 

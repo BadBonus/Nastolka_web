@@ -1,4 +1,4 @@
-import {EDays, ETimePeriods} from "@consts/gameShedule";
+import {EDays, ETimePeriods} from "#consts/gameShedule";
 
 export const daysConfig = [
   {id: EDays.monday, shortName: "Пн"},

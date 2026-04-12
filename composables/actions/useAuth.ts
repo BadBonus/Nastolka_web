@@ -1,5 +1,5 @@
 
-import {API_ENDPOINTS, type TApiPayloads} from "@consts/api-endpoints"
+import {API_ENDPOINTS, type TApiPayloads} from "#consts/api-endpoints"
 
 type TLoginReq = TApiPayloads['AUTH']['LOGIN']['POST']['req'];
 type TLoginRes = TApiPayloads['AUTH']['LOGIN']['POST']['res'];
@@ -50,7 +50,7 @@ export const useAuthActions = () => {
   const logoutAction = async () => {
     error.value = null
     try {
-      await useApi(urlAuthLogout, {method: 'DELETE'})
+      await useApi(urlAuthLogout, {method: 'POST'})
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка выхода'
       throw err

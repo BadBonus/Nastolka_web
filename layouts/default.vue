@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { transform } from "typescript";
 import generateLayout, { type TplaceBgImagesOut } from "~/utils/placeBgImages";
 
 const images = [
@@ -57,7 +56,7 @@ onMounted(() => {
       />
 
       <!-- delete-tag - напоминание, что этот тег служит сугубо для поддержки мобильного вида и после разработки должен будет быть удален -->
-      <div delete-tag class="mx-auto max-w-[360px]">
+      <div delete-tag class="mx-auto max-w-90">
         <slot />
       </div>
     </main>
