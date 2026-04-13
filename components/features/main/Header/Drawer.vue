@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AuthForm, UsersDrawerNav } from "#components";
+
 defineOptions({
   name: "HeaderDrawer",
 });
@@ -28,15 +29,12 @@ watch(
     description="Навигация сайта"
     :ui="{
       header: 'flex items-center justify-between',
-      content: 'min-w-[320px]',
+      content: 'max-w-[360px] ring-0',
     }"
     direction="right"
     id="reka-dialog-content-v-0-1"
+    title="тест"
   >
-    <template #title>
-      <VisuallyHidden> </VisuallyHidden>
-    </template>
-
     <UButton color="primary">
       <Icon name="ci:hamburger-lg" />
     </UButton>
@@ -56,7 +54,6 @@ watch(
       />
     </template>
 
-    <template aria-describedby="undefined" #content></template>
     <template #body>
       <component :is="bodyComponent" />
       <USeparator class="mt-4" color="primary" type="solid" />
