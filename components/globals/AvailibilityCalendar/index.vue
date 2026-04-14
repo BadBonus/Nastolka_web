@@ -42,9 +42,9 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
       >
         <NuxtImg
           class="mx-auto"
-          :src="`images/svg/availibilityCalendar/${timePeriodsConfig[index].icon}`"
+          :src="`images/svg/availibilityCalendar/${timePeriodsConfig[index]?.icon || ''}`"
         />
-        {{ timePeriodsConfig[index].id }}
+        {{ timePeriodsConfig[index]?.id || "" }}
       </li>
     </ul>
     <div class="flex gap-1.5">
@@ -107,11 +107,11 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
     text-align: center;
 
     &:hover {
-      background: var(--color-primary-hover);
+      background: var(--color-blue);
     }
 
     &.active {
-      background: var(--color-primary);
+      background: var(--color-dark-blue);
     }
   }
 }

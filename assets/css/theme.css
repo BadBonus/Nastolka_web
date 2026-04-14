@@ -36,8 +36,8 @@
 
   --color-danger: var(--color-red);
   --color-danger-hover: var(--color-red-hover);
-  --color-primary: var(--color-brown);
-  --color-primary-hover: var(--color-brown-hover);
+  --color-primary: var(--color-neutral-dark);
+  --color-primary-hover: var(--color-neutral-dark-hover);
   --color-success: var(--color-green);
   --color-success-hover: var(--color-green-hover);
   --color-warning: var(--color-gold);

@@ -4,7 +4,7 @@ defineOptions({
 });
 </script>
 <template>
-  <article class="Profile">
+  <article class="Profile papperPattern rounded p-2">
     <ProfileNavigation />
     <NuxtPage />
   </article>

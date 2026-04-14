@@ -11,7 +11,7 @@ defineOptions({
 const page = ref(5);
 </script>
 <template>
-  <section class="ProfileHistory pt-2.5">
+  <section class="ProfileHistory">
     <h1 class="text-center font-bold">Ваша история игр</h1>
     <event-list :items="events" />
     <UPagination class="mx-auto mt-3 w-fit" v-model:page="page" :total="100" />

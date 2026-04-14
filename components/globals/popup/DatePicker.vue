@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { format } from "date-fns";
-
 const date = ref<Date>(new Date());
+const formatDate = computed(() => {
+  const formatter = new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  return formatter.format(date.value);
+});
 </script>
 
 <template>
@@ -17,9 +24,9 @@ const date = ref<Date>(new Date());
       <UButton
         size="md"
         icon="i-heroicons-calendar-days-20-solid"
-        :label="format(date, 'd MMM, yyy')"
+        :label="formatDate"
         variant="soft"
-        class="shadow-button"
+        class="shadow-button text-secondary border-2 border-black p-1!"
       />
     </div>
 

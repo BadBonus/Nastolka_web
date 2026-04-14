@@ -15,4 +15,4 @@ export const timePeriodsConfig = [
   {id: ETimePeriods.afternoon, icon: "sunny.svg"},
   {id: ETimePeriods.evening, icon: "evening.svg"},
   {id: ETimePeriods.night, icon: "moon.svg"},
-];
+] as const;

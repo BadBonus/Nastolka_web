@@ -27,6 +27,9 @@ const emit = defineEmits<{
       variant: 'outline',
       class: 'rounded-full',
     }"
+    :ui="{
+      content: 'border-3 border-black',
+    }"
   >
     <slot />
 

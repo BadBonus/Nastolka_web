@@ -39,6 +39,7 @@ export default defineAppConfig({
         value: "font-semibold text-secondary",
         placeholder: "font-semibold",
         base: 'shadow-element border-2 border-border !bg-neutral-light',
+        item: 'hover:bg-dark-blue hover:text-white!'
       }
     },
     button: {

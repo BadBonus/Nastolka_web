@@ -116,8 +116,14 @@ export default defineNuxtConfig({
       tailwindcss(),
       Inspect(),
     ],
+    optimizeDeps: {
+      include: [
+        'vue-advanced-cropper',
+        'v-calendar',
+        'zod'
+      ]
+    },
   },
-
   typescript: {
     tsConfig: {
       include: ["./app/shared/types/**/*.d.ts"]

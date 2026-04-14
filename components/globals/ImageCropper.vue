@@ -38,8 +38,10 @@ const takeImg = async (event: Event) => {
   isDragOver.value = false;
   const target = event.target as HTMLInputElement;
   if (target && target.files) {
-    const cookedImg = await toBase64(target.files[0]);
-    imgFile.value = target.files[0];
+    const file = target.files[0];
+    if (!file) return;
+    const cookedImg = await toBase64(file);
+    imgFile.value = target.files[0] ?? null;
     img.value = cookedImg;
   }
 };
@@ -70,7 +72,7 @@ const submit = () => {
     @dragleave.prevent="isDragOver = false"
     class="ImageCropper relative"
   >
-    <div class="inputImageArea h-[60px] w-full text-black">
+    <div class="inputImageArea h-15 w-full text-black">
       <input
         @dragenter.prevent="isDragOver = true"
         @dragleave.prevent="isDragOver = false"
@@ -93,9 +95,11 @@ const submit = () => {
         :style="{
           height: canvasHeight + 'px',
         }"
-        class="bg-bg-2 flex items-center rounded-2xl"
+        class="relative top-2 flex items-center border-2 border-dashed border-black"
       >
-        <span v-if="!img" class="abscenter h-fit w-fit"> Перетащи </span>
+        <span v-if="!img" class="abscenter inset-0 m-auto h-fit w-fit">
+          Перетащи
+        </span>
         <input
           class="abscenter"
           @dragenter.prevent="isDragOver = true"

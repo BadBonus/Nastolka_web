@@ -100,7 +100,9 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 
     <SocLinksInput v-model="state.social_links" />
 
-    <Button class="mx-auto" type="submit"> Сохранить изменения </Button>
+    <Button color="secondary" class="mx-auto" type="submit">
+      Сохранить изменения
+    </Button>
   </UForm>
 </template>
 
