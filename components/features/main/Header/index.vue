@@ -9,12 +9,10 @@ defineOptions({
 const authStore = useAuthStore();
 </script>
 <template>
-  <header
-    class="MainHeader bg-bg-header border-b-brown relative z-10 h-16 border-b-4 px-4"
-  >
+  <header class="MainHeader relative z-10 h-13 px-4 pt-2">
     <div class="MainHeader__decore"></div>
     <div class="relative z-10 flex h-full w-full items-center justify-between">
-      <NuxtLink to="/" class="text-inverted flex items-center gap-1 text-3xl">
+      <NuxtLink to="/" class="flex items-center gap-1 text-3xl">
         <span class="font-decorate font-bold max-md:hidden"> NASTOLKA </span>
         <Icon name="game-icons:cubes" />
       </NuxtLink>
@@ -28,15 +26,26 @@ const authStore = useAuthStore();
 </template>
 
 <style>
+.MainHeader {
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  border-bottom: 10px solid transparent;
+  border-image-source: url("/images/bg_decors/svg/border_line.svg");
+  border-image-slice: 10;
+  border-image-repeat: round;
+  border-image-outset: 6px;
+  box-shadow: 0px 5px 10px black;
+}
 .MainHeader__decore {
   width: 100%;
   height: 103%;
-  background-repeat: repeat;
-  background-image: url("/images/bg_decors/wood.webp");
+  /* background-repeat: repeat; */
+  /* background-image: url("/images/bg_decors/paper.jpg"); */
+  background-size: 100%;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 0;
-  opacity: 0.4;
+  /* opacity: 0.4; */
 }
 </style>

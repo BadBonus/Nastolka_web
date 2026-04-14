@@ -43,11 +43,12 @@ export default defineAppConfig({
     },
     button: {
       slots: {
-        base: 'rounded-sm ',
+        base: 'rounded-sm',
       }
     },
     drawer: {
       slots: {
+        base: 'text-[inherit]',
         content: 'drawer',
         'overlay': 'bg-secondary/50'
       },

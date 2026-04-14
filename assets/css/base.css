@@ -2,7 +2,7 @@
 
 @layer base {
   html {
-    font-family: "ShantellSans", "Roboto";
+    font-family: "Shantell Sans", "Roboto";
   }
 
   * {
@@ -21,6 +21,14 @@
 
   body {
     background-repeat: repeat;
-    background-image: url("/images/bg_decors/stena.webp");
+    background-image: url("/images/bg_decors/woodTexture.webp");
+    background-size: 23%;
+  }
+
+  :deep(.ui-drawer),
+  :deep(.ui-popover),
+  :deep(.ui-drawer *),
+  :deep(.ui-popover *) {
+    font-family: inherit !important;
   }
 }

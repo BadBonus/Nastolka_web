@@ -5,34 +5,34 @@
 }
 
 @theme {
-  /* Новая цветовая гамма - start*/
-  /* контраст color-text к поверхностям 10+ - отлично */
+  /* Montserrat Alternates - ранее как main */
+  --font-main: "Shantell Sans, Rubik";
+  --font-secondary: "Shantell Sans";
+  --font-decorate: "Artist Nouveau";
+  --font-decorate-2: "Rubik Doodle Shadow";
 
   /* Палитра базовых цветов  - старт*/
-  /* Montserrat Alternates - ранее как main */
-  --font-main: "Rubik";
-  --font-secondary: "ShantellSans";
-  --font-decorate: "Artist Nouveau";
-
-  --color-red: oklch(0.5555 0.1429 26.42);
+  --color-red: oklch(0.51 0.19 30);
   --color-red-hover: oklch(71% 0.05 45);
-  --color-neutral-dark: oklch(0.3132 0 0);
-  --color-neutral-dark-soft: oklch(0.3132 0 0 / 95%);
-  --color-neutral-dark-hover: oklch(0.6128 0 0);
-  --color-brown: oklch(0.5114 0.0833 55.39);
+  --color-neutral-dark: oklch(0.24 0.07 40.96);
+  --color-neutral-dark-soft: oklch(0.24 0.07 40.96 / 95%);
+  --color-neutral-dark-hover: oklch(0.24 0.07 40.96 / 85%);
+  --color-brown: oklch(0.44 0.13 40.14);
   --color-brown-hover: oklch(0.5875 0.0833 55.39);
   --color-dark-brown: oklch(0.3215 0.0714 51.76);
-  --color-green: oklch(0.5974 0.1198 161.26);
+  --color-green: oklch(0.62 0.25 145);
   --color-green-hover: oklch(0.6908 0.1579 158.13);
-  --color-gold: oklch(0.7007 0.1502 69.8);
+  --color-gold: oklch(0.85 0.15 90);
   --color-gold-hover: oklch(0.6908 0.1579 158.13);
-  --color-blue: oklch(0.7234 0.1421 253);
+  --color-blue: oklch(0.58 0.11 250);
+  --color-dark-blue: oklch(0.37 0.13 252.22);
   --color-blue-hover: oklch(0.7685 0.1066 252.15);
   --color-neutral-light: oklch(0.9 0.02 60);
   --color-neutral-medium: oklch(0.7 0.05 55);
-  --color-white: oklch(0.9791 0 0);
-
+  --color-white: oklch(0.9803 0.0054 117.92);
   /* Палитра базовых цветов  - конец*/
+
+  /* Типовые переменные - старт */
 
   --color-danger: var(--color-red);
   --color-danger-hover: var(--color-red-hover);
@@ -60,11 +60,10 @@
   --color-inverted-hover: var(--color-neutral-light);
   --color-text-secondary: var(--color-brown);
   --color-shadow: oklch(0.3329 0 0 / 30%);
-  /* --color-focus-state: var(--color-secondary-hover); */
   --color-focus-state: var(--color-brown);
-  --color-bg-footer: var(--color-dark-brown);
-  --color-bg-header: var(--color-dark-brown);
-  --color-drawer: var(--color-dark-brown);
+  --color-bg-footer: var(--color-paper);
+  --color-bg-header: var(--color-paper);
+  --color-drawer: var(--color-white);
   --color-label: color-mix(in srgb, var(--color-neutral-dark) 50%, transparent);
   --color-placeholder: color-mix(
     in srgb,
@@ -80,14 +79,12 @@
   --shadow-box-text: 1px 1px 4px oklch(0.3329 0 0 / 55%);
   --shadow-box-elements: 2px 2px 2px oklch(0.1504 0.0251 124.13 / 30%);
 
-  /* Новая цветовая гамма - end*/
-
-  /* --color-bg-header: oklch(25.86% 0.003 228.93);
-  --color-bg-body: oklch(0.9189 0 0); */
   --color-bg-secondary: oklch(0.3126 0.014 211.12 / 70%);
+  /* Типовые переменные - финиш */
 
   /* NUXT_UI_VARS */
-  --ui-bg: var(--color-primary-background-2);
+  /* --ui-bg: var(--color-primary-background-2); */
+  --ui-bg: unset;
   --ui-secondary: var(--color-secondary);
   --ui-success: var(--color-success);
   --ui-primary: var(--color-primary);
@@ -104,5 +101,6 @@
   --text-base--line-height: "initial";
   --ui-bg-elevated: var(--color-dark-brown);
   --ui-text-highlighted: var(--color-dark-brown);
-  --ui-bg-accented: var(--color-brown);
+  --ui-bg-accented: var(--color-dark-blue);
+  --ui-text-muted: var(--color-blue);
 }

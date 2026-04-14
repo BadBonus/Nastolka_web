@@ -50,6 +50,7 @@ async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
       class="w-full justify-center font-semibold"
       type="submit"
       :disabled="!isFormValid"
+      color="secondary"
     >
       Авторизоваться
     </Button>

@@ -50,7 +50,11 @@ async function onSubmit(event: FormSubmitEvent<TRegisterUserSchema>) {
       />
     </UFormField>
 
-    <Button class="w-full justify-center font-semibold" type="submit">
+    <Button
+      color="secondary"
+      class="w-full justify-center font-semibold"
+      type="submit"
+    >
       Зарегистрироваться
     </Button>
   </UForm>

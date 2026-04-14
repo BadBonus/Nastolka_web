@@ -72,11 +72,14 @@ export default defineNuxtConfig({
   ],
 
   fonts: {
+    providers: {
+      npm: false
+    },
     defaults: {
       weights: [400, 500, 600, 700, 800, 900],
       styles: ['normal', 'italic'],
       fallbacks: {
-        'serif': ['ShantellSans'],
+        'serif': ['Shantell Sans'],
         'system-ui': ['Roboto', 'system-ui'],
         'sans-serif': ['Pangolin'],
       },
@@ -85,7 +88,12 @@ export default defineNuxtConfig({
     },
     families: [{
       name: 'Rubik Doodle Shadow', provider: 'google'
-    }],
+    },
+    {
+      name: 'Shantell Sans',
+      provider: 'local',
+    }
+    ]
   },
 
   routeRules: {

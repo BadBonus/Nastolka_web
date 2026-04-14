@@ -1,9 +1,9 @@
 @layer reset, base, theme, frameworks, components, utilities, overrides;
 
-@import "tailwindcss";
-@import "@nuxt/ui";
-@import "tw-animate-css";
 @import "./reset.css";
+@import "@nuxt/ui";
+@import "tailwindcss";
+@import "tw-animate-css";
 @import "./base.css";
 @import "./theme.css";
 @import "./frameworks.css";

@@ -26,16 +26,16 @@ const transformImg = (): string => {
 };
 
 onMounted(() => {
-  imagesLayout.value = generateLayout(
-    images.map((el) => ({ name: el })),
-    {
-      cols: 10,
-      rows: 10,
-      countOfImages: 12,
-      defaultSizeCell: 2,
-      numberOfEmptyCol: [5, 6],
-    },
-  );
+  // imagesLayout.value = generateLayout(
+  //   images.map((el) => ({ name: el })),
+  //   {
+  //     cols: 10,
+  //     rows: 10,
+  //     countOfImages: 12,
+  //     defaultSizeCell: 2,
+  //     numberOfEmptyCol: [5, 6],
+  //   },
+  // );
 });
 </script>
 
@@ -43,7 +43,7 @@ onMounted(() => {
   <div class="common-layout">
     <MainHeader />
     <main class="layout_main relative overflow-hidden px-1.5 py-6">
-      <nuxt-img
+      <!-- <nuxt-img
         v-for="img in imagesLayout"
         class="layout_main__bg_img absolute z-0"
         :style="{
@@ -53,7 +53,7 @@ onMounted(() => {
           transform: transformImg(),
         }"
         :src="`images/bg_decors/webp/${img.name}.webp`"
-      />
+      /> -->
 
       <!-- delete-tag - напоминание, что этот тег служит сугубо для поддержки мобильного вида и после разработки должен будет быть удален -->
       <div delete-tag class="mx-auto max-w-90">

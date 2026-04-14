@@ -8,24 +8,33 @@
   .drawer {
     border-radius: unset;
     background: var(--color-drawer);
-    border-left: 6px solid var(--color-brown);
+    border-left: 3px solid var(--color-neutral-dark);
+
+    [data-vaul-handle] {
+      opacity: 1 !important;
+    }
 
     label {
-      color: var(--color-text-inverted);
     }
     nav {
       span {
         font-weight: 600;
-        color: var(--color-neutral-light);
+        color: var(--color-dark-blue);
+      }
+
+      a:hover {
+        span {
+          color: var(--color-white);
+        }
       }
 
       a.text-primary::before {
-        background: var(--color-gold);
+        background: var(--color-blue);
       }
 
       a:hover:not(.text-primary) {
         &::before {
-          background: var(--color-gold-hover);
+          background: var(--color-dark-blue);
         }
       }
     }

@@ -33,7 +33,9 @@ const items = ref<NavigationMenuItem[]>([
 </script>
 <template>
   <div>
-    <h2 class="font-main mb-3 text-4xl font-bold text-white">Навигация</h2>
+    <h2 class="font-decorate-2 text-dark-blue mb-3 text-4xl font-bold">
+      Навигация
+    </h2>
 
     <nav class="MainNavigation">
       <UNavigationMenu
@@ -42,6 +44,7 @@ const items = ref<NavigationMenuItem[]>([
         class="data-[orientation=vertical]:w-48"
         :ui="{
           indicator: 'indicator',
+          item: 'text-secondary',
         }"
       />
     </nav>
