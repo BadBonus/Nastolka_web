@@ -1,5 +1,6 @@
 {
   "level": "error",
+  "exclude": "**/*.json,**/*.ts,**/*.js,**/*.tsx,**/*.jsx,**/node_modules/**",
   "fileIgnoreRules": {
     "*": "ifWithoutCurlyBraces, singleNameComponent, globalStyle, computedSideEffects, elseCondition"
   },

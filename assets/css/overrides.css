@@ -73,4 +73,15 @@
   p.text-error {
     color: var(--color-danger);
   }
+
+  nav[data-reka-navigation-menu] {
+    button {
+      &:hover {
+        background: var(--color-dark-blue);
+        span {
+          color: var(--color-white) !important;
+        }
+      }
+    }
+  }
 }

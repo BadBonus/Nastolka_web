@@ -45,6 +45,7 @@ onMounted(() => {
     <main class="layout_main relative overflow-hidden px-1.5 py-6">
       <!-- <nuxt-img
         v-for="img in imagesLayout"
+        :key="img.name"
         class="layout_main__bg_img absolute z-0"
         :style="{
           top: img.top,

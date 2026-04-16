@@ -1,3 +1,4 @@
+
 export const AUTH_COOKIE_TOKEN_NAME = 'refresh_token';
 export const TOKEN_LIFE = 7 * 24 * 60 * 60 * 1000;
 

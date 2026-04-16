@@ -130,11 +130,8 @@ export default defineNuxtConfig({
     }
   },
   alias: {
-    // В Nuxt 4 '@' и '~' по умолчанию указывают на папку <root>/app/
-    // Если нужно оставить привязку к корню проекта:
-    '#src': fileURLToPath(new URL('./', import.meta.url)),
+    '#src': fileURLToPath(new URL('./app', import.meta.url)),
 
-    // Для папок вне /app (например, shared в корне)
     '#types': fileURLToPath(new URL('./shared/types', import.meta.url)),
     '#consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
     '#apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
