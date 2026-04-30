@@ -9,10 +9,6 @@ import type { TModalFiltersFilterBadge } from "@/components/globals/FilterBadges
 
 import type { CheckboxGroupItem, CheckboxGroupValue } from "@nuxt/ui";
 
-// 	 type THeaderFilterRow = {
-
-// 	}
-
 defineOptions({
   name: "HeaderFilterRow",
 });
@@ -55,6 +51,8 @@ const places = ref<string[]>([]);
         class="mx-auto"
         :ui="{
           fieldset: 'justify-center',
+          indicator: 'bg-dark-blue!',
+          item: 'flex-col items-center',
         }"
       />
     </div>
@@ -71,6 +69,8 @@ const places = ref<string[]>([]);
         :items="typesOfPlatformGame"
         :ui="{
           fieldset: 'justify-center',
+          indicator: 'bg-dark-blue!',
+          item: 'flex-col items-center',
         }"
       />
     </div>
@@ -83,6 +83,8 @@ const places = ref<string[]>([]);
         orientation="horizontal"
         :ui="{
           fieldset: 'justify-center',
+          indicator: 'bg-dark-blue!',
+          item: 'flex-col items-center',
         }"
         v-model="statusGame"
         :items="statusesOfGame"
@@ -96,7 +98,7 @@ const places = ref<string[]>([]);
     >
       <span class="block w-full text-center">Бесплатные игры</span>
     </Button>
-    <section class="mt-4">
+    <section class="mt-4 mb-3">
       <h3 class="block text-center text-xl">Выбранные фильтры</h3>
       <FilterBadges class="mt-3" v-model="badges" />
     </section>

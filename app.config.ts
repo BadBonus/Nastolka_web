@@ -68,6 +68,16 @@ export default defineAppConfig({
         track: 'bg-dark-brown'
       }
     },
+    radiogroup: {
+      slots: {
+        // indicator: 'bg-dark-blue!', //не работает
+      }
+    },
+    checkboxGroup: {
+      slots: {
+
+      }
+    },
     card: {
       slots: {
         root: 'overflow-hidden',

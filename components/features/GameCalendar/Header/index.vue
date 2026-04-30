@@ -25,41 +25,46 @@ const changeDate = (data: Date) => {
 };
 </script>
 <template>
-  <header class="GameCalendarHeader">
+  <header class="GameCalendarHeader papperPattern rounded px-2">
     <CalendarRow @change-date="changeDate" v-model="choosedDate" />
     <RowOrigin v-model="search" v-model:is-all-vars="isAllVars" />
     <div class="sticky">
       <FilterRow class="mt-3" />
     </div>
 
-    <Button
-      variant="filled"
-      icon="material-symbols:arrow-upward-rounded"
-      class="fixed bottom-3 left-3 z-50 opacity-25 hover:opacity-100"
-      @click="scrollToTop"
-      rounded
-      only-icon
-    />
-    <UModal
-      title="Фильтры"
-      :close="{
-        color: 'primary',
-        variant: 'outline',
-        class: 'rounded-full',
-      }"
+    <div
+      class="fixed right-2 bottom-2 z-50 flex flex-col items-center justify-center gap-2"
     >
       <Button
-        size="lg"
         variant="filled"
-        color="secondary"
-        icon="lucide:settings-2"
-        class="fixed right-3 bottom-3 z-50"
+        icon="material-symbols:arrow-upward-rounded"
+        class="opacity-25 hover:opacity-100"
+        @click="scrollToTop"
+        rounded
+        only-icon
+      />
+      <UModal
+        title="Фильтры"
+        :close="{
+          color: 'primary',
+          variant: 'outline',
+          class: 'rounded-full',
+        }"
       >
-      </Button>
+        <Button
+          size="lg"
+          variant="filled"
+          color="secondary"
+          icon="lucide:settings-2"
+          class=""
+        >
+        </Button>
 
-      <template #body>
-        <GameCalendarModalFilters />
-      </template>
-    </UModal>
+        <template #body>
+          <GameCalendarModalFilters />
+        </template>
+      </UModal>
+    </div>
   </header>
 </template>
+

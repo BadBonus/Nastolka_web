@@ -6,7 +6,7 @@ defineOptions({
 
 <template>
   <section class="Calendar">
-    <GameCalendar class="mx-auto max-w-[340px]" />
+    <GameCalendar class="mx-auto max-w-85" />
   </section>
 </template>
 

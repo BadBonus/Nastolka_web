@@ -19,13 +19,16 @@ function removeElementAtIndex(
 }
 </script>
 <template>
-  <ul class="flex flex-wrap gap-1.5">
+  <ul class="flex flex-wrap justify-center gap-1.5">
     <li v-for="(el, index) in model" :key="index + el.name">
-      <UBadge size="xl" color="secondary">
+      <UBadge size="lg" color="secondary">
         <span>{{ el.name }}</span>
         <span v-if="el.count">{{ el.count }}</span>
 
-        <button @click="removeElementAtIndex(index)">
+        <button
+          class="flex items-center justify-center"
+          @click="removeElementAtIndex(index)"
+        >
           <Icon name="lucide:octagon-x" />
         </button>
       </UBadge>

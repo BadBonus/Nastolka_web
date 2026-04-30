@@ -71,10 +71,7 @@ watch(choosedDate, (newD) => {
 </script>
 
 <template>
-  <div class="CalendarRow max-w-[360px]">
-    <ClientOnly>
-      <!-- <MonthYear v-model="choosedDate" /> -->
-    </ClientOnly>
+  <div class="CalendarRow max-w-90">
     <ItemsPickSelector
       @change-via-arrow="changeWeek"
       @change="changeDate"

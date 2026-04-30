@@ -33,8 +33,10 @@ const items = computed<
     />
     <div class="mt-4 flex flex-col gap-4">
       <div v-for="list in items" :key="list.place">
-        <USeparator color="primary" type="solid">
-          <h3 class="text-2xl font-bold uppercase">{{ list.place }}</h3>
+        <USeparator :ui="{ border: 'border-white' }" type="solid">
+          <h3 class="font-decorate-2 text-2xl font-bold text-white uppercase">
+            {{ list.place }}
+          </h3>
         </USeparator>
 
         <EventList class="mt-4" :items="list.events" />

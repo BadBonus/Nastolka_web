@@ -53,7 +53,7 @@ onUnmounted(() => {
 </script>
 <template>
   <div class="HeaderRowOrigin">
-    <div class="mt-3 flex items-center justify-between">
+    <div class="mt-3 flex h-9 items-center justify-between">
       <UInput
         ref="searchInput"
         :class="{
@@ -91,6 +91,7 @@ onUnmounted(() => {
           class="flex w-auto justify-center px-1"
           variant="filled"
           icon="heroicons-solid:bars-arrow-up"
+          size="sm"
         />
       </div>
     </div>
