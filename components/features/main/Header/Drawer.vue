@@ -40,7 +40,7 @@ watch(
     </UButton>
 
     <template #header>
-      <UsersDrawerBaseInfo v-if="isAuth" />
+      <UsersDrawerBaseInfo class="mt-1.5" v-if="isAuth" />
     </template>
 
     <template #body>
@@ -51,7 +51,7 @@ watch(
         @click="open = false"
         only-icon
         size="sm"
-        class="absolute! top-3 right-2"
+        class="absolute! top-5 right-2"
       />
       <component :is="bodyComponent" />
       <USeparator class="mt-4" color="secondary" type="solid" />

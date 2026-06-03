@@ -12,6 +12,10 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD_VALIDATE: "/auth/reset-password/validate",
     RESET_PASSWORD_CONFIRM: "/auth/reset-password/confirm",
   },
+  PROFILE: {
+    ID: "/profile/",
+    INDEX: "/profile",
+  },
 } as const;
 
 export type TApiPayloads = {
@@ -72,6 +76,24 @@ export type TApiPayloads = {
       POST: { 
         req: paths["/auth/reset-password/confirm"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
+      };
+    };
+  };
+  PROFILE: {
+    ID: {
+      GET: { 
+        req?: never;
+        res?: void;
+      };
+      PATCH: { 
+        req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["application/json"];
+        res?: void;
+      };
+    };
+    INDEX: {
+      GET: { 
+        req?: never;
+        res: paths["/profile"]["get"]["responses"]["200"]["content"]["application/json"];
       };
     };
   };

@@ -19,7 +19,11 @@ try {
   const grouped = {};
 
   paths.forEach((path) => {
-    const parts = path.split("/").filter(Boolean);
+    const parts = path
+      .split("/")
+      .filter(Boolean)
+      .map((part) => part.replace(/[{}]/g, ""));
+
     if (parts.length === 0) return;
 
     const group = parts[0].toUpperCase().replace(/-/g, "_");
@@ -50,7 +54,11 @@ try {
     return Object.entries(grouped)
       .map(([group, items]) => {
         const entries = Object.entries(items)
-          .map(([key, info]) => `    ${key}: "${info.path}",`)
+          .map(([key, info]) => {
+            // Удаляет конструкции вида /{id} на конце пути и оставляет слэш
+            const cleanPath = info.path.replace(/\/{[^}]+}$/, "/");
+            return `    ${key}: "${cleanPath}",`;
+          })
           .join("\n");
         return `  ${group}: {\n${entries}\n  },`;
       })

@@ -33,7 +33,7 @@ const formatDate = (date: Date | string): string | undefined => {
 </script>
 <template>
   <UCard
-    class="shadow-element text-text relative border-2 border-[text] bg-[#f5e8d1] p-1"
+    class="shadow-element text-text relative border-2 border-[text] bg-white p-1"
     variant="outline"
   >
     <nuxt-img

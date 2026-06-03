@@ -80,7 +80,7 @@ const iconSpacingClasses = computed(() => {
     <span :class="{ invisible: loading }" class="inline-flex items-center">
       <Icon
         :class="[iconSpacingClasses]"
-        class="min-h-[18px] min-w-[18px] flex-shrink-0"
+        class="min-h-4.5 min-w-4.5 shrink-0"
         v-if="icon && props.iconPos === 'left' && !loading"
         :name="icon"
       />
@@ -88,7 +88,7 @@ const iconSpacingClasses = computed(() => {
       <slot />
       <Icon
         :class="[iconSpacingClasses]"
-        class="flex-shrink-0"
+        class="shrink-0"
         v-if="icon && props.iconPos === 'right'"
         :name="icon"
       />

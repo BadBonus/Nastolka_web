@@ -50,7 +50,7 @@ export const useAuthActions = () => {
   const logoutAction = async () => {
     error.value = null
     try {
-      await useApi(urlAuthLogout, {method: 'POST'})
+      await useApi(urlAuthLogout, {method: 'POST', credentials: 'include'})
     } catch (err: any) {
       error.value = err.statusMessage || 'Ошибка выхода'
       throw err
