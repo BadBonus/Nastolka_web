@@ -94,6 +94,7 @@ try {
       .map(([group, items]) => {
         const entries = Object.entries(items)
           .map(([key, info]) => {
+            // Удаляет конструкции вида /{id} на конце пути и оставляет слэш
             const cleanPath = info.path.replace(/\/{[^}]+}$/, '/');
             return `    ${key}: "${cleanPath}",`;
           })
