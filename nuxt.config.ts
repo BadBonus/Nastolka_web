@@ -11,29 +11,29 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@pinia/nuxt',
-    // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine 
+    // Когда будещь добавлять шрифты то глянь на https://github.com/nuxt-modules/fontaine для уточнения как шрифты добавлять в оптимизационный fontaine
     '@nuxtjs/fontaine',
     'nuxt-tiptap-editor',
     '@vueuse/nuxt',
     'reka-ui/nuxt',
     'vue-mess-detector-nuxt-devtools',
-    'shadcn-nuxt'
+    // 'shadcn-nuxt'
   ],
 
-  shadcn: {
-    /**
-     * Prefix for all the imported component.
-     * @default "Ui"
-     */
-    prefix: '',
-    /**
-     * Directory that the component lives in.
-     * Will respect the Nuxt aliases.
-     * @link https://nuxt.com/docs/api/nuxt-config#alias
-     * @default "@/components/ui"
-     */
-    componentDir: '@/components/ui'
-  },
+  // shadcn: {
+  //   /**
+  //    * Prefix for all the imported component.
+  //    * @default "Ui"
+  //    */
+  //   prefix: '',
+  //   /**
+  //    * Directory that the component lives in.
+  //    * Will respect the Nuxt aliases.
+  //    * @link https://nuxt.com/docs/api/nuxt-config#alias
+  //    * @default "@/components/ui"
+  //    */
+  //   componentDir: '@/components/ui'
+  // },
 
   app: {
     baseURL: '/Nastolka_web/',
@@ -143,7 +143,7 @@ export default defineNuxtConfig({
     {path: '~/components/features'},
     '~/components'
   ],
-  ui: {
-    colorMode: false
-  }
+   colorMode: {
+    preference: 'dark'
+  },
 })

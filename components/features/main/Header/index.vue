@@ -12,9 +12,9 @@ const authStore = useAuthStore();
   <header class="MainHeader relative z-10 h-13 px-4 pt-2">
     <div class="MainHeader__decore"></div>
     <div class="relative z-10 flex h-full w-full items-center justify-between">
-      <NuxtLink to="/" class="flex items-center gap-1 text-3xl">
+      <NuxtLink to="/" class="flex items-center gap-1 text-3xl  text-inverted">
         <span class="font-decorate font-bold max-md:hidden"> NASTOLKA </span>
-        <Icon name="game-icons:cubes" />
+        <Icon name="game-icons:cubes " />
       </NuxtLink>
 
       <div class="flex items-center gap-3">

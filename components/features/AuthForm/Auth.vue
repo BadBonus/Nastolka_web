@@ -45,14 +45,13 @@ async function onSubmit(event: FormSubmitEvent<TLoginUserSchema>) {
       />
     </UFormField>
 
-    <Button
+    <UButton
       :loading="isLoading"
       class="w-full justify-center font-semibold"
       type="submit"
       :disabled="!isFormValid"
-      color="secondary"
     >
       Авторизоваться
-    </Button>
+    </UButton>
   </UForm>
 </template>

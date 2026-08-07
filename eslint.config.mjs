@@ -1,10 +1,12 @@
 // @ts-check
-import cspellPlugin from "@cspell/eslint-plugin";
 import withNuxt from "./.nuxt/eslint.config.mjs";
+import eslintConfigPrettier from "eslint-config-prettier";
+import eslintPluginPrettier from "eslint-plugin-prettier";
+
 
 export default withNuxt({
   plugins: {
-    "@cspell": cspellPlugin,
+    prettier: eslintPluginPrettier,
   },
   rules: {
     "no-console": ["warn", { allow: ["error", "warn", "info"] }],
@@ -27,4 +29,4 @@ export default withNuxt({
       },
     ],
   },
-});
+}, eslintConfigPrettier);

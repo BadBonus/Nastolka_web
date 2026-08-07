@@ -1,0 +1,87 @@
+/* Тут слой, что должен по важности перекрывать другие слои и перезаписывать правила*/
+@import "@nuxt/ui";
+@layer overrides {
+  .bg-default {
+    background-color: var(--color-elements-surface);
+  }
+
+  .drawer {
+    border-radius: unset;
+    background: var(--color-drawer);
+    border-left: 3px solid var(--color-neutral-dark);
+
+    [data-vaul-handle] {
+      opacity: 1 !important;
+    }
+
+    label {
+    }
+    nav {
+      span {
+        font-weight: 600;
+        color: var(--color-dark-blue);
+      }
+
+      a:hover {
+        span {
+          color: var(--color-white);
+        }
+      }
+
+      a.text-primary::before {
+        background: var(--color-blue);
+      }
+
+      a:hover:not(.text-primary) {
+        &::before {
+          background: var(--color-dark-blue);
+        }
+      }
+    }
+  }
+
+  .base-input {
+    background: var(--color-neutral-light);
+    border: 2px solid var(--color-border);
+    box-sizing: border-box;
+    height: 32px;
+    box-shadow: var(--shadow-box-elements);
+    border-radius: 4px;
+    color: var(--color-text);
+    font-weight: 600;
+
+    &:focus {
+      border-color: var(--color-focus-state);
+    }
+
+    &::placeholder {
+      color: var(--color-placeholder);
+    }
+
+    &.ring-error {
+      color: var(--color-danger);
+      border-color: var(--color-danger);
+    }
+  }
+
+  label {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  p.text-error {
+    color: var(--color-danger);
+  }
+
+  nav[data-reka-navigation-menu] {
+    button {
+      &:hover {
+        background: var(--color-dark-blue);
+        span {
+          color: var(--color-white) !important;
+        }
+      }
+    }
+  }
+}

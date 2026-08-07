@@ -14,6 +14,9 @@ const route = useRoute();
 const bodyComponent = computed(() =>
   props.isAuth ? UsersDrawerNav : AuthForm,
 );
+const switchStateOpen = () => {
+  open.value = !open.value;
+};
 
 watch(
   () => route.name,
@@ -35,26 +38,25 @@ watch(
     direction="right"
     id="reka-dialog-content-v-0-1"
   >
-    <UButton color="secondary">
-      <Icon name="ci:hamburger-lg" />
-    </UButton>
+    <UButton variant="ghost" class="text-inverted">
+      <Icon class="text-3xl" name="ci:hamburger-lg" />
+      </UButton>
 
     <template #header>
       <UsersDrawerBaseInfo class="mt-1.5" v-if="isAuth" />
     </template>
 
     <template #body>
-      <Button
+      <UButton
         icon="i-lucide-x"
-        color="secondary"
-        variant="filled"
-        @click="open = false"
+        variant="ghost"
+        @click="switchStateOpen"
         only-icon
-        size="sm"
-        class="absolute! top-5 right-2"
+        size="xl"
+        class="absolute! top-4 right-4 p-0"
       />
       <component :is="bodyComponent" />
-      <USeparator class="mt-4" color="secondary" type="solid" />
+      <USeparator class="mt-4" type="solid" />
       <MainNavigation class="mt-4" />
     </template>
   </UDrawer>

@@ -50,12 +50,11 @@ async function onSubmit(event: FormSubmitEvent<TRegisterUserSchema>) {
       />
     </UFormField>
 
-    <Button
-      color="secondary"
+    <UButton
       class="w-full justify-center font-semibold"
       type="submit"
     >
       Зарегистрироваться
-    </Button>
+    </UButton>
   </UForm>
 </template>

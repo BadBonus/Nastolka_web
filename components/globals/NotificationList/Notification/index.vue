@@ -16,15 +16,14 @@ const deleteNotify = () => {
 </script>
 <template>
   <div class="NotificationListNotification font-main">
-    <div class="flex items-center justify-between">
-      <UBadge color="info">{{
+    <div class="flex items-center justify-between mb-2">
+      <UBadge class="text-inverted bg-inverted font-bold">{{
         notificationComponents[props.type].message
       }}</UBadge>
       <Button
         only-icon
         rounded
         variant="ghost"
-        color="secondary"
         icon="i-lucide-x"
         size="sm"
         @click="deleteNotify"
@@ -34,6 +33,5 @@ const deleteNotify = () => {
       :is="notificationComponents[props.type].component"
       v-bind="props"
     />
-    <USeparator class="mt-2" color="secondary" />
   </div>
 </template>
