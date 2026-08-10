@@ -1,34 +1,41 @@
 <script setup lang="ts">
-import { daysConfig, timePeriodsConfig } from "./utils";
-import type { TDataAvaCalendar } from "@/shared/types/gameShedule";
-import { EDays, ETimePeriods } from "#consts/gameShedule";
+import { daysConfig, timePeriodsConfig } from './utils';
+import type { TDataAvaCalendar } from '~/components/globals/AvailibilityCalendar/gameShedule';
+import { EDays, ETimePeriods } from '#consts/gameShedule';
 
 defineOptions({
-  name: "AvailibilityCalendar",
+  name: 'AvailibilityCalendar',
 });
 
-const model = defineModel<TDataAvaCalendar>();
+const model = defineModel<TDataAvaCalendar>({
+  default: () => new Map(),
+});
+
 defineProps<{
   blocked?: boolean;
 }>();
 
 const addTiming = (day: EDays, timePeriod: ETimePeriods) => {
-  const initValue = model.value ? { ...model.value } : {};
+  const nextMap = new Map(model.value);
+  const daySchedule = new Set(nextMap.get(day));
 
-  if (!initValue[day]) initValue[day] = [];
+  if (daySchedule.has(timePeriod)) {
+    daySchedule.delete(timePeriod);
+  } else {
+    daySchedule.add(timePeriod);
+  }
 
-  const daySchedule = [...(initValue[day] as ETimePeriods[])];
-  const indexOfValue = daySchedule.indexOf(timePeriod);
+  if (daySchedule.size === 0) {
+    nextMap.delete(day);
+  } else {
+    nextMap.set(day, daySchedule);
+  }
 
-  if (indexOfValue === -1) daySchedule.push(timePeriod);
-  else daySchedule.splice(indexOfValue, 1);
-
-  initValue[day] = daySchedule;
-  model.value = initValue;
+  model.value = nextMap;
 };
 
 const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
-  return !!model.value?.[day]?.includes(timePeriod);
+  return model.value?.get(day)?.has(timePeriod) ?? false;
 };
 </script>
 
@@ -40,29 +47,19 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
         v-for="(tp_name, index) in timePeriodsConfig.length"
         :key="tp_name"
       >
-        <NuxtImg
-          class="mx-auto"
-          :src="`images/svg/availibilityCalendar/${timePeriodsConfig[index]?.icon || ''}`"
-        />
-        {{ timePeriodsConfig[index]?.id || "" }}
+        <!-- <NuxtImg class="mx-auto" :src="`images/svg/availibilityCalendar/${ || ''}`" /> -->
+        <Component :is="timePeriodsConfig[index]?.icon" class="fill-primary mx-auto w-6" />
+        {{ timePeriodsConfig[index]?.id || '' }}
       </li>
     </ul>
     <div class="flex gap-1.5">
       <ul class="flex flex-col gap-1">
-        <li
-          v-for="day in daysConfig"
-          :key="day.shortName"
-          class="AvailibilityCalendar__nameDays"
-        >
+        <li v-for="day in daysConfig" :key="day.shortName" class="AvailibilityCalendar__nameDays">
           {{ day.shortName }}
         </li>
       </ul>
       <ul class="flex gap-1">
-        <li
-          v-for="tp in timePeriodsConfig"
-          :key="tp.id"
-          class="flex flex-col gap-1"
-        >
+        <li v-for="tp in timePeriodsConfig" :key="tp.id" class="flex flex-col gap-1">
           <button
             type="button"
             @click="() => !blocked && addTiming(day.id, tp.id)"
@@ -100,18 +97,18 @@ const isSlotActive = (day: EDays, timePeriod: ETimePeriods): boolean => {
   .AvailibilityCalendar__button {
     width: var(--btn_width);
     height: var(--btn_height);
-    border: 2px solid var(--color-secondary);
+    border: 2px solid var(--color-primary);
     border-radius: var(--radius-md);
     transition-property: background, color;
     transition: 0.25s;
     text-align: center;
 
     &:hover {
-      background: var(--color-blue);
+      background: var(--color-primary-100);
     }
 
     &.active {
-      background: var(--color-dark-blue);
+      background: var(--color-primary);
     }
   }
 }

@@ -1,16 +1,13 @@
-import { execSync } from "child_process";
-import fs from "fs";
+import { execSync } from 'child_process';
+import fs from 'fs';
 
-const apiUrl = process.env.API_URL || "http://localhost:4000";
-const typesPath = "./shared/types/api.d.ts";
-const constantsPath = "./shared/constants/api-endpoints.ts";
+const apiUrl = process.env.API_URL || 'http://localhost:4000';
+const typesPath = './shared/types/api.d.ts';
+const constantsPath = './shared/constants/api-endpoints.ts';
 
 try {
-  console.log("Генерация типов из Swagger...");
-  execSync(
-    `pnpm exec openapi-typescript ${apiUrl}/api/docs-json -o ${typesPath}`,
-    { stdio: "inherit" },
-  );
+  console.log('Генерация типов из Swagger...');
+  execSync(`pnpm exec openapi-typescript ${apiUrl}/api/docs-json -o ${typesPath}`, { stdio: 'inherit' });
 
   const response = await fetch(`${apiUrl}/api/docs-json`);
   const spec = await response.json();
@@ -20,15 +17,14 @@ try {
 
   paths.forEach((path) => {
     const parts = path
-      .split("/")
+      .split('/')
       .filter(Boolean)
-      .map((part) => part.replace(/[{}]/g, ""));
+      .map((part) => part.replace(/[{}]/g, ''));
 
     if (parts.length === 0) return;
 
-    const group = parts[0].toUpperCase().replace(/-/g, "_");
-    const key =
-      parts.slice(1).join("_").toUpperCase().replace(/-/g, "_") || "INDEX";
+    const group = parts[0].toUpperCase().replace(/-/g, '_');
+    const key = parts.slice(1).join('_').toUpperCase().replace(/-/g, '_') || 'INDEX';
 
     if (!grouped[group]) grouped[group] = {};
 
@@ -36,9 +32,7 @@ try {
     Object.entries(spec.paths[path]).forEach(([method, detail]) => {
       const m = method.toLowerCase();
       const hasReq = !!detail.requestBody;
-      const successCode = Object.keys(detail.responses).find((code) =>
-        code.startsWith("2"),
-      );
+      const successCode = Object.keys(detail.responses).find((code) => code.startsWith('2'));
       const hasRes = !!detail.responses[successCode]?.content;
 
       methodsInfo[m] = { hasReq, hasRes, successCode };
@@ -56,13 +50,13 @@ try {
         const entries = Object.entries(items)
           .map(([key, info]) => {
             // Удаляет конструкции вида /{id} на конце пути и оставляет слэш
-            const cleanPath = info.path.replace(/\/{[^}]+}$/, "/");
+            const cleanPath = info.path.replace(/\/{[^}]+}$/, '/');
             return `    ${key}: "${cleanPath}",`;
           })
-          .join("\n");
+          .join('\n');
         return `  ${group}: {\n${entries}\n  },`;
       })
-      .join("\n");
+      .join('\n');
   };
 
   const generateSchemaTypes = () => {
@@ -76,26 +70,26 @@ try {
 
                 const reqTypeLine = details.hasReq
                   ? `req: paths["${info.path}"]["${m}"]["requestBody"]["content"]["application/json"];`
-                  : "req?: never;";
+                  : 'req?: never;';
 
                 const resTypeLine = details.hasRes
                   ? `res: paths["${info.path}"]["${m}"]["responses"]["${details.successCode}"]["content"]["application/json"];`
-                  : "res?: void;";
+                  : 'res?: void;';
 
-                return `      ${methodUpper}: { 
+                return `      ${methodUpper}: {
         ${reqTypeLine}
         ${resTypeLine}
       };`;
               })
-              .join("\n");
+              .join('\n');
 
             return `    ${key}: {\n${methodTypes}\n    };`;
           })
-          .join("\n");
+          .join('\n');
 
         return `  ${group}: {\n${entries}\n  };`;
       })
-      .join("\n");
+      .join('\n');
   };
 
   const constantsContent = `
@@ -115,6 +109,13 @@ export type ApiPath = keyof paths;
   fs.writeFileSync(constantsPath, constantsContent);
   console.log(`Файл успешно обновлен в ${constantsPath}`);
 } catch (error) {
-  console.error("Ошибка генерации");
+  const errorText = String(error?.stderr || error?.message || error);
+  const isConnRefused = errorText.includes('ECONNREFUSED') || error?.cause?.code === 'ECONNREFUSED';
+
+  if (isConnRefused) {
+    console.error(`Сервер недоступен по адресу ${apiUrl}. Проверьте работу сервера.`);
+  } else {
+    console.error('Произошла ошибка при генерации типов', error);
+  }
   process.exit(1);
 }

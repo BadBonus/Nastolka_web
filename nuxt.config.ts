@@ -1,6 +1,6 @@
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite';
 import Inspect from 'vite-plugin-inspect';
-import {fileURLToPath} from 'node:url'
+import { fileURLToPath } from 'node:url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -17,8 +17,12 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'reka-ui/nuxt',
     'vue-mess-detector-nuxt-devtools',
-    // 'shadcn-nuxt'
+    // 'shadcn-nuxt',
+    'nuxt-svgo',
   ],
+  svgo: {
+    defaultImport: 'component',
+  },
 
   // shadcn: {
   //   /**
@@ -42,7 +46,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       failOnError: false,
-    }
+    },
   },
   icon: {
     serverBundle: false,
@@ -62,42 +66,39 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: true
+    enabled: true,
   },
 
-  css: [
-    '@/assets/css/main.css',
-    './public/fonts/fonts.css',
-    '@splidejs/splide/dist/css/splide.min.css'
-  ],
+  css: ['@/assets/css/main.css', '~/public/fonts/fonts.css', '@splidejs/splide/dist/css/splide.min.css'],
 
   fonts: {
     providers: {
-      npm: false
+      npm: false,
     },
     defaults: {
       weights: [400, 500, 600, 700, 800, 900],
       styles: ['normal', 'italic'],
       fallbacks: {
-        'serif': ['Shantell Sans'],
+        serif: ['Shantell Sans'],
         'system-ui': ['Roboto', 'system-ui'],
         'sans-serif': ['Pangolin'],
       },
-      preload: true
-
+      preload: true,
     },
-    families: [{
-      name: 'Rubik Doodle Shadow', provider: 'google'
-    },
-    {
-      name: 'Shantell Sans',
-      provider: 'local',
-    }
-    ]
+    families: [
+      {
+        name: 'Rubik Doodle Shadow',
+        provider: 'google',
+      },
+      {
+        name: 'Shantell Sans',
+        provider: 'local',
+      },
+    ],
   },
 
   routeRules: {
-    '/': {prerender: true}
+    '/': { prerender: true },
   },
 
   compatibilityDate: '2025-01-15',
@@ -106,44 +107,34 @@ export default defineNuxtConfig({
     config: {
       stylistic: {
         commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
-    }
+        braceStyle: '1tbs',
+      },
+    },
   },
 
   vite: {
-    plugins: [
-      tailwindcss(),
-      Inspect(),
-    ],
+    plugins: [tailwindcss(), Inspect()],
     optimizeDeps: {
-      include: [
-        'vue-advanced-cropper',
-        'v-calendar',
-        'zod'
-      ]
+      include: ['vue-advanced-cropper', 'v-calendar', 'zod'],
     },
   },
   typescript: {
     tsConfig: {
-      include: ["./app/shared/types/**/*.d.ts"]
-    }
+      include: ['./app/shared/types/**/*.d.ts'],
+    },
   },
   alias: {
     '#src': fileURLToPath(new URL('./app', import.meta.url)),
-
     '#types': fileURLToPath(new URL('./shared/types', import.meta.url)),
     '#consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
     '#apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
-    '#valSchemas': fileURLToPath(new URL('./shared/types/validationSchemas', import.meta.url))
+    '#valSchemas': fileURLToPath(new URL('./shared/types/validationSchemas', import.meta.url)),
+    '#components': fileURLToPath(new URL('./components', import.meta.url)),
+    '#features': fileURLToPath(new URL('./components/features', import.meta.url)),
+    '#globals': fileURLToPath(new URL('./components/globals', import.meta.url)),
   },
-  components: [
-    {path: '~/components/ui'},
-    {path: '~/components/globals'},
-    {path: '~/components/features'},
-    '~/components'
-  ],
-   colorMode: {
-    preference: 'dark'
+  components: [{ path: '~/components/globals' }, { path: '~/components/features' }, '~/components'],
+  colorMode: {
+    preference: 'dark',
   },
-})
+});

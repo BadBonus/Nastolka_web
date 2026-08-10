@@ -13,87 +13,94 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD_CONFIRM: "/auth/reset-password/confirm",
   },
   PROFILE: {
-    ID: "/profile/",
     INDEX: "/profile",
+    ID: "/profile/",
+    ME: "/profile/me",
   },
 } as const;
 
 export type TApiPayloads = {
   AUTH: {
     LOGIN: {
-      POST: { 
+      POST: {
         req: paths["/auth/login"]["post"]["requestBody"]["content"]["application/json"];
         res: paths["/auth/login"]["post"]["responses"]["201"]["content"]["application/json"];
       };
     };
     REGISTER: {
-      POST: { 
+      POST: {
         req: paths["/auth/register"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     VERIFY_EMAIL: {
-      POST: { 
+      POST: {
         req: paths["/auth/verify-email"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     ME: {
-      GET: { 
+      GET: {
         req?: never;
         res: paths["/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
       };
-      DELETE: { 
+      DELETE: {
         req?: never;
         res: paths["/auth/me"]["delete"]["responses"]["200"]["content"]["application/json"];
       };
     };
     LOGOUT: {
-      POST: { 
+      POST: {
         req?: never;
         res?: void;
       };
     };
     REFRESH: {
-      POST: { 
+      POST: {
         req?: never;
         res: paths["/auth/refresh"]["post"]["responses"]["200"]["content"]["application/json"];
       };
     };
     RESET_PASSWORD_REQUEST: {
-      POST: { 
+      POST: {
         req: paths["/auth/reset-password/request"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
     RESET_PASSWORD_VALIDATE: {
-      GET: { 
+      GET: {
         req?: never;
         res?: void;
       };
     };
     RESET_PASSWORD_CONFIRM: {
-      POST: { 
+      POST: {
         req: paths["/auth/reset-password/confirm"]["post"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
   };
   PROFILE: {
-    ID: {
-      GET: { 
+    INDEX: {
+      GET: {
         req?: never;
-        res?: void;
+        res: paths["/profile"]["get"]["responses"]["200"]["content"]["application/json"];
       };
-      PATCH: { 
+    };
+    ID: {
+      GET: {
+        req?: never;
+        res: paths["/profile/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
+      };
+      PATCH: {
         req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["application/json"];
         res?: void;
       };
     };
-    INDEX: {
-      GET: { 
-        req?: never;
-        res: paths["/profile"]["get"]["responses"]["200"]["content"]["application/json"];
+    ME: {
+      PATCH: {
+        req: paths["/profile/me"]["patch"]["requestBody"]["content"]["application/json"];
+        res?: void;
       };
     };
   };

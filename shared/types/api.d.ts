@@ -149,6 +149,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ProfileController_getMyProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/profile/{id}": {
         parameters: {
             query?: never;
@@ -165,20 +181,20 @@ export interface paths {
         patch: operations["ProfileController_update"];
         trace?: never;
     };
-    "/profile": {
+    "/profile/me": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ProfileController_getMyProfile"];
+        get?: never;
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["ProfileController_updateMe"];
         trace?: never;
     };
 }
@@ -219,10 +235,38 @@ export interface components {
             token: string;
             newPassword: string;
         };
+        ProfileUserMe: {
+            id: number;
+            nickname: string;
+            email: string;
+            fullName: string | null;
+            description: string | null;
+            /** Format: date-time */
+            birthdate: string | null;
+            slug: string;
+            avatar: string | null;
+            timezone: string;
+            soclinks: Record<string, never> | null;
+            gameHistory: Record<string, never>[];
+            isVerified: boolean;
+            roleId: number;
+        };
+        ProfileUserWithId: {
+            id: number;
+            nickname: string;
+            email: string;
+            fullName: string | null;
+            description: string | null;
+            slug: string;
+            avatar: string | null;
+            timezone: string;
+            soclinks: Record<string, never> | null;
+            gameHistory: Record<string, never>[];
+        };
         UpdateProfileDto: {
             fullName?: string;
             description?: string;
-            avatar?: string;
+            avatar?: Record<string, never>;
             /** Format: date-time */
             birthdate?: string;
             timezone?: string;
@@ -454,46 +498,6 @@ export interface operations {
             };
         };
     };
-    ProfileController_findOne: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    ProfileController_update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdateProfileDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     ProfileController_getMyProfile: {
         parameters: {
             query?: never;
@@ -503,13 +507,80 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Получения данных текущего авторизованного пользователя */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": Record<string, never>;
+                    "application/json": components["schemas"]["ProfileUserMe"];
                 };
+            };
+        };
+    };
+    ProfileController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Получения данных пользователя по id */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProfileUserWithId"];
+                };
+            };
+        };
+    };
+    ProfileController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UpdateProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProfileController_updateMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UpdateProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

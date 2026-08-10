@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ESocLinks } from "~/shared/socLinks";
-import { initSocLinks, socLinkKeys } from "~/utils/soclinks";
+import { ESocLinks } from '#consts/socLinks';
+import { initSocLinks, socLinkKeys } from '~/utils/soclinks';
 
 defineOptions({
-  name: "SocLinksInput",
+  name: 'SocLinksInput',
 });
 
 withDefaults(
@@ -11,8 +11,8 @@ withDefaults(
     title?: string;
   }>(),
   {
-    title: "Ссылки на ваши профили в соц. сетях",
-  },
+    title: 'Ссылки на ваши профили в соц. сетях',
+  }
 );
 
 const model = defineModel<Partial<Record<ESocLinks, string>>>({
@@ -22,16 +22,10 @@ const model = defineModel<Partial<Record<ESocLinks, string>>>({
 
 <template>
   <div>
-    <h2 class="mb-3 block text-center text-xl">
+    <h2 class="mb-3 block text-center text-lg">
       {{ title }}
     </h2>
-    <UFormField
-      v-for="field in socLinkKeys"
-      :key="field"
-      :label="`Ссылка на ваш ${field}`"
-      :name="field"
-      class="mb-3"
-    >
+    <UFormField v-for="field in socLinkKeys" :key="field" :label="`Ссылка на ваш ${field}`" :name="field" class="mb-3">
       <UInput class="w-full" v-model="model[field] as string" type="text" />
     </UFormField>
   </div>

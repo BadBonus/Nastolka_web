@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { EExpYears } from "../types";
-import type { FormError, FormSubmitEvent } from "@nuxt/ui";
-import { countries } from "#consts/countries";
-import { game_platforms, game_systems } from "#consts/gameAttrs";
-import type { ESocLinks } from "#consts/socLinks";
-import { initSocLinks } from "~/utils/soclinks";
+import { EExpYears } from '../types';
+import type { FormError, FormSubmitEvent } from '@nuxt/ui';
+import { countries } from '#consts/countries';
+import { game_platforms, game_systems } from '#consts/gameAttrs';
+import type { ESocLinks } from '#consts/socLinks';
+import { initSocLinks } from '~/utils/soclinks';
 
 type TSettingsGMForm = {
   nickname?: string;
@@ -23,21 +23,21 @@ type TSettingsGMForm = {
 };
 
 defineOptions({
-  name: "GMForm",
+  name: 'GMForm',
 });
 
 const toast = useToast();
 const state = reactive<TSettingsGMForm>({
   languages: [],
-  nickname: "",
-  city: "",
-  country: "",
-  zipcode: "",
-  about: "",
-  background: "",
-  avatar: "",
+  nickname: '',
+  city: '',
+  country: '',
+  zipcode: '',
+  about: '',
+  background: '',
+  avatar: '',
   gm_exp_age: EExpYears.less,
-  gameStyle: "",
+  gameStyle: '',
   social_links: initSocLinks,
   game_platforms: [],
   game_systems: [],
@@ -52,22 +52,17 @@ const validate = (state: any): FormError[] => {
 
 async function onSubmit(event: FormSubmitEvent<typeof state>) {
   toast.add({
-    title: "Успех",
-    description: "Форма была успешно отправлена.",
-    color: "success",
+    title: 'Успех',
+    description: 'Форма была успешно отправлена.',
+    color: 'success',
   });
   console.log(event.data);
 }
 
-const editorContent = ref("");
+const editorContent = ref('');
 </script>
 <template>
-  <UForm
-    :validate="validate"
-    :state="state"
-    class="w-full space-y-4"
-    @submit="onSubmit"
-  >
+  <UForm :validate="validate" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <UFormField label="Ник мастера" name="nickname">
       <UInput class="w-full" type="text" v-model="state.nickname as string" />
     </UFormField>
@@ -75,9 +70,7 @@ const editorContent = ref("");
     <div class="text-center">
       <h2 class="text-2xl font-bold">Изменить Аватар мастера</h2>
       <modals-change-img title="Смена аватара">
-        <button
-          class="canEditWrapper shadow-element border-border rounded-full border-2"
-        >
+        <button class="canEditWrapper shadow-element border-border rounded-full border-2">
           <NuxtImg
             class="bg-brown h-36 w-full min-w-36 rounded-full object-cover"
             src="https://github.com/benjamincanac.png"
@@ -90,56 +83,27 @@ const editorContent = ref("");
     <div class="text-center">
       <h2 class="text-2xl font-bold">Изменить бэк</h2>
       <modals-change-img title="Смена бэка">
-        <button
-          class="canEditWrapper border-border shadow-element w-full rounded border-2"
-        >
-          <NuxtImg
-            class="h-36 w-full rounded-xs object-cover"
-            src="/images/wod_1.png"
-            alt="Ваш бэк"
-          />
+        <button class="canEditWrapper border-border shadow-element w-full rounded border-2">
+          <NuxtImg class="h-36 w-full rounded-xs object-cover" src="/images/wod_1.png" alt="Ваш бэк" />
         </button>
       </modals-change-img>
     </div>
 
     <u-form-field label="Языки на котором вы можете вести игры" name="timezone">
-      <USelectMenu
-        class="w-full"
-        multiple
-        v-model="state.languages"
-        value-key="offset"
-        :items="['русский', 'английский']"
-      />
+      <USelectMenu class="w-full" multiple v-model="state.languages" value-key="offset" :items="['русский', 'английский']" />
     </u-form-field>
 
     <u-form-field label="Предпочитаемые системы" name="timezone">
-      <USelectMenu
-        class="w-full"
-        multiple
-        v-model="state.game_systems"
-        value-key="offset"
-        :items="game_systems"
-      />
+      <USelectMenu class="w-full" multiple v-model="state.game_systems" value-key="offset" :items="game_systems" />
     </u-form-field>
 
     <u-form-field label="Предпочитаемые платформы" name="timezone">
-      <USelectMenu
-        multiple
-        class="w-full"
-        v-model="state.game_platforms"
-        value-key="offset"
-        :items="game_platforms"
-      />
+      <USelectMenu multiple class="w-full" v-model="state.game_platforms" value-key="offset" :items="game_platforms" />
     </u-form-field>
 
     <div class="flex items-end gap-4">
       <UFormField label="Страна" name="country">
-        <USelectMenu
-          class="w-full"
-          v-model="state.country"
-          value-key="name"
-          :items="countries"
-        />
+        <USelectMenu class="w-full" v-model="state.country" value-key="name" :items="countries" />
       </UFormField>
 
       <UFormField label="Город" name="city">
@@ -161,8 +125,6 @@ const editorContent = ref("");
 
     <SocLinksInput v-model="state.social_links" />
 
-    <Button color="secondary" class="mx-auto block" type="submit">
-      Сохранить изменения
-    </Button>
+    <Button color="secondary" class="mx-auto block" type="submit"> Сохранить изменения </Button>
   </UForm>
 </template>

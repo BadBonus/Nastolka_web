@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { EProfileNavigation } from "./types";
-import { sections, urlTabsCoordination } from "./utils";
+import { EProfileNavigation } from './types';
+import { sections, urlTabsCoordination } from './utils';
 
 defineOptions({
-  name: "ProfileNavigation",
+  name: 'ProfileNavigation',
 });
 
 const route = useRoute();
 
 console.log(route.path);
-const currentTab =
-  urlTabsCoordination(route.path) ?? EProfileNavigation.profile;
+const currentTab = urlTabsCoordination(route.path) ?? EProfileNavigation.profile;
 
 const selectedTab = ref<string | number>(currentTab);
 const router = useRouter();
@@ -24,11 +23,9 @@ watch(selectedTab, (newTab) => {
   <UTabs
     :ui="{
       label: 'hidden',
-      root: 'border-3 border-black border-dashed rounded',
       list: 'bg-inherit',
-      indicator: 'bg-secondary',
-      trigger:
-        'text-secondary hover:text-secondary! data-[state=active]:text-white!',
+      indicator: 'bg-inverted',
+      trigger: 'text-black hover:text-white data-[state=inactive]:text-white',
     }"
     :content="false"
     v-model="selectedTab"

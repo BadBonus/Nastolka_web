@@ -1,31 +1,21 @@
 <script setup lang="ts">
-import { ADVICE } from "@/shared/messagesToUsers";
+import { ADVICE } from '@/shared/messagesToUsers';
 
 defineOptions({
-  name: "ProfileHeader",
+  name: 'ProfileHeader',
 });
 </script>
 <template>
   <header class="ProfileHeader">
     <div class="relative">
-      <NuxtImg
-        class="border-border h-35 w-full rounded-md border-2 object-cover"
-        src="images/wod_1.png"
-      />
+      <NuxtImg class="border-border h-35 w-full rounded-md border-2 object-cover" src="images/wod_1.png" />
       <NuxtImg
         class="absolute -bottom-4 left-2 h-25 w-25 rounded-full border-2"
         src="https://github.com/benjamincanac.png"
       />
 
-      <div
-        class="absolute top-0 right-0 ml-auto flex h-full flex-col justify-between self-stretch py-2 pr-2"
-      >
-        <Button
-          class="rounded-full p-2!"
-          color="danger"
-          icon="material-symbols:favorite"
-          size="sm"
-        />
+      <div class="absolute top-0 right-0 ml-auto flex h-full flex-col justify-between self-stretch py-2 pr-2">
+        <Button class="rounded-full p-2!" color="danger" icon="material-symbols:favorite" size="sm" />
 
         <ChatModal
           :advice="ADVICE"
@@ -35,23 +25,15 @@ defineOptions({
             avatar: 'https://github.com/benjamincanac.png',
           }"
         >
-          <Button
-            class="rounded-full p-2!"
-            color="info"
-            icon="streamline-freehand:messages-bubble-menu"
-            size="lg"
-          />
+          <Button class="rounded-full p-2!" color="info" icon="streamline-freehand:messages-bubble-menu" size="lg" />
         </ChatModal>
       </div>
     </div>
 
     <section class="mt-3.5 flex items-center justify-between">
-      <h1 class="-truncate my-0 text-3xl font-semibold">
-        Jack Black Black Black
-      </h1>
-      <Button class="h-fit" icon="i-game-icons:cubes" icon-pos="right"
-        >Запрос</Button
-      >
+      <h1 class="-truncate my-0 text-3xl font-semibold">Jack Black Black Black</h1>
+      <!-- <Button class="h-fit" icon="i-game-icons:cubes" icon-pos="right">Запрос</Button> -->
+      <Icon name="game-icons:cubes" />
     </section>
   </header>
 </template>

@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import DetailsForm from "./DetailsForm.vue";
+import DetailsForm from './DetailsForm.vue';
 // 	 type TSettingsMain = {
 
 // 	}
 
 defineOptions({
-  name: "SettingsMain",
+  name: 'SettingsMain',
 });
 </script>
 <template>
   <div class="SettingsMain">
     <div class="text-center">
-      <h2 class="text-2xl font-bold">Изменить аватар</h2>
+      <h2 class="mb-2 text-xl font-bold">Изменить аватар</h2>
       <modals-change-img title="Смена аватара">
-        <button
-          class="canEditWrapper shadow-element border-border rounded-full border-2"
-        >
+        <button class="canEditWrapper shadow-element border-border rounded-full border-2">
           <NuxtImg
             class="bg-brown h-36 w-full min-w-36 rounded-full object-cover"
             src="https://github.com/benjamincanac.png"
@@ -25,8 +23,8 @@ defineOptions({
       </modals-change-img>
     </div>
 
-    <div class="text-center">
-      <h2 class="mb-2 text-2xl font-bold">Детали вашего профиля</h2>
+    <div class="mt-4 text-center">
+      <h2 class="mb-3 text-xl font-bold">Детали вашего профиля</h2>
       <DetailsForm />
     </div>
   </div>

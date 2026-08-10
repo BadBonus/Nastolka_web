@@ -1,14 +1,16 @@
 <script setup lang="ts">
-const date = ref<Date>(new Date());
-const formatDate = computed(() => {
-  const formatter = new Intl.DateTimeFormat("ru-RU", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+import { CalendarDate, parseDate } from '@internationalized/date';
 
-  return formatter.format(date.value);
+// const date = ref<Date>(new Date());
+
+const date = shallowRef<Date | null>(null);
+const formatDate = computed(() => {
+  return date.value?.toString() || 'нет данных';
 });
+
+const props = defineProps<{
+  label: string;
+}>();
 </script>
 
 <template>
@@ -18,20 +20,19 @@ const formatDate = computed(() => {
     }"
   >
     <div class="relative">
-      <span class="text-text absolute -top-6 left-0 text-left text-sm font-bold"
-        >Ваш д.р.</span
-      >
+      <span class="text-text absolute -top-6 left-0 text-left text-sm font-bold">{{ label }}</span>
       <UButton
         size="md"
         icon="i-heroicons-calendar-days-20-solid"
         :label="formatDate"
-        variant="soft"
-        class="shadow-button text-secondary border-2 border-black p-1!"
+        variant="ghost"
+        class="text-default min-w-[138px] border-2"
       />
     </div>
 
     <template #content="{ close }">
-      <DatePicker v-model="date" is-required @close="close" />
+      <UCalendar type="date" locale="ru-RU" v-model="date" is-required @close="close" />
+      <!-- <DatePicker v-model="date" is-required @close="close" /> -->
     </template>
   </UPopover>
 </template>

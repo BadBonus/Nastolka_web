@@ -1,13 +1,13 @@
 <script setup lang="ts">
 defineOptions({
-  name: "MainFooter",
+  name: 'MainFooter',
 });
 </script>
 <template>
-  <footer class="relative w-full px-4 py-1">
-    <div class="relative z-10 flex items-center gap-1 text-3xl text-inverted">
-      <span class="font-decorate font-bold"> NASTOLKA </span>
-      <Icon name="game-icons:cubes" />
+  <footer class="relative min-h-12 w-full px-4 py-1">
+    <div class="text-inverted relative z-10 flex items-center gap-1 text-3xl">
+      <!--  <span class="font-decorate font-bold"> NASTOLKA </span> -->
+      <!-- <ClientOnly><Icon name="game-icons:cubes" /> </ClientOnly> -->
     </div>
     <div class="MainFooter__decore"></div>
   </footer>
@@ -21,7 +21,7 @@ footer {
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     margin: auto;

@@ -1,0 +1,1 @@
+Остановился на том, что для твоего datePicker, для UDATE надо скачать https://www.npmjs.com/package/@internationalized/date, ты подумывал о том, чтобы он возвращал просто Date тип.

@@ -1,22 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Здесь будут располагаться основные глобальные стили на проект, что переписывают base стили, в base другие фреймы и библиотеки могут добавлять глобаные стили */
 
 /*NOTE: @theme - спец. директива для tailwind, ненадо путать с утилитой css @layer your_name(например theme)  */
 @layer theme {
   :root {
-  --ui-primary: var(--ui-color-neutral-900);
-}
+    --ui-primary: var(--ui-color-neutral-900);
+  }
 
-.dark {
+  .dark {
     --ui-primary: white;
+    --ui-text: white;
   }
 }
 
 @theme {
   /* Montserrat Alternates - ранее как main */
-  --font-main: "Shantell Sans, Rubik";
-  --font-secondary: "Shantell Sans";
-  --font-decorate: "Artist Nouveau";
-
+  --font-main: 'Shantell Sans, Rubik';
+  --font-secondary: 'Shantell Sans';
+  --font-decorate: 'Artist Nouveau';
 }

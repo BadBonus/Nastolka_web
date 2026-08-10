@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from "@nuxt/ui";
-import { popularTimezones } from "@consts/timezones";
-import { EDays, type TDataAvaCalendar } from "@/shared/types/gameShedule";
-import type { TSoclinksObject } from "~/shared/types/global";
-import { initSocLinks } from "~/utils/soclinks";
+import type { FormError, FormSubmitEvent } from '@nuxt/ui';
+import { popularTimezones } from '@consts/timezones';
+import { EDays, type TDataAvaCalendar } from '~/components/globals/AvailibilityCalendar/gameShedule';
+import type { TSoclinksObject } from '~/shared/types/global';
+import { initSocLinks } from '~/utils/soclinks';
 // 	 type TSettingsDetailsForm = {
 
 // 	}
@@ -21,18 +21,18 @@ type TSettingsDetailsForm = {
 };
 
 defineOptions({
-  name: "PagesBecomegm",
+  name: 'PagesBecomegm',
 });
 
 const state = reactive<TSettingsDetailsForm>({
-  nickname: "",
-  fio: "",
-  timezone: "",
-  email: "",
-  gameStyle: "",
+  nickname: '',
+  fio: '',
+  timezone: '',
+  email: '',
+  gameStyle: '',
   availableDays: null,
   // tabletop_exp_age: EExpYears.less,
-  gm_style: "",
+  gm_style: '',
   social_links: initSocLinks,
 });
 
@@ -46,20 +46,15 @@ const validate = (state: any): FormError[] => {
 const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<typeof state>) {
   toast.add({
-    title: "Успех",
-    description: "Форма была успешно отправлена.",
-    color: "success",
+    title: 'Успех',
+    description: 'Форма была успешно отправлена.',
+    color: 'success',
   });
 }
 </script>
 
 <template>
-  <UForm
-    :validate="validate"
-    :state="state"
-    class="w-full space-y-4"
-    @submit="onSubmit"
-  >
+  <UForm :validate="validate" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <div class="flex">
       <UFormField class="w-full" label="Ник" name="nickname">
         <UInput class="w-full" type="text" v-model="state.nickname" />
@@ -67,12 +62,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     </div>
 
     <u-form-field label="Временная зона" name="timezone">
-      <USelectMenu
-        class="w-full"
-        v-model="state.timezone"
-        value-key="offset"
-        :items="popularTimezones"
-      />
+      <USelectMenu class="w-full" v-model="state.timezone" value-key="offset" :items="popularTimezones" />
     </u-form-field>
 
     <UFormField label="Как вы проводите игры?" name="gameStyle">

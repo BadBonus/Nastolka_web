@@ -1,4 +1,6 @@
 /* Тут слой, что должен по важности перекрывать другие слои и перезаписывать правила*/
 @layer overrides {
-
+  .focus-visible\:outline-3:focus-visible {
+    outline-color: var(--ui-info);
+  }
 }

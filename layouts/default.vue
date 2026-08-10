@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import generateLayout, { type TplaceBgImagesOut } from "~/utils/placeBgImages";
+import generateLayout, { type TplaceBgImagesOut } from '~/utils/placeBgImages';
 
 const images = [
-  "common_funny",
-  "dragon",
-  "dwarf",
-  "evilEye",
-  "orc_funny",
-  "goblin",
-  "knight",
-  "knightFunny",
-  "orc",
-  "evil_funny",
-  "warriorGirl",
-  "chest_funny",
-  "dwarf_funny",
+  'common_funny',
+  'dragon',
+  'dwarf',
+  'evilEye',
+  'orc_funny',
+  'goblin',
+  'knight',
+  'knightFunny',
+  'orc',
+  'evil_funny',
+  'warriorGirl',
+  'chest_funny',
+  'dwarf_funny',
 ];
 const imagesLayout = ref<TplaceBgImagesOut[]>([]);
 
@@ -57,12 +57,12 @@ onMounted(() => {
       /> -->
 
       <!-- delete-tag - напоминание, что этот тег служит сугубо для поддержки мобильного вида и после разработки должен будет быть удален -->
-      <div delete-tag class="mx-auto max-w-90">
+      <div delete-tag class="mx-auto max-w-100">
         <slot />
       </div>
     </main>
 
-    <MainFooter />
+    <MainFooter class="mt-8" />
   </div>
 </template>
 

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // import { EExpYears } from "../types";
-import type { FormError, FormSubmitEvent } from "@nuxt/ui";
-import { popularTimezones } from "#consts/timezones";
-import type { TDataAvaCalendar } from "~/shared/types/gameShedule";
-import type { TSoclinksObject } from "~/shared/types/global";
-import { initSocLinks } from "~/utils/soclinks.ts";
+import type { FormError, FormSubmitEvent } from '@nuxt/ui';
+import { popularTimezones } from '#consts/timezones';
+import type { TDataAvaCalendar } from '~/components/globals/AvailibilityCalendar/gameShedule';
+import type { TSoclinksObject } from '~/shared/types/global';
+import { initSocLinks } from '~/utils/soclinks.ts';
 // 	 type TSettingsDetailsForm = {
 
 // 	}
@@ -22,18 +22,18 @@ type TSettingsDetailsForm = {
 };
 
 defineOptions({
-  name: "SettingsDetailsForm",
+  name: 'SettingsDetailsForm',
 });
 
 const state = reactive<TSettingsDetailsForm>({
-  nickname: "",
-  fio: "",
-  timezone: "",
-  email: "",
-  about: "",
+  nickname: '',
+  fio: '',
+  timezone: '',
+  email: '',
+  about: '',
   availableDays: null,
   // tabletop_exp_age: EExpYears.less,
-  gm_style: "",
+  gm_style: '',
   social_links: initSocLinks,
 });
 
@@ -47,20 +47,15 @@ const validate = (state: any): FormError[] => {
 const toast = useToast();
 async function onSubmit(event: FormSubmitEvent<typeof state>) {
   toast.add({
-    title: "Успех",
-    description: "Форма была успешно отправлена.",
-    color: "success",
+    title: 'Успех',
+    description: 'Форма была успешно отправлена.',
+    color: 'success',
   });
   console.log(event.data);
 }
 </script>
 <template>
-  <UForm
-    :validate="validate"
-    :state="state"
-    class="w-full space-y-4"
-    @submit="onSubmit"
-  >
+  <UForm :validate="validate" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
         <UInput class="w-full" type="text" v-model="state.nickname as string" />
@@ -72,12 +67,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
     </div>
 
     <u-form-field label="Временная зона" name="timezone">
-      <USelectMenu
-        class="w-full"
-        v-model="state.timezone"
-        value-key="offset"
-        :items="popularTimezones"
-      />
+      <USelectMenu class="w-full" v-model="state.timezone" value-key="offset" :items="popularTimezones" />
     </u-form-field>
 
     <div class="flex items-end gap-4">
@@ -85,24 +75,20 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
         <UInput class="w-full" v-model="state.email as string" type="text" />
       </UFormField>
 
-      <PopupDatePicker />
+      <PopupDatePicker label="Ваш д.р." />
     </div>
     <UFormField label="О себе" name="about">
       <UTextarea class="w-full" v-model="state.about" />
     </UFormField>
 
     <div>
-      <span class="mb-3 block text-center text-xl">
-        Доступное время для игр
-      </span>
+      <span class="mb-3 block text-center text-xl"> Доступное время для игр </span>
       <AvailibilityCalendar v-model="state.availableDays as TDataAvaCalendar" />
     </div>
 
-    <SocLinksInput v-model="state.social_links" />
+    <SocLinksInput class="mt-5" v-model="state.social_links" />
 
-    <Button color="secondary" class="mx-auto" type="submit">
-      Сохранить изменения
-    </Button>
+    <UButton class="mx-auto mt-3" type="submit"> Сохранить изменения </UButton>
   </UForm>
 </template>
 

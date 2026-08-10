@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { AuthForm, UsersDrawerNav } from "#components";
+import { AuthForm, UsersDrawerNav } from '#components';
 
 defineOptions({
-  name: "HeaderDrawer",
+  name: 'HeaderDrawer',
 });
 
 const props = withDefaults(defineProps<{ isAuth?: boolean }>(), {
@@ -11,9 +11,7 @@ const props = withDefaults(defineProps<{ isAuth?: boolean }>(), {
 
 const open = ref<boolean>(false);
 const route = useRoute();
-const bodyComponent = computed(() =>
-  props.isAuth ? UsersDrawerNav : AuthForm,
-);
+const bodyComponent = computed(() => (props.isAuth ? UsersDrawerNav : AuthForm));
 const switchStateOpen = () => {
   open.value = !open.value;
 };
@@ -22,7 +20,7 @@ watch(
   () => route.name,
   () => {
     open.value = false;
-  },
+  }
 );
 </script>
 <template>
@@ -39,8 +37,8 @@ watch(
     id="reka-dialog-content-v-0-1"
   >
     <UButton variant="ghost" class="text-inverted">
-      <Icon class="text-3xl" name="ci:hamburger-lg" />
-      </UButton>
+      <Icon class="text-3xl" name="ci:hamburger" />
+    </UButton>
 
     <template #header>
       <UsersDrawerBaseInfo class="mt-1.5" v-if="isAuth" />

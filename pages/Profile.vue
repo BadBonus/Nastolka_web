@@ -1,12 +1,12 @@
 <script setup lang="ts">
 defineOptions({
-  name: "Profile",
+  name: 'Profile',
 });
 </script>
 <template>
-  <article class="Profile papperPattern rounded p-2">
+  <article class="Profile border-inverted sketchy-border border-3 p-4">
     <ProfileNavigation />
-    <NuxtPage />
+    <NuxtPage class="mt-4" />
   </article>
 </template>
 

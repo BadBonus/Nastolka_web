@@ -4,13 +4,13 @@
 // 	}
 
 defineOptions({
-  name: "ProfileIndex",
+  name: 'ProfileIndex',
 });
 </script>
 
 <template>
   <section>
-    <h1 class="font-decorate-2 text-center font-bold">Настройка профиля</h1>
+    <h1 class="font-decorate-2 text-center text-2xl font-bold">Настройка профиля</h1>
     <profile-settings-main />
   </section>
 </template>
