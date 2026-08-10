@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Cropper, CircleStencil } from "vue-advanced-cropper";
-import type { CropperResult } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
+import { Cropper, CircleStencil } from 'vue-advanced-cropper';
+import type { CropperResult } from 'vue-advanced-cropper';
+import 'vue-advanced-cropper/dist/style.css';
 
 export type TImageCropper = {
   minWidth?: number;
@@ -25,13 +25,13 @@ const props = withDefaults(defineProps<TImageCropper>(), {
   maxHeight: 2000,
 });
 
-const cropperRef = useTemplateRef("cropperRef");
+const cropperRef = useTemplateRef('cropperRef');
 const isDragOver = ref<boolean>(false);
 const imgFile = ref<File | null>(null);
 const img = ref<null | string>(null);
 
 const emit = defineEmits<{
-  (e: "confirm", data: TModifiedCropperResult): void;
+  (e: 'confirm', data: TModifiedCropperResult): void;
 }>();
 
 const takeImg = async (event: Event) => {
@@ -59,7 +59,7 @@ const sizeRestrictions = () => ({
 
 const submit = () => {
   if (cropperRef.value)
-    emit("confirm", {
+    emit('confirm', {
       ...cropperRef.value?.getResult(),
       file: imgFile.value as File,
     });
@@ -67,12 +67,8 @@ const submit = () => {
 </script>
 
 <template>
-  <div
-    @dragenter.prevent="isDragOver = true"
-    @dragleave.prevent="isDragOver = false"
-    class="ImageCropper relative"
-  >
-    <div class="inputImageArea h-15 w-full text-black">
+  <div @dragenter.prevent="isDragOver = true" @dragleave.prevent="isDragOver = false" class="ImageCropper relative">
+    <div class="inputImageArea text-inverted h-15 w-full">
       <input
         @dragenter.prevent="isDragOver = true"
         @dragleave.prevent="isDragOver = false"
@@ -97,9 +93,7 @@ const submit = () => {
         }"
         class="relative top-2 flex items-center border-2 border-dashed border-black"
       >
-        <span v-if="!img" class="abscenter inset-0 m-auto h-fit w-fit">
-          Перетащи
-        </span>
+        <span v-if="!img" class="abscenter inset-0 m-auto h-fit w-fit"> Перетащи </span>
         <input
           class="abscenter"
           @dragenter.prevent="isDragOver = true"
@@ -121,33 +115,20 @@ const submit = () => {
       </div>
 
       <div class="absolute right-3 bottom-3 z-10 flex gap-2" v-if="img">
-        <button
-          @click="rotate(-90)"
-          class="bg-bg-2 flex items-center justify-center rounded-lg p-1 text-black hover:bg-black hover:text-white"
-        >
-          <Icon class="text-xl" name="ph:arrow-arc-left" />
+        <button @click="rotate(-90)" class="bg-bg-2 text-inverted flex items-center justify-center rounded-lg p-1">
+          <Icon class="text-xl text-white" name="ph:arrow-arc-left" />
         </button>
-        <button
-          @click="rotate(90)"
-          class="bg-bg-2 flex items-center justify-center rounded-lg p-1 text-black hover:bg-black hover:text-white"
-        >
-          <Icon class="text-xl" name="ph:arrow-arc-right" />
+        <button @click="rotate(90)" class="bg-bg-2 text-inverted flex items-center justify-center rounded-lg p-1">
+          <Icon class="text-xl text-white" name="ph:arrow-arc-right" />
         </button>
       </div>
     </div>
 
-    <span :class="{ 'opacity-0': !img }" class="mt-3 block text-sm text-black">
-      Совет
-    </span>
+    <span :class="{ 'opacity-0': !img }" class="text-primary mt-3 block text-sm"> Совет </span>
 
-    <Button
-      variant="filled"
-      :disabled="!img"
-      class="mt-4 w-full"
-      @click="submit"
-    >
+    <UButton color="success" :disabled="!img" class="mt-4 w-full justify-center" size="lg" @click="submit">
       Сохранить
-    </Button>
+    </UButton>
   </div>
 </template>
 
@@ -174,14 +155,14 @@ const submit = () => {
     position: relative;
     border: 2px solid var(--color-secondary);
     transition: 0.2s;
-    color: var(--color-white);
+    color: var(--text-color-inverted);
 
     &:has(input:hover) {
       background: var(--color-black/40);
     }
   }
 
-  input[type="file"] {
+  input[type='file'] {
     width: 100%;
     height: 100%;
     position: absolute;
