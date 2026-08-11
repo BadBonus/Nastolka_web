@@ -1,20 +1,35 @@
+/**
+ * @file Скрипт для автоматической генерации TypeScript типов и констант эндпоинтов из OpenAPI/Swagger спецификации.
+ * Извлекает спецификацию, группирует пути по контроллерам и формирует типы запросов/ответов с учетом Content-Type.
+ */
+
 import { execSync } from 'child_process';
 import fs from 'fs';
 
 const apiUrl = process.env.API_URL || 'http://localhost:4000';
 const typesPath = './shared/types/api.d.ts';
 const constantsPath = './shared/constants/api-endpoints.ts';
+const SWAGGER_PATH = '/api/docs-json';
+
+/**
+ * @typedef {Object} MethodInfo
+ * @property {string|null} reqContentType - Формат данных запроса.
+ * @property {string|null} resContentType - Формат данных ответа.
+ * @property {string|undefined} successCode - HTTP код успешного ответа (2xx).
+ */
 
 try {
   console.log('Генерация типов из Swagger...');
-  execSync(`pnpm exec openapi-typescript ${apiUrl}/api/docs-json -o ${typesPath}`, { stdio: 'inherit' });
+  execSync(`pnpm exec openapi-typescript ${apiUrl}${SWAGGER_PATH} -o ${typesPath}`, { stdio: 'inherit' });
 
-  const response = await fetch(`${apiUrl}/api/docs-json`);
+  const response = await fetch(`${apiUrl}${SWAGGER_PATH}`);
   const spec = await response.json();
   const paths = Object.keys(spec.paths);
 
+  /** @type {Object.<string, Object.<string, { path: string, methods: Object.<string, MethodInfo> }>>} */
   const grouped = {};
 
+  // Группировка путей спецификации по неймспейсам (контроллерам)
   paths.forEach((path) => {
     const parts = path
       .split('/')
@@ -23,19 +38,44 @@ try {
 
     if (parts.length === 0) return;
 
+    // Определение группы (например, AUTH) и ключа (например, REGISTER)
     const group = parts[0].toUpperCase().replace(/-/g, '_');
     const key = parts.slice(1).join('_').toUpperCase().replace(/-/g, '_') || 'INDEX';
 
     if (!grouped[group]) grouped[group] = {};
 
     const methodsInfo = {};
+
+    // Обход всех HTTP-методов (get, post, patch и т.д.) для текущего пути
     Object.entries(spec.paths[path]).forEach(([method, detail]) => {
       const m = method.toLowerCase();
-      const hasReq = !!detail.requestBody;
-      const successCode = Object.keys(detail.responses).find((code) => code.startsWith('2'));
-      const hasRes = !!detail.responses[successCode]?.content;
 
-      methodsInfo[m] = { hasReq, hasRes, successCode };
+      let reqContentType = null;
+      // Определение приоритетного Content-Type для тела запроса
+      if (detail.requestBody?.content) {
+        const types = Object.keys(detail.requestBody.content);
+        reqContentType = types.includes('application/json')
+          ? 'application/json'
+          : types.includes('multipart/form-data')
+            ? 'multipart/form-data'
+            : types[0];
+      }
+
+      // Поиск первого успешного HTTP-статуса (начинается с '2')
+      const successCode = Object.keys(detail.responses || {}).find((code) => code.startsWith('2'));
+      let resContentType = null;
+
+      // Определение приоритетного Content-Type для тела ответа
+      if (successCode && detail.responses[successCode]?.content) {
+        const types = Object.keys(detail.responses[successCode].content);
+        resContentType = types.includes('application/json')
+          ? 'application/json'
+          : types.includes('multipart/form-data')
+            ? 'multipart/form-data'
+            : types[0];
+      }
+
+      methodsInfo[m] = { reqContentType, resContentType, successCode };
     });
 
     grouped[group][key] = {
@@ -44,12 +84,16 @@ try {
     };
   });
 
+  /**
+   * Формирует строковое представление объекта API_ENDPOINTS.
+   * Очищает пути от динамических параметров Swagger (/{id}) для использования на клиенте.
+   * @returns {string} Исходный код объекта констант маршрутов.
+   */
   const generateEndpointsObject = () => {
     return Object.entries(grouped)
       .map(([group, items]) => {
         const entries = Object.entries(items)
           .map(([key, info]) => {
-            // Удаляет конструкции вида /{id} на конце пути и оставляет слэш
             const cleanPath = info.path.replace(/\/{[^}]+}$/, '/');
             return `    ${key}: "${cleanPath}",`;
           })
@@ -59,6 +103,11 @@ try {
       .join('\n');
   };
 
+  /**
+   * Формирует строковое представление типа TApiPayloads.
+   * Связывает пути и методы с соответствующими типами request и response из сгенерированного api.d.ts.
+   * @returns {string} Исходный код объявления типа полезной нагрузки API.
+   */
   const generateSchemaTypes = () => {
     return Object.entries(grouped)
       .map(([group, items]) => {
@@ -68,12 +117,12 @@ try {
               .map(([m, details]) => {
                 const methodUpper = m.toUpperCase();
 
-                const reqTypeLine = details.hasReq
-                  ? `req: paths["${info.path}"]["${m}"]["requestBody"]["content"]["application/json"];`
+                const reqTypeLine = details.reqContentType
+                  ? `req: paths["${info.path}"]["${m}"]["requestBody"]["content"]["${details.reqContentType}"];`
                   : 'req?: never;';
 
-                const resTypeLine = details.hasRes
-                  ? `res: paths["${info.path}"]["${m}"]["responses"]["${details.successCode}"]["content"]["application/json"];`
+                const resTypeLine = details.resContentType
+                  ? `res: paths["${info.path}"]["${m}"]["responses"]["${details.successCode}"]["content"]["${details.resContentType}"];`
                   : 'res?: void;';
 
                 return `      ${methodUpper}: {
