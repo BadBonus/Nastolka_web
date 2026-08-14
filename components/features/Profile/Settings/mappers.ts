@@ -10,9 +10,9 @@ export const mapToSettingsProps = (data: TProfileMeRes): TSettingsMainProps => (
   fio: data.fullName,
   about: data.description,
   availableDays: data.schedules.map((item) => ({
-    day: item.dayOfWeek.toString(),
-    start: item.startTime.toString(),
-    end: item.endTime.toString(),
+    day: item.dayOfWeek,
+    start: item.startTime,
+    end: item.endTime,
   })),
   social_links: data.soclinks,
   avatar: data.avatar,

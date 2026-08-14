@@ -8,5 +8,5 @@ export const settingsDetailsFormSchema: z.ZodType<TSettingsProps> = z.object({
   fio: z.string().optional(),
   about: z.string().optional(),
   social_links: z.record(z.string(), z.string().optional()).optional(),
-  availableDays: z.array(z.object({ day: z.string(), start: z.string(), end: z.string() })).optional(),
+  availableDays: z.array(z.object({ day: z.number(), start: z.number(), end: z.number() })).optional(),
 });

@@ -9,7 +9,7 @@ export type TSettingsProps = {
   fio?: string;
   about?: string;
   social_links?: Record<string, string | undefined>;
-  availableDays?: Array<{ day: string; start: string; end: string }>;
+  availableDays?: Array<{ day: number; start: number; end: number }>;
 };
 
 defineOptions({ name: 'SettingsDetailsForm' });
@@ -42,15 +42,15 @@ defineEmits(['submit']);
     </div>
 
     <UFormField label="О себе" name="about">
-      <!-- <UTextarea class="w-full" v-model="state.about" /> -->
+      <UTextarea class="w-full" v-model="state.about" />
     </UFormField>
 
     <div>
       <span class="mb-3 block text-center text-xl">Доступное время для игр</span>
-      <!-- <AvailibilityCalendar v-model="state.availableDays" /> -->
+      <AvailibilityCalendar v-model="state.availableDays" />
     </div>
 
-    <!-- <SocLinksInput class="mt-5" v-model="state.social_links" /> -->
+    <SocLinksInput class="mt-5" v-model="state.social_links" />
 
     <UButton @click="$emit('submit')" class="mx-auto mt-3" type="submit">Сохранить изменения</UButton>
   </UForm>

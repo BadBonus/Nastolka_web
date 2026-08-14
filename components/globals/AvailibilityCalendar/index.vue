@@ -5,7 +5,7 @@ defineOptions({
   name: 'AvailibilityCalendar',
 });
 
-const model = defineModel<ScheduleInterval[]>({
+const model = defineModel<ScheduleInterval[] | undefined>({
   default: () => [],
 });
 
@@ -13,23 +13,19 @@ defineProps<{
   blocked?: boolean;
 }>();
 
-const toggleTiming = (dayOfWeek: number, startTime: number, endTime: number) => {
+const toggleTiming = (day: number, start: number, end: number) => {
   const currentList = model.value ?? [];
-  const index = currentList.findIndex(
-    (item) => item.dayOfWeek === dayOfWeek && item.startTime === startTime && item.endTime === endTime
-  );
+  const index = currentList.findIndex((item) => item.day === day && item.start === start && item.end === end);
 
   if (index !== -1) {
     model.value = currentList.filter((_, i) => i !== index);
   } else {
-    model.value = [...currentList, { dayOfWeek, startTime, endTime }];
+    model.value = [...currentList, { day, start, end }];
   }
 };
 
-const isSlotActive = (dayOfWeek: number, startTime: number, endTime: number): boolean => {
-  return (model.value ?? []).some(
-    (item) => item.dayOfWeek === dayOfWeek && item.startTime === startTime && item.endTime === endTime
-  );
+const isSlotActive = (day: number, start: number, end: number): boolean => {
+  return (model.value ?? []).some((item) => item.day === day && item.start === start && item.end === end);
 };
 </script>
 
@@ -47,7 +43,7 @@ const isSlotActive = (dayOfWeek: number, startTime: number, endTime: number): bo
     </ul>
     <div class="flex gap-1.5">
       <ul class="flex flex-col gap-1">
-        <li v-for="day in daysConfig" :key="day.dayOfWeek" class="AvailibilityCalendar__nameDays">
+        <li v-for="day in daysConfig" :key="day.day" class="AvailibilityCalendar__nameDays">
           {{ day.shortName }}
         </li>
       </ul>
@@ -55,12 +51,12 @@ const isSlotActive = (dayOfWeek: number, startTime: number, endTime: number): bo
         <li v-for="tp in timePeriodsConfig" :key="tp.id" class="flex flex-col gap-1">
           <button
             v-for="day in daysConfig"
-            :key="day.dayOfWeek"
+            :key="day.day"
             type="button"
-            @click="() => !blocked && toggleTiming(day.dayOfWeek, tp.startTime, tp.endTime)"
+            @click="() => !blocked && toggleTiming(day.day, tp.start, tp.end)"
             class="AvailibilityCalendar__button"
             :class="{
-              active: isSlotActive(day.dayOfWeek, tp.startTime, tp.endTime),
+              active: isSlotActive(day.day, tp.start, tp.end),
               'pointer-events-none': blocked,
             }"
           ></button>
