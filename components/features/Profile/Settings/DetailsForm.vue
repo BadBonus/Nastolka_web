@@ -18,7 +18,8 @@ defineEmits(['submit']);
 </script>
 
 <template>
-  <UForm :schema="settingsDetailsFormSchema" :state="state" class="w-full space-y-4" @submit="onSubmit">
+  <mark>{{ state }}</mark>
+  <UForm :schema="settingsDetailsFormSchema" :state="state" class="w-full space-y-4" @submit="(e) => $emit('submit', e)">
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
         <UInput disabled class="w-full" type="text" v-model="state.nickname" />
@@ -30,7 +31,7 @@ defineEmits(['submit']);
     </div>
 
     <UFormField label="Временная зона" name="timezone">
-      <USelectMenu class="w-full" v-model="state.timezone" value-key="offset" :items="popularTimezones" />
+      <USelectMenu class="w-full" v-model="state.timezone" value-key="offset" label-key="label" :items="popularTimezones" />
     </UFormField>
 
     <div class="flex items-end gap-4">
@@ -52,6 +53,6 @@ defineEmits(['submit']);
 
     <SocLinksInput class="mt-5" v-model="state.social_links" />
 
-    <UButton @click="$emit('submit')" class="mx-auto mt-3" type="submit">Сохранить изменения</UButton>
+    <UButton class="mx-auto mt-3" type="submit">Сохранить изменения</UButton>
   </UForm>
 </template>

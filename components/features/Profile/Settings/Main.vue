@@ -8,18 +8,20 @@ defineOptions({
 });
 
 export type TSettingsMainProps = TSettingsProps & { avatar?: string };
-defineProps<TSettingsMainProps>();
-
+const props = defineProps<TSettingsMainProps>();
 const toast = useToast();
-const stateDetailsForm = ref<TSettingsProps>({
-  nickname: '',
-  timezone: 'UTC',
-  email: '',
-  fio: undefined,
-  about: undefined,
-  social_links: undefined,
-  availableDays: undefined,
+
+const createInitialState = (data?: Partial<TSettingsMainProps>): TSettingsProps => ({
+  nickname: data?.nickname ?? '',
+  timezone: data?.timezone ?? 'UTC',
+  email: data?.email ?? '',
+  fio: data?.fio,
+  about: data?.about,
+  social_links: data?.social_links,
+  availableDays: data?.availableDays,
 });
+
+const stateDetailsForm = ref<TSettingsProps>(createInitialState(props));
 
 const onSubmit = (event: FormSubmitEvent<TSettingsProps>) => {
   // Данные попадают сюда только при успешной валидации Zod
@@ -31,6 +33,14 @@ const onSubmit = (event: FormSubmitEvent<TSettingsProps>) => {
     color: 'success',
   });
 };
+
+watch(
+  () => props,
+  (newProps) => {
+    stateDetailsForm.value = createInitialState(newProps);
+  },
+  { deep: true }
+);
 </script>
 <template>
   <div class="SettingsMain">
@@ -50,7 +60,7 @@ const onSubmit = (event: FormSubmitEvent<TSettingsProps>) => {
 
     <div class="mt-4 text-center">
       <h2 class="mb-3 text-xl font-bold">Детали вашего профиля</h2>
-      <DetailsForm v-model="stateDetailsForm" @submit="onSubmit" />
+      <DetailsForm v-model="stateDetailsForm" @submit="(e: FormSubmitEvent<TSettingsProps>) => onSubmit(e)" />
     </div>
   </div>
 </template>

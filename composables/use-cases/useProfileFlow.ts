@@ -1,6 +1,6 @@
 import useProfileActions from '@/composables/actions/useProfile';
 import { mapToSettingsProps } from '@/components/features/Profile/Settings/mappers';
-import { sanitizeNulls } from '@/utils/transformers/sanitizeNulls';
+import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
 
 export default function useProfileFlow() {
   const { getMeAction, error } = useProfileActions();
