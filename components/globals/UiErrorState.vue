@@ -21,24 +21,19 @@ const emit = defineEmits<{
 
 <template>
   <div
-    class="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 bg-gray-50/50 p-6 text-center"
+    class="border-error bg-inverted-primary flex flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center"
   >
-    <h3 class="text-base font-semibold text-gray-900">
+    <h3 class="text-error text-base font-semibold">
       {{ title }}
     </h3>
-    <p class="mt-1 max-w-sm text-sm text-gray-500">
+    <p class="text-inverted-primary mt-1 max-w-sm text-sm">
       {{ description }}
     </p>
     <div class="mt-4">
-      <button
-        type="button"
-        :disabled="isRetrying"
-        @click="emit('retry')"
-        class="bg-primary hover:bg-primary/90 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium text-white transition-colors disabled:opacity-50"
-      >
+      <UButton type="button" :disabled="isRetrying" @click="emit('retry')" color="error">
         <span v-if="isRetrying">Загрузка...</span>
         <span v-else>{{ retryLabel }}</span>
-      </button>
+      </UButton>
     </div>
   </div>
 </template>
