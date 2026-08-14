@@ -5,20 +5,16 @@ import { popularTimezones } from '#consts/timezones';
 import type { TDataAvaCalendar } from '~/components/globals/AvailibilityCalendar/gameShedule';
 import type { TSoclinksObject } from '~/shared/types/global';
 import { initSocLinks } from '~/utils/soclinks.ts';
-// 	 type TSettingsDetailsForm = {
 
-// 	}
-
-type TSettingsDetailsForm = {
+export type TSettingsDetailsForm = {
   nickname: string;
-  fio: string;
   timezone: string;
   email: string;
-  about: string | number;
-  availableDays: TDataAvaCalendar;
-  // tabletop_exp_age: EExpYears;
+  fio?: string;
+  about?: string;
+  availableDays?: TDataAvaCalendar | null;
   gm_style?: string;
-  social_links: TSoclinksObject;
+  social_links?: TSoclinksObject;
 };
 
 defineOptions({
@@ -58,7 +54,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
   <UForm :validate="validate" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
-        <UInput class="w-full" type="text" v-model="state.nickname as string" />
+        <UInput disabled class="w-full" type="text" v-model="state.nickname as string" />
       </UFormField>
 
       <UFormField label="ФИО" name="fio">

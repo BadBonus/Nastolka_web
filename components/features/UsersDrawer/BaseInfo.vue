@@ -4,13 +4,13 @@
 // 	}
 
 defineOptions({
-  name: "UsersDrawerBaseInfo",
+  name: 'UsersDrawerBaseInfo',
 });
 </script>
 <template>
   <NuxtLink to="/profile" class="UsersDrawerBaseInfo flex items-center gap-1.5">
     <UAvatar src="/images/wod_1.png" class="border-border h-14 w-14 border-2" />
-    <h3 class="-truncate w-32.25 text-lg font-semibold">User Name</h3>
+    <h3 class="w-32.25 truncate text-lg font-semibold">User Name</h3>
   </NuxtLink>
 </template>
 

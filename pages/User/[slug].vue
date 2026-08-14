@@ -30,7 +30,7 @@ const linksData = [
     <header class="relative">
       <NuxtImg class="mx-auto block h-25 w-25 rounded-full border-2" src="https://github.com/benjamincanac.png" />
     </header>
-    <h1 class="-truncate mt-3.5 mb-1 text-3xl font-semibold">Jack Black Black Black</h1>
+    <h1 class="mt-3.5 mb-1 truncate text-3xl font-semibold">Jack Black Black Black</h1>
 
     <span class="mx-auto block text-center text-xl font-semibold"> Сыграл: 100500 игр </span>
 

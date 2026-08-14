@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { NuxtLink } from "#components";
-import StatsComments from "./Stats.vue";
-import { skillItems } from "@/shared/skills";
+import { NuxtLink } from '#components';
+import StatsComments from './Stats.vue';
+import { skillItems } from '@/shared/skills';
 
 // FIXME: потом пропсы стабилизировать
 
@@ -20,10 +20,10 @@ const props = withDefaults(defineProps<TProfileHeader>(), {
   link: undefined,
 });
 
-const linkComponent = computed(() => (props.link ? NuxtLink : "span"));
+const linkComponent = computed(() => (props.link ? NuxtLink : 'span'));
 
 defineOptions({
-  name: "ProfileHeader",
+  name: 'ProfileHeader',
 });
 defineSlots<{ topPart(): any }>();
 </script>
@@ -31,15 +31,9 @@ defineSlots<{ topPart(): any }>();
   <header class="ProfileHeader">
     <div class="relative h-28">
       <slot name="topPart" />
-      <NuxtImg
-        class="-absCenter h-full w-full rounded-sm object-cover"
-        src="/images/wod_1.png"
-      />
+      <NuxtImg class="absCenter h-full w-full rounded-sm object-cover" src="/images/wod_1.png" />
 
-      <UAvatar
-        class="-absCenter h-20 w-20"
-        src="https://github.com/benjamincanac.png"
-      />
+      <UAvatar class="absCenter h-20 w-20" src="https://github.com/benjamincanac.png" />
     </div>
     <component
       :is="linkComponent"
@@ -56,9 +50,7 @@ defineSlots<{ topPart(): any }>();
       <li><UBadge>Красаффчик</UBadge></li>
     </ul>
 
-    <div
-      class="justify-centertext-xl mt-2 flex items-center justify-center gap-1.5 font-semibold"
-    >
+    <div class="justify-centertext-xl mt-2 flex items-center justify-center gap-1.5 font-semibold">
       <Star />
       <span> 5.0 (29) </span>
     </div>

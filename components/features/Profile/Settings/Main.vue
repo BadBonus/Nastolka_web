@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import DetailsForm from './DetailsForm.vue';
-// 	 type TSettingsMain = {
-
-// 	}
+import type { TSettingsDetailsForm } from './DetailsForm.vue';
 
 defineOptions({
   name: 'SettingsMain',
 });
+
+defineProps<TSettingsDetailsForm & { avatar: string }>();
 </script>
 <template>
   <div class="SettingsMain">
@@ -19,7 +19,7 @@ defineOptions({
             src="https://github.com/benjamincanac.png"
             alt="Ваш аватар"
           />
-          <Icon class="SettingsMainEditIcon -absCenter text-3xl" name="material-symbols:edit-sharp" />
+          <Icon class="SettingsMainEditIcon absCenter text-3xl" name="material-symbols:edit-sharp" />
         </button>
       </modals-change-img>
     </div>

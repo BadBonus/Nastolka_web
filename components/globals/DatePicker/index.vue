@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { DatePicker as VCalendarDatePicker } from "v-calendar";
-import "v-calendar/dist/style.css";
-import "./vars.css";
+import { DatePicker as VCalendarDatePicker } from 'v-calendar';
+import 'v-calendar/dist/style.css';
 
 interface DatePickerRangeObject {
   start: Date | null;
@@ -24,23 +23,21 @@ defineOptions({
 
 const props = defineProps({
   modelValue: {
-    type: [Date, Object] as PropType<
-      DatePickerDate | DatePickerRangeObject | null
-    >,
+    type: [Date, Object] as PropType<DatePickerDate | DatePickerRangeObject | null>,
     default: null,
   },
 });
 
-const emit = defineEmits(["update:model-value", "close"]);
+const emit = defineEmits(['update:model-value', 'close']);
 
 const date = computed({
   get: () => {
     // If using range mode, ensure start and end are defined and not undefined
     if (
       props.modelValue &&
-      typeof props.modelValue === "object" &&
-      "start" in props.modelValue &&
-      "end" in props.modelValue
+      typeof props.modelValue === 'object' &&
+      'start' in props.modelValue &&
+      'end' in props.modelValue
     ) {
       const { start, end } = props.modelValue as DatePickerRangeObject;
       return {
@@ -51,17 +48,17 @@ const date = computed({
     return props.modelValue;
   },
   set: (value) => {
-    emit("update:model-value", value);
-    emit("close");
+    emit('update:model-value', value);
+    emit('close');
   },
 });
 
 const attrs = {
   transparent: true,
   borderless: true,
-  color: "primary",
-  "is-dark": { selector: "html", darkClass: "dark" },
-  "first-day-of-week": 2,
+  color: 'primary',
+  'is-dark': { selector: 'html', darkClass: 'dark' },
+  'first-day-of-week': 2,
 };
 
 function onDayClick(_: any, event: MouseEvent): void {
@@ -73,23 +70,13 @@ function onDayClick(_: any, event: MouseEvent): void {
 <template>
   <VCalendarDatePicker
     class="date-picker"
-    v-if="
-      date &&
-      (date as DatePickerRangeObject)?.start &&
-      (date as DatePickerRangeObject)?.end
-    "
+    v-if="date && (date as DatePickerRangeObject)?.start && (date as DatePickerRangeObject)?.end"
     v-model.range="date"
     :columns="2"
     v-bind="{ ...attrs, ...$attrs }"
     @dayclick="onDayClick"
   />
-  <VCalendarDatePicker
-    class="date-picker"
-    v-else
-    v-model="date"
-    v-bind="{ ...attrs, ...$attrs }"
-    @dayclick="onDayClick"
-  />
+  <VCalendarDatePicker class="date-picker" v-else v-model="date" v-bind="{ ...attrs, ...$attrs }" @dayclick="onDayClick" />
 </template>
 
 <style>

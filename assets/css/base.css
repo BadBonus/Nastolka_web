@@ -2,7 +2,7 @@
 
 @layer base {
   html {
-    font-family: "Shantell Sans", "Roboto";;
+    font-family: 'Shantell Sans', 'Roboto';
   }
 
   * {
@@ -26,5 +26,18 @@
     font-family: inherit !important;
   }
 
-    @apply scheme-light dark:scheme-dark;
+  @apply scheme-light dark:scheme-dark;
+
+  :where(:disabled, [disabled], [aria-disabled='true'], .disabled) {
+    opacity: 0.2;
+    cursor: not-allowed !important;
+    user-select: none;
+    box-shadow: none !important;
+    outline: none !important;
+    filter: grayscale(30%);
+  }
+
+  :where(a, [role='button']):where([aria-disabled='true'], .disabled) {
+    pointer-events: none;
+  }
 }

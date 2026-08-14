@@ -31,7 +31,7 @@ defineOptions({
     </div>
 
     <section class="mt-3.5 flex items-center justify-between">
-      <h1 class="-truncate my-0 text-3xl font-semibold">Jack Black Black Black</h1>
+      <h1 class="my-0 truncate text-3xl font-semibold">Jack Black Black Black</h1>
       <!-- <Button class="h-fit" icon="i-game-icons:cubes" icon-pos="right">Запрос</Button> -->
       <Icon name="game-icons:cubes" />
     </section>

@@ -149,7 +149,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/profile": {
+    "/profile/me": {
         parameters: {
             query?: never;
             header?: never;
@@ -162,7 +162,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["ProfileController_updateMe"];
         trace?: never;
     };
     "/profile/{id}": {
@@ -181,22 +181,6 @@ export interface paths {
         patch: operations["ProfileController_update"];
         trace?: never;
     };
-    "/profile/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["ProfileController_updateMe"];
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -206,11 +190,7 @@ export interface components {
             email: string;
             password: string;
         };
-        User: {
-            id: number;
-            nickname: string;
-            email: string;
-        };
+        User: Record<string, never>;
         LoginResponse: {
             user: components["schemas"]["User"];
             accessToken: string;
@@ -235,7 +215,26 @@ export interface components {
             token: string;
             newPassword: string;
         };
+        ScheduleIntervalEntity: {
+            /**
+             * @description День недели (1-7)
+             * @example 1
+             */
+            dayOfWeek: number;
+            /**
+             * @description Время начала
+             * @example 8
+             */
+            startTime: number;
+            /**
+             * @description Время окончания
+             * @example 12
+             */
+            endTime: number;
+        };
         ProfileUserMe: {
+            /** @description Интервалы доступности пользователя */
+            schedules: components["schemas"]["ScheduleIntervalEntity"][];
             id: number;
             nickname: string;
             email: string;
@@ -263,14 +262,47 @@ export interface components {
             soclinks: Record<string, never> | null;
             gameHistory: Record<string, never>[];
         };
+        ScheduleIntervalDto: {
+            /**
+             * @description День недели (1-7)
+             * @example 1
+             */
+            dayOfWeek: number;
+            /**
+             * @description Время начала (в часах)
+             * @example 8
+             */
+            startTime: number;
+            /**
+             * @description Время окончания (в часах)
+             * @example 12
+             */
+            endTime: number;
+        };
         UpdateProfileDto: {
+            /** @example Иван Иванов */
             fullName?: string;
+            /** @example О себе */
             description?: string;
-            avatar?: Record<string, never>;
-            /** Format: date-time */
+            /**
+             * Format: binary
+             * @description Файл аватара
+             */
+            avatar?: string;
+            /**
+             * Format: date-time
+             * @example 1990-01-01T00:00:00.000Z
+             */
             birthdate?: string;
+            /** @example UTC */
             timezone?: string;
-            soclinks?: Record<string, never>;
+            /**
+             * @description JSON-строка с соцсетями
+             * @example {"VK": "https://vk.com/id1"}
+             */
+            soclinks?: string;
+            /** @description Массив интервалов расписания доступности */
+            schedules?: components["schemas"]["ScheduleIntervalDto"][];
         };
     };
     responses: never;
@@ -518,6 +550,27 @@ export interface operations {
             };
         };
     };
+    ProfileController_updateMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UpdateProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     ProfileController_findOne: {
         parameters: {
             query?: never;
@@ -547,27 +600,6 @@ export interface operations {
             path: {
                 id: number;
             };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": components["schemas"]["UpdateProfileDto"];
-            };
-        };
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    ProfileController_updateMe: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody: {

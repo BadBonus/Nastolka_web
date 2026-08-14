@@ -11,7 +11,7 @@
   border-radius: var(--r1) var(--r2) var(--r3) var(--r4) / var(--r2) var(--r3) var(--r4) var(--r1);
 }
 
-@utility -absVertCenter {
+@utility absVertCenter {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -24,7 +24,7 @@
   box-shadow: 0 0 12px 2px black;
 }
 
-@utility -absCenter {
+@utility absCenter {
   position: absolute;
   top: 0;
   right: 0;
@@ -33,7 +33,7 @@
   margin: auto;
 }
 
-@utility -truncate {
+@utility truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

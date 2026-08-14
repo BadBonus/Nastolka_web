@@ -13,9 +13,8 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD_CONFIRM: "/auth/reset-password/confirm",
   },
   PROFILE: {
-    INDEX: "/profile",
-    ID: "/profile/",
     ME: "/profile/me",
+    ID: "/profile/",
   },
 } as const;
 
@@ -81,10 +80,14 @@ export type TApiPayloads = {
     };
   };
   PROFILE: {
-    INDEX: {
+    ME: {
       GET: {
         req?: never;
-        res: paths["/profile"]["get"]["responses"]["200"]["content"]["application/json"];
+        res: paths["/profile/me"]["get"]["responses"]["200"]["content"]["application/json"];
+      };
+      PATCH: {
+        req: paths["/profile/me"]["patch"]["requestBody"]["content"]["multipart/form-data"];
+        res?: void;
       };
     };
     ID: {
@@ -93,13 +96,7 @@ export type TApiPayloads = {
         res: paths["/profile/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
       };
       PATCH: {
-        req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["application/json"];
-        res?: void;
-      };
-    };
-    ME: {
-      PATCH: {
-        req: paths["/profile/me"]["patch"]["requestBody"]["content"]["application/json"];
+        req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["multipart/form-data"];
         res?: void;
       };
     };
