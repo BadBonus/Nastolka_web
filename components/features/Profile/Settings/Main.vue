@@ -6,7 +6,9 @@ defineOptions({
   name: 'SettingsMain',
 });
 
-defineProps<TSettingsDetailsForm & { avatar: string }>();
+export type TSettingsMainProps = TSettingsDetailsForm & { avatar: Nullable<string> };
+
+defineProps<TSettingsMainProps>();
 </script>
 <template>
   <div class="SettingsMain">

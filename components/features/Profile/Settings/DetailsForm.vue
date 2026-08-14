@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// import { EExpYears } from "../types";
 import type { FormError, FormSubmitEvent } from '@nuxt/ui';
 import { popularTimezones } from '#consts/timezones';
-import type { TDataAvaCalendar } from '~/components/globals/AvailibilityCalendar/gameShedule';
+import type { ScheduleInterval } from '~/components/globals/AvailibilityCalendar/utils';
 import type { TSoclinksObject } from '~/shared/types/global';
 import { initSocLinks } from '~/utils/soclinks.ts';
 
@@ -10,11 +9,11 @@ export type TSettingsDetailsForm = {
   nickname: string;
   timezone: string;
   email: string;
-  fio?: string;
-  about?: string;
-  availableDays?: TDataAvaCalendar | null;
-  gm_style?: string;
-  social_links?: TSoclinksObject;
+  fio?: Nullable<string>;
+  about?: Nullable<string>;
+  availableDays?: ScheduleInterval[] | null;
+  // gm_style?: Nullable<string>;
+  social_links?: Nullable<TSoclinksObject>;
 };
 
 defineOptions({
@@ -27,7 +26,7 @@ const state = reactive<TSettingsDetailsForm>({
   timezone: '',
   email: '',
   about: '',
-  availableDays: null,
+  availableDays: [],
   // tabletop_exp_age: EExpYears.less,
   gm_style: '',
   social_links: initSocLinks,
@@ -79,7 +78,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
 
     <div>
       <span class="mb-3 block text-center text-xl"> Доступное время для игр </span>
-      <AvailibilityCalendar v-model="state.availableDays as TDataAvaCalendar" />
+      <AvailibilityCalendar v-model="state.availableDays as ScheduleInterval[]" />
     </div>
 
     <SocLinksInput class="mt-5" v-model="state.social_links" />

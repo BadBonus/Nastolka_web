@@ -1,21 +1,22 @@
-import useActions from '@/composables/actions/useProfile';
+import useProfileActions from '@/composables/actions/useProfile';
+import { mapToSettingsProps } from '@/components/features/Profile/Settings/mappers';
 
-export default function useAuthFlow() {
-  const { getMeAction } = useActions();
+export default function useProfileFlow() {
+  const { getMeAction, error } = useProfileActions();
   const isLoading = ref(false);
 
-  const getMe = async () => {
+  const getMeSettings = async (): Promise<ReturnType<typeof mapToSettingsProps> | null> => {
     isLoading.value = true;
     try {
       const data = await getMeAction();
-
-      return data;
-    } catch (error) {
-      console.error(error);
+      return mapToSettingsProps(data);
+    } catch (err) {
+      console.error(err);
+      return null;
     } finally {
       isLoading.value = false;
     }
   };
 
-  return { getMe, isLoading };
+  return { getMeSettings, isLoading, error };
 }
