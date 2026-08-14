@@ -1,7 +1,7 @@
 import { type TApiPayloads } from '#consts/api-endpoints';
 import type { TSettingsMainProps } from './Main.vue';
 
-export type TProfileMeRes = TApiPayloads['PROFILE']['ME']['GET']['res'];
+export type TProfileMeRes = DeepNullToUndefined<TApiPayloads['PROFILE']['ME']['GET']['res']>;
 
 export const mapToSettingsProps = (data: TProfileMeRes): TSettingsMainProps => ({
   nickname: data.nickname,
@@ -9,7 +9,11 @@ export const mapToSettingsProps = (data: TProfileMeRes): TSettingsMainProps => (
   email: data.email,
   fio: data.fullName,
   about: data.description,
-  availableDays: data.schedules,
+  availableDays: data.schedules.map((item) => ({
+    day: item.dayOfWeek.toString(),
+    start: item.startTime.toString(),
+    end: item.endTime.toString(),
+  })),
   social_links: data.soclinks,
   avatar: data.avatar,
 });

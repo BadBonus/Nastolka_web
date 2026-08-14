@@ -1,90 +1,57 @@
 <script setup lang="ts">
-import type { FormError, FormSubmitEvent } from '@nuxt/ui';
 import { popularTimezones } from '#consts/timezones';
-import type { ScheduleInterval } from '~/components/globals/AvailibilityCalendar/utils';
-import type { TSoclinksObject } from '~/shared/types/global';
-import { initSocLinks } from '~/utils/soclinks.ts';
+import { settingsDetailsFormSchema } from './schemas/details-form.schema';
 
-export type TSettingsDetailsForm = {
+export type TSettingsProps = {
   nickname: string;
   timezone: string;
   email: string;
-  fio?: Nullable<string>;
-  about?: Nullable<string>;
-  availableDays?: ScheduleInterval[] | null;
-  // gm_style?: Nullable<string>;
-  social_links?: Nullable<TSoclinksObject>;
+  fio?: string;
+  about?: string;
+  social_links?: Record<string, string | undefined>;
+  availableDays?: Array<{ day: string; start: string; end: string }>;
 };
 
-defineOptions({
-  name: 'SettingsDetailsForm',
-});
-
-const state = reactive<TSettingsDetailsForm>({
-  nickname: '',
-  fio: '',
-  timezone: '',
-  email: '',
-  about: '',
-  availableDays: [],
-  // tabletop_exp_age: EExpYears.less,
-  gm_style: '',
-  social_links: initSocLinks,
-});
-
-const validate = (state: any): FormError[] => {
-  const errors: FormError[] = [];
-  // if (!state.name) errors.push({ name: "email", message: "Required" });
-  // if (!state.password) errors.push({ name: "password", message: "Required" });
-  return errors;
-};
-
-const toast = useToast();
-async function onSubmit(event: FormSubmitEvent<typeof state>) {
-  toast.add({
-    title: 'Успех',
-    description: 'Форма была успешно отправлена.',
-    color: 'success',
-  });
-  console.log(event.data);
-}
+defineOptions({ name: 'SettingsDetailsForm' });
+const state = defineModel<TSettingsProps>({ required: true });
+defineEmits(['submit']);
 </script>
+
 <template>
-  <UForm :validate="validate" :state="state" class="w-full space-y-4" @submit="onSubmit">
+  <UForm :schema="settingsDetailsFormSchema" :state="state" class="w-full space-y-4" @submit="onSubmit">
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
-        <UInput disabled class="w-full" type="text" v-model="state.nickname as string" />
+        <UInput disabled class="w-full" type="text" v-model="state.nickname" />
       </UFormField>
 
       <UFormField label="ФИО" name="fio">
-        <UInput class="w-full" v-model="state.fio as string" type="text" />
+        <UInput class="w-full" type="text" v-model="state.fio" />
       </UFormField>
     </div>
 
-    <u-form-field label="Временная зона" name="timezone">
+    <UFormField label="Временная зона" name="timezone">
       <USelectMenu class="w-full" v-model="state.timezone" value-key="offset" :items="popularTimezones" />
-    </u-form-field>
+    </UFormField>
 
     <div class="flex items-end gap-4">
       <UFormField label="Email" name="email">
-        <UInput class="w-full" v-model="state.email as string" type="text" />
+        <UInput class="w-full" type="text" v-model="state.email" />
       </UFormField>
 
       <PopupDatePicker label="Ваш д.р." />
     </div>
+
     <UFormField label="О себе" name="about">
-      <UTextarea class="w-full" v-model="state.about" />
+      <!-- <UTextarea class="w-full" v-model="state.about" /> -->
     </UFormField>
 
     <div>
-      <span class="mb-3 block text-center text-xl"> Доступное время для игр </span>
-      <AvailibilityCalendar v-model="state.availableDays as ScheduleInterval[]" />
+      <span class="mb-3 block text-center text-xl">Доступное время для игр</span>
+      <!-- <AvailibilityCalendar v-model="state.availableDays" /> -->
     </div>
 
-    <SocLinksInput class="mt-5" v-model="state.social_links" />
+    <!-- <SocLinksInput class="mt-5" v-model="state.social_links" /> -->
 
-    <UButton class="mx-auto mt-3" type="submit"> Сохранить изменения </UButton>
+    <UButton @click="$emit('submit')" class="mx-auto mt-3" type="submit">Сохранить изменения</UButton>
   </UForm>
 </template>
-
-<!--<style lang="scss"></style>-->

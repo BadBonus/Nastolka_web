@@ -1,5 +1,6 @@
 import useProfileActions from '@/composables/actions/useProfile';
 import { mapToSettingsProps } from '@/components/features/Profile/Settings/mappers';
+import { sanitizeNulls } from '@/utils/transformers/sanitizeNulls';
 
 export default function useProfileFlow() {
   const { getMeAction, error } = useProfileActions();
@@ -9,7 +10,7 @@ export default function useProfileFlow() {
     isLoading.value = true;
     try {
       const data = await getMeAction();
-      return mapToSettingsProps(data);
+      return mapToSettingsProps(sanitizeNulls(data));
     } catch (err) {
       console.error(err);
       return null;
