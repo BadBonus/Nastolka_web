@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { CalendarDate, parseDate } from '@internationalized/date';
+import { type AnyCalendarDate, type CalendarDate } from '@internationalized/date';
 
-// const date = ref<Date>(new Date());
+const date = defineModel<AnyCalendarDate | undefined>({
+  required: true,
+});
 
-const date = shallowRef<Date | null>(null);
 const formatDate = computed(() => {
   return date.value?.toString() || 'нет данных';
 });
@@ -26,13 +27,12 @@ const props = defineProps<{
         icon="i-heroicons-calendar-days-20-solid"
         :label="formatDate"
         variant="ghost"
-        class="text-default min-w-[138px] border-2"
+        class="text-default min-w-34.5 border-2"
       />
     </div>
 
     <template #content="{ close }">
-      <UCalendar type="date" locale="ru-RU" v-model="date" is-required @close="close" />
-      <!-- <DatePicker v-model="date" is-required @close="close" /> -->
+      <UCalendar type="date" locale="ru-RU" v-model="date as CalendarDate" is-required @close="close" />
     </template>
   </UPopover>
 </template>
