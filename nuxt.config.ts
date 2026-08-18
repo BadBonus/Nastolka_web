@@ -62,6 +62,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: '',
+      imgproxyUrl: process.env.NUXT_PUBLIC_IMGPROXY_URL || 'http://localhost:8079',
     },
   },
 

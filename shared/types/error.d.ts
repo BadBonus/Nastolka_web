@@ -1,9 +1,9 @@
-export { }
+export {};
 
 declare global {
   type TBackendError = {
     statusCode: number;
-    message: string;
+    message: string | string[];
     error: string;
   };
 }
