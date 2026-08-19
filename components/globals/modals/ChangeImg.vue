@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import type {
-  TImageCropper,
-  TModifiedCropperResult,
-} from "../ImageCropper.vue";
-import ImageCropper from "../ImageCropper.vue";
+import type { TImageCropper, TModifiedCropperResult } from '../ImageCropper.vue';
+import ImageCropper from '../ImageCropper.vue';
 
 type TModalsChangeImg = {
   title?: string;
@@ -11,13 +8,24 @@ type TModalsChangeImg = {
 };
 
 defineOptions({
-  name: "ModalsChangeImg",
+  name: 'ModalsChangeImg',
 });
 
 defineProps<TModalsChangeImg>();
 const emit = defineEmits<{
-  (e: "confirm", data: TModifiedCropperResult): void;
+  (e: 'confirm', data: TModifiedCropperResult): void;
 }>();
+
+const open = ref(false);
+
+const onSubmit = (data: TModifiedCropperResult) => {
+  try {
+    emit('confirm', data);
+    open.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 <template>
   <UModal
@@ -30,11 +38,12 @@ const emit = defineEmits<{
     :ui="{
       content: 'border-3 border-black',
     }"
+    v-model:open="open"
   >
     <slot />
 
     <template #body>
-      <ImageCropper v-bind="cropperProps" @confirm="emit('confirm', $event)" />
+      <ImageCropper v-bind="cropperProps" @confirm="onSubmit" />
     </template>
   </UModal>
 </template>

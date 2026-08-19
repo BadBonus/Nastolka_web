@@ -286,7 +286,7 @@ export interface components {
             description?: string;
             /**
              * Format: binary
-             * @description Файл аватара
+             * @description Аватар пользователя, размерность 256x256 пикселей
              */
             avatar?: string;
             /**

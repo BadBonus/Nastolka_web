@@ -15,17 +15,17 @@ defineProps<{
 
 const toggleTiming = (day: number, start: number, end: number) => {
   const currentList = model.value ?? [];
-  const index = currentList.findIndex((item) => item.day === day && item.start === start && item.end === end);
+  const index = currentList.findIndex((item) => item.dayOfWeek === day && item.startTime === start && item.endTime === end);
 
   if (index !== -1) {
     model.value = currentList.filter((_, i) => i !== index);
   } else {
-    model.value = [...currentList, { day, start, end }];
+    model.value = [...currentList, { dayOfWeek: day, startTime: start, endTime: end }];
   }
 };
 
 const isSlotActive = (day: number, start: number, end: number): boolean => {
-  return (model.value ?? []).some((item) => item.day === day && item.start === start && item.end === end);
+  return (model.value ?? []).some((item) => item.dayOfWeek === day && item.startTime === start && item.endTime === end);
 };
 </script>
 

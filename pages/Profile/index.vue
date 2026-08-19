@@ -10,7 +10,7 @@ definePageMeta({
   keepalive: true,
 });
 
-const { getMeSettings, isLoading, error } = useActions();
+const { getMeSettings, patchMe, isLoading, error } = useActions();
 const { data } = await useAsyncData(PROFILE_DATA, () => getMeSettings());
 </script>
 
@@ -19,7 +19,7 @@ const { data } = await useAsyncData(PROFILE_DATA, () => getMeSettings());
     <Loader v-if="isLoading" class="absCenter" />
     <h1 class="font-decorate-2 text-center text-2xl font-bold">Настройка профиля</h1>
     <UiErrorState @retry="getMeSettings" :description="error as string" v-if="!data" />
-    <ProfileSettingsMain v-else v-bind="data" :class="{ disabled: isLoading }" />
+    <ProfileSettingsMain v-else v-bind="data" @updateSettings="patchMe" :class="{ disabled: isLoading }" />
   </section>
 </template>
 

@@ -1,5 +1,6 @@
 import { type TApiPayloads } from '#consts/api-endpoints';
 import type { TSettingsMainProps } from './Main.vue';
+import { parseAbsolute, toCalendarDate } from '@internationalized/date';
 
 export type TProfileMeRes = DeepNullToUndefined<TApiPayloads['PROFILE']['ME']['GET']['res']>;
 
@@ -10,10 +11,11 @@ export const mapToSettingsProps = (data: TProfileMeRes): TSettingsMainProps => (
   fio: data.fullName,
   about: data.description,
   availableDays: data.schedules.map((item) => ({
-    day: item.dayOfWeek,
-    start: item.startTime,
-    end: item.endTime,
+    dayOfWeek: item.dayOfWeek,
+    startTime: item.startTime,
+    endTime: item.endTime,
   })),
   social_links: data.soclinks,
   avatar: data.avatar,
+  birthdate: data.birthdate ? toCalendarDate(parseAbsolute(data.birthdate, 'UTC')) : undefined,
 });

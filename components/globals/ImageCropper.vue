@@ -70,6 +70,7 @@ const submit = () => {
   <div @dragenter.prevent="isDragOver = true" @dragleave.prevent="isDragOver = false" class="ImageCropper relative">
     <div class="inputImageArea text-inverted h-15 w-full">
       <input
+        class="cursor-pointer"
         @dragenter.prevent="isDragOver = true"
         @dragleave.prevent="isDragOver = false"
         type="file"
@@ -95,7 +96,7 @@ const submit = () => {
       >
         <span v-if="!img" class="abscenter inset-0 m-auto h-fit w-fit"> Перетащи </span>
         <input
-          class="abscenter"
+          class="abscenter cursor-pointer"
           @dragenter.prevent="isDragOver = true"
           @dragleave.prevent="isDragOver = false"
           type="file"
@@ -124,7 +125,7 @@ const submit = () => {
       </div>
     </div>
 
-    <span :class="{ 'opacity-0': !img }" class="text-primary mt-3 block text-sm"> Совет </span>
+    <span :class="{ 'opacity-0': !img }" class="text-primary mt-3 block text-sm"> {{ recomendation }} </span>
 
     <UButton color="success" :disabled="!img" class="mt-4 w-full justify-center" size="lg" @click="submit">
       Сохранить

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { popularTimezones } from '#consts/timezones';
 import { settingsDetailsFormSchema } from './schemas/details-form.schema';
+import { type AnyCalendarDate } from '@internationalized/date';
 
 export type TSettingsProps = {
   nickname: string;
@@ -9,17 +10,23 @@ export type TSettingsProps = {
   fio?: string;
   about?: string;
   social_links?: Record<string, string | undefined>;
-  availableDays?: Array<{ day: number; start: number; end: number }>;
+  availableDays?: Array<{ dayOfWeek: number; startTime: number; endTime: number }>;
+  birthdate?: AnyCalendarDate;
 };
 
 defineOptions({ name: 'SettingsDetailsForm' });
 const state = defineModel<TSettingsProps>({ required: true });
-defineEmits(['submit']);
+const emit = defineEmits<{
+  (event: 'submit', data: TSettingsProps): void;
+}>();
+
+const submit = () => {
+  emit('submit', state.value);
+};
 </script>
 
 <template>
-  <mark>{{ state }}</mark>
-  <UForm :schema="settingsDetailsFormSchema" :state="state" class="w-full space-y-4" @submit="(e) => $emit('submit', e)">
+  <UForm :schema="settingsDetailsFormSchema" :state="state" class="w-full space-y-4" @submit="submit">
     <div class="flex gap-4">
       <UFormField label="Ник" name="nickname">
         <UInput disabled class="w-full" type="text" v-model="state.nickname" />
@@ -36,10 +43,10 @@ defineEmits(['submit']);
 
     <div class="flex items-end gap-4">
       <UFormField label="Email" name="email">
-        <UInput class="w-full" type="text" v-model="state.email" />
+        <UInput disabled class="w-full" type="text" v-model="state.email" />
       </UFormField>
 
-      <PopupDatePicker label="Ваш д.р." />
+      <PopupDatePicker v-model="state.birthdate" label="Ваш д.р." />
     </div>
 
     <UFormField label="О себе" name="about">

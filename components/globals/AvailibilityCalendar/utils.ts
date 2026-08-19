@@ -5,9 +5,9 @@ import morning from '@/public/images/svg/availibilityCalendar/morning.svg';
 import sunny from '@/public/images/svg/availibilityCalendar/sunny.svg';
 
 export interface ScheduleInterval {
-  day: number;
-  start: number;
-  end: number;
+  dayOfWeek: number;
+  startTime: number;
+  endTime: number;
 }
 
 export const daysConfig = [
