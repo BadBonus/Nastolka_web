@@ -2,13 +2,27 @@
 }
 
 @utility sketchy-border {
-  --i: sibling-index();
-  --r1: calc(220px + 35px * sin(var(--i) * 1.5));
-  --r2: calc(15px + 10px * cos(var(--i) * 2.3));
-  --r3: calc(240px + 30px * sin(var(--i) * 3.7));
-  --r4: calc(12px + 8px * cos(var(--i) * 4.1));
+  border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
+}
 
-  border-radius: var(--r1) var(--r2) var(--r3) var(--r4) / var(--r2) var(--r3) var(--r4) var(--r1);
+@utility sketchy-border-2 {
+  border-radius: 30px 236px 70px 265px/263px 19px 208px 43px;
+}
+
+@utility sketchy-border-3 {
+  border-radius: 60px 236px 40px 265px/263px 79px 208px 0;
+}
+
+@utility sketchy-border-4 {
+  border-radius: 74px 160px 85px 250px/220px 57px 156px 64px;
+}
+
+@utility sketchy-border-5 {
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+@utility sketchy-border-6 {
+  border-radius: 245px 110px 225px 45px/45px 215px 45px 255px;
 }
 
 @utility absVertCenter {
