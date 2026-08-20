@@ -1,5 +1,5 @@
 import type { TApiPayloads } from '#consts/api-endpoints';
-import { appendResponseHeader } from 'h3';
+import { appendResponseHeader, deleteCookie } from 'h3';
 import { AUTH_COOKIE_TOKEN_NAME } from '#consts/auth.constants';
 import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
 
@@ -38,6 +38,8 @@ export default defineNuxtPlugin(async () => {
       }
     } catch (error) {
       console.error(error);
+      deleteCookie(event, AUTH_COOKIE_TOKEN_NAME);
+      authStore.logout();
       await navigateTo('/');
       return;
     }
