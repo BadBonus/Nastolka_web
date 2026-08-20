@@ -115,3 +115,15 @@ error: string;
 В процессе SSR перед отправкой HTML клиенту Nuxt пытается гидратировать состояние и запускает devalue.
 
 devalue падает при попытке сериализовать класс CalendarDate, так как это не POJO.
+
+#Не работает указание класса в app.config.ts
+Если указать такой класс в утилите tailwind, затем в app.config.ts можно использовать этот класс в вариантах цвета для кнопок, то такая конструкция не работает, но при этом работает, если просто значения указать
+@utility sketchy-border {
+--i: sibling-index();
+--r1: calc(220px + 35px * sin(var(--i) * 1.5));
+--r2: calc(15px + 10px * cos(var(--i) * 2.3));
+--r3: calc(240px + 30px * sin(var(--i) * 3.7));
+--r4: calc(12px + 8px * cos(var(--i) * 4.1));
+
+border-radius: var(--r1) var(--r2) var(--r3) var(--r4) / var(--r2) var(--r3) var(--r4) var(--r1);
+}
