@@ -1,19 +1,18 @@
 <script setup lang="ts">
 defineOptions({
-  name: "PagesIndex",
+  name: 'PagesIndex',
 });
 </script>
 
 <template>
-  <div>
-    <UButton >Test</UButton>
-    <UButton color="primary" >Test</UButton>
-    <UButton color="warning" >Test</UButton>
-    <UButton color="error"  >Test</UButton>
-    <UButton color="info"  >Test</UButton>
-    <UButton color="neutral"  >Test</UButton>
-    <UButton color="secondary"  >Test</UButton>
-    <UButton color="success"  >Test</UButton>
-
+  <div class="flex gap-1">
+    <UButton>Test</UButton>
+    <UButton color="primary">primary</UButton>
+    <UButton color="warning">warning</UButton>
+    <UButton color="error">error</UButton>
+    <UButton color="info">info</UButton>
+    <UButton color="neutral">neutral</UButton>
+    <UButton color="secondary">secondary</UButton>
+    <UButton color="success">success</UButton>
   </div>
 </template>
