@@ -1,37 +1,35 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui';
 import { registerUserSchema, type TRegisterUserSchema } from './schemas/registration-form.schema';
-import useAuthFlow from '~/composables/use-cases/useAuthFlow';
 
-const state = reactive<Partial<TRegisterUserSchema>>({
-  nickname: undefined,
-  email: undefined,
-  password: undefined,
-  confirmPassword: undefined,
-});
-const { registerUser } = useAuthFlow();
+defineProps<{ isLoading: boolean }>();
+const state = defineModel<TRegisterUserSchema>({ required: true });
+
+const emit = defineEmits<{
+  (e: 'submit', data: TRegisterUserSchema): void;
+}>();
 
 async function onSubmit(event: FormSubmitEvent<TRegisterUserSchema>) {
-  await registerUser(event.data);
+  emit('submit', event.data);
 }
 </script>
 
 <template>
-  <UForm :schema="registerUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :loading="isLoading" :schema="registerUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Nickname" name="nickname">
-      <UInput class="w-full" v-model="state.nickname as string" />
+      <UInput class="w-full" v-model="state.nickname" />
     </UFormField>
 
     <UFormField label="Email" name="email">
-      <UInput class="w-full" v-model="state.email as string" />
+      <UInput class="w-full" v-model="state.email" />
     </UFormField>
 
     <UFormField label="Password" name="password">
-      <UInput class="w-full" v-model="state.password as string" type="password" />
+      <UInput class="w-full" v-model="state.password" type="password" />
     </UFormField>
 
     <UFormField label="Repeat Password" name="confirmPassword">
-      <UInput class="w-full" v-model="state.confirmPassword as string" type="password" />
+      <UInput class="w-full" v-model="state.confirmPassword" type="password" />
     </UFormField>
 
     <UButton class="w-full justify-center font-semibold" type="submit"> Зарегистрироваться </UButton>

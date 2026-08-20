@@ -201,6 +201,8 @@ export interface components {
             accessToken: string;
         };
         RegisterDto: {
+            /** @example Europe/Minsk */
+            timezone?: string;
             /** Format: email */
             email: string;
             password: string;

@@ -1,14 +1,13 @@
 import { type TApiPayloads } from '@/shared/constants/api-endpoints';
 import useActions from '@/composables/actions/useAuth';
-import type { TRegisterUserSchema } from '#components/features/AuthForm/schemas/registration-form.schema';
+
 import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
+import type { TRegisterUserSchema } from '~/components/features/AuthForm/schemas/registration-form.schema';
 
 export default function useAuthFlow() {
   const { loginAction, refreshAction, logoutAction, getUserMeAction, registerUserAction } = useActions();
   const store = useAuthStore();
   const isLoading = ref(false);
-
-  console.log('ты выще срабатываешь?');
 
   const login = async (credentials: TApiPayloads['AUTH']['LOGIN']['POST']['req']) => {
     isLoading.value = true;
@@ -65,8 +64,9 @@ export default function useAuthFlow() {
 
   const registerUser = async (credentials: TRegisterUserSchema) => {
     isLoading.value = true;
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     try {
-      await registerUserAction(credentials);
+      await registerUserAction({ timezone, ...credentials });
     } catch (error) {
       console.error(error);
     } finally {
