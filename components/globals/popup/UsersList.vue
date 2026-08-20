@@ -5,7 +5,7 @@ type TPopupUser = {
 };
 
 defineOptions({
-  name: "PopupCUsersList",
+  name: 'PopupCUsersList',
 });
 
 defineProps<{
@@ -25,7 +25,7 @@ defineProps<{
       <ul class="flex w-fit max-w-[195px] flex-wrap gap-1.5 p-1.5">
         <li :key="u.slug" v-for="u in users">
           <NuxtLink :to="'/profile/' + u.slug">
-            <UAvatar :src="u.avatar" class="border-border size-9 border-1" />
+            <UAvatar :src="u.avatar" class="border-border size-9" />
           </NuxtLink>
         </li>
       </ul>

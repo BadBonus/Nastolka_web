@@ -33,7 +33,7 @@ defineSlots<{ topPart(): any }>();
       <slot name="topPart" />
       <NuxtImg class="absCenter h-full w-full rounded-sm object-cover" src="/images/wod_1.png" />
 
-      <UAvatar class="absCenter h-20 w-20" src="https://github.com/benjamincanac.png" />
+      <UAvatar :alt="name" class="absCenter h-20 w-20" :src="avatar" />
     </div>
     <component
       :is="linkComponent"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { input } from "#build/ui";
+import { input } from '#build/ui';
 
 type TModal = {
   user: {
@@ -11,7 +11,7 @@ type TModal = {
 };
 
 defineOptions({
-  name: "ChatModal",
+  name: 'ChatModal',
 });
 
 defineProps<TModal>();
@@ -33,7 +33,7 @@ defineProps<TModal>();
         {{ advice }}
       </span>
       <div class="mt-4 flex items-center gap-2">
-        <NuxtImg class="size-10 rounded-full border" :src="user.avatar" />
+        <UAvatar :alt="user?.name" class="size-10 rounded-full border" :src="user.avatar" />
         <span class="font-semibold">{{ user.name }}</span>
       </div>
 

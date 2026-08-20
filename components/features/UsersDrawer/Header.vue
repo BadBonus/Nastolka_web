@@ -28,9 +28,13 @@ defineOptions({
         icon="ic:baseline-message"
         size="lg"
       />
-      <NuxtImg class="absCenter h-full w-full rounded-sm object-cover" :src="userAuthData?.avatar" />
+      <UAvatar
+        :alt="userAuthData?.nickname"
+        class="absCenter h-full w-full rounded-sm object-cover"
+        :src="userAuthData?.avatar"
+      />
 
-      <UAvatar class="absCenter h-20 w-20" :src="userAuthData?.avatar" />
+      <UAvatar :alt="userAuthData?.nickname" class="absCenter h-20 w-20" :src="userAuthData?.avatar" />
     </div>
     <NuxtLink class="mt-1 block w-full text-center text-2xl font-semibold underline">
       {{ userAuthData?.nickname }}
