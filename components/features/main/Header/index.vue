@@ -19,7 +19,7 @@ const authStore = useAuthStore();
 
       <div class="flex items-center gap-3">
         <NotificationPopup />
-        <Drawer :is-auth="authStore.isAuthenticated" />
+        <Drawer :is-auth="authStore.userAuthData !== null" />
       </div>
     </div>
   </header>

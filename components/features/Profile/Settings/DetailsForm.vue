@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { popularTimezones } from '#consts/timezones';
 import { settingsDetailsFormSchema } from './schemas/details-form.schema';
-import { type AnyCalendarDate } from '@internationalized/date';
 
 export type TSettingsProps = {
   nickname: string;
@@ -11,7 +10,7 @@ export type TSettingsProps = {
   about?: string;
   social_links?: Record<string, string | undefined>;
   availableDays?: Array<{ dayOfWeek: number; startTime: number; endTime: number }>;
-  birthdate?: AnyCalendarDate;
+  birthdate?: Date;
 };
 
 defineOptions({ name: 'SettingsDetailsForm' });

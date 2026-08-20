@@ -2,7 +2,7 @@ import useProfileActions from '@/composables/actions/useProfile';
 import { mapToSettingsProps } from '@/components/features/Profile/Settings/mappers';
 import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
 import type { TPatchProfilePayload } from '~/shared/types/profile';
-import type { CalendarDate } from '@internationalized/date';
+// import type { CalendarDate } from '@internationalized/date';
 
 export default function useProfileFlow() {
   const { getMeAction, patchMeAction, error } = useProfileActions();
@@ -12,10 +12,7 @@ export default function useProfileFlow() {
   const getMeSettings = async (): Promise<ReturnType<typeof mapToSettingsProps> | null> => {
     isLoading.value = true;
     try {
-      console.log('TEST');
       const data = await getMeAction();
-      console.log('TEST');
-      console.log(data);
       return mapToSettingsProps(sanitizeNulls(data));
     } catch (err) {
       console.error(err);
@@ -41,12 +38,10 @@ export default function useProfileFlow() {
       // NOTE: после добавления фичи смена почты добавить и обработку email
       if (data.fio) formData.append('fullName', data.fio);
       if (data.about) formData.append('description', data.about);
-      if (data.birthdate) formData.append('birthdate', (data.birthdate as CalendarDate).toDate('UTC').toISOString() || '');
+      if (data.birthdate) formData.append('birthdate', data.birthdate.toISOString());
       if (data.timezone) formData.append('timezone', data.timezone);
 
-      if (data.social_links) {
-        formData.append('soclinks', JSON.stringify(data.social_links));
-      }
+      if (data.social_links) formData.append('soclinks', JSON.stringify(data.social_links));
 
       if (data.availableDays && data.availableDays.length > 0) {
         // В multipart/form-data массивы объектов нельзя передать напрямую.

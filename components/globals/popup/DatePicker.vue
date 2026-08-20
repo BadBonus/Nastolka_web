@@ -1,17 +1,40 @@
 <script setup lang="ts">
-import { type AnyCalendarDate, type CalendarDate } from '@internationalized/date';
+import { parseDate, CalendarDate, getLocalTimeZone } from '@internationalized/date';
 
-const date = defineModel<AnyCalendarDate | undefined>({
+const dateModel = defineModel<Date | undefined>({
   required: true,
-});
-
-const formatDate = computed(() => {
-  return date.value?.toString() || 'нет данных';
 });
 
 const props = defineProps<{
   label: string;
 }>();
+
+const calendarValue = computed({
+  get(): CalendarDate | undefined {
+    if (!dateModel.value || !(dateModel.value instanceof Date)) return undefined;
+    try {
+      const year = dateModel.value.getFullYear();
+      const month = String(dateModel.value.getMonth() + 1).padStart(2, '0');
+      const day = String(dateModel.value.getDate()).padStart(2, '0');
+
+      return parseDate(`${year}-${month}-${day}`);
+    } catch {
+      return undefined;
+    }
+  },
+  set(val: CalendarDate | undefined) {
+    if (!val) {
+      dateModel.value = undefined;
+      return;
+    }
+    dateModel.value = val.toDate(getLocalTimeZone());
+  },
+});
+
+const formatDate = computed(() => {
+  if (!dateModel.value || !(dateModel.value instanceof Date)) return 'нет данных';
+  return dateModel.value.toLocaleDateString('ru-RU');
+});
 </script>
 
 <template>
@@ -32,7 +55,7 @@ const props = defineProps<{
     </div>
 
     <template #content="{ close }">
-      <UCalendar type="date" locale="ru-RU" v-model="date as CalendarDate" is-required @close="close" />
+      <UCalendar type="date" locale="ru-RU" v-model="calendarValue" is-required @close="close" />
     </template>
   </UPopover>
 </template>

@@ -1,4 +1,5 @@
 import type { ESocLinks } from '@/shared/constants/socLinks';
+import type {} from './api';
 
 declare global {
   type Nullable<T> = T | null | undefined;
@@ -12,8 +13,3 @@ declare global {
 
 export type TSoclinksObject = Partial<Record<ESocLinks, string | undefined>>;
 export type TGameHistory = Array<{ id: string; startTime: string }>;
-export type TUser = {
-  nickname: string;
-  email: string;
-  id: number;
-};

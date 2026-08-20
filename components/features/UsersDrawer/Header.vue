@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import StatsComments from './StatsComments.vue';
+// import StatsComments from './StatsComments.vue';
 
 // 	 type TProfileHeader = {
 
 // 	}
+
+const authStore = useAuthStore();
+const { userAuthData } = storeToRefs(authStore);
 
 defineOptions({
   name: 'ProfileHeader',
@@ -25,11 +28,13 @@ defineOptions({
         icon="ic:baseline-message"
         size="lg"
       />
-      <NuxtImg class="absCenter h-full w-full rounded-sm object-cover" src="/images/wod_1.png" />
+      <NuxtImg class="absCenter h-full w-full rounded-sm object-cover" :src="userAuthData?.avatar" />
 
-      <UAvatar class="absCenter h-20 w-20" src="https://github.com/benjamincanac.png" />
+      <UAvatar class="absCenter h-20 w-20" :src="userAuthData?.avatar" />
     </div>
-    <NuxtLink class="mt-1 block w-full text-center text-2xl font-semibold underline"> Jack Black </NuxtLink>
+    <NuxtLink class="mt-1 block w-full text-center text-2xl font-semibold underline">
+      {{ userAuthData?.nickname }}
+    </NuxtLink>
     <ul class="mt-1 flex flex-wrap justify-center gap-1.5">
       <li><UBadge>Крутой учитель</UBadge></li>
       <li><UBadge>Мастер историй</UBadge></li>
@@ -43,7 +48,7 @@ defineOptions({
       <span> 5.0 (29) </span>
     </div>
 
-    <StatsComments />
+    <!-- <StatsComments /> -->
   </header>
 </template>
 

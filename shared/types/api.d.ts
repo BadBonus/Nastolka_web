@@ -190,7 +190,12 @@ export interface components {
             email: string;
             password: string;
         };
-        User: Record<string, never>;
+        User: {
+            id: number;
+            nickname: string;
+            email: string;
+            avatar: string | null;
+        };
         LoginResponse: {
             user: components["schemas"]["User"];
             accessToken: string;

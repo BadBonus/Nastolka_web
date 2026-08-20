@@ -1,27 +1,21 @@
-import type {TUser} from "~/shared/types/global";
+import type { TUserAuthData } from '@/entities/user/model/types';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null as null | TUser,
-    isAuthenticated: false,
+    userAuthData: null as null | TUserAuthData,
     accessToken: null as string | null,
   }),
-  getters: {
-    isUserAuth: (state) => state.isAuthenticated
-  },
+  getters: {},
   actions: {
-    setUser(user: TUser) {
-      this.user = user;
-      this.isAuthenticated = true;
+    setUser(data: TUserAuthData) {
+      this.userAuthData = data;
     },
     setAccessToken(token: string) {
       this.accessToken = token;
     },
     logout() {
-      this.isAuthenticated = false;
-      this.user = null;
+      this.userAuthData = null;
       this.accessToken = null;
     },
-
   },
 });

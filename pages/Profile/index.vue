@@ -22,5 +22,3 @@ const { data } = await useAsyncData(PROFILE_DATA, () => getMeSettings());
     <ProfileSettingsMain v-else v-bind="data" @updateSettings="patchMe" :class="{ disabled: isLoading }" />
   </section>
 </template>
-
-<!-- <style lang="scss"></style> -->
