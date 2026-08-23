@@ -1,4 +1,4 @@
-import type {TChatItem} from "@/components/features/Chat/Item.vue"
+import type { TChatItem } from '@/components/features/Chat/Item.vue';
 // https://github.com/benjamincanac.png
 
 export const organizers = [
@@ -48,6 +48,8 @@ const techInnovators = organizers[0];
 const artisticMinds = organizers[1];
 const greenThumb = organizers[2];
 const fitnessFanatics = organizers[3];
+
+// FIXME: добавить конкретный тип валюты через свойство
 
 export const events = [
   {
@@ -255,39 +257,36 @@ export const events = [
 export const eventsFromPlaces = {
   online: events,
   Minsk: events,
-  Pinsk: events
-} as Record<string, TGamesCalendarEvent[]>
+  Pinsk: events,
+} as Record<string, TGamesCalendarEvent[]>;
 
-export const messagesItems = [{
-  id: '1',
-  title: "GM RAH - Bear",
-  lastTime: new Date(2024),
-  lastMessage:
-    "Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?",
-  avatar: "images/wod_1.png",
-},
-{
-  id: '21',
-  title: "GM RAH - Bear",
-  lastTime: new Date(2024),
-  lastMessage:
-    "Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?",
-  avatar: "images/wod_1.png",
-},
-{
-  id: '31',
-  title: "GM RAH - Bear",
-  lastTime: new Date(2024),
-  lastMessage:
-    "Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?",
-  avatar: "images/wod_1.png",
-},
-{
-  id: '41',
-  title: "GM RAH - Bear",
-  lastTime: new Date(2024),
-  lastMessage:
-    "Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?",
-  avatar: "images/wod_1.png",
-},
-] as (TChatItem & {id: string})[]
+export const messagesItems = [
+  {
+    id: '1',
+    title: 'GM RAH - Bear',
+    lastTime: new Date(2024),
+    lastMessage: 'Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?',
+    avatar: 'images/wod_1.png',
+  },
+  {
+    id: '21',
+    title: 'GM RAH - Bear',
+    lastTime: new Date(2024),
+    lastMessage: 'Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?',
+    avatar: 'images/wod_1.png',
+  },
+  {
+    id: '31',
+    title: 'GM RAH - Bear',
+    lastTime: new Date(2024),
+    lastMessage: 'Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?',
+    avatar: 'images/wod_1.png',
+  },
+  {
+    id: '41',
+    title: 'GM RAH - Bear',
+    lastTime: new Date(2024),
+    lastMessage: 'Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?Hello, how are you?',
+    avatar: 'images/wod_1.png',
+  },
+] as (TChatItem & { id: string })[];

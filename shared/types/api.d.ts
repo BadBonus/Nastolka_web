@@ -191,7 +191,7 @@ export interface components {
             password: string;
         };
         User: {
-            id: number;
+            id: string;
             nickname: string;
             email: string;
             avatar: string | null;
@@ -242,7 +242,7 @@ export interface components {
         ProfileUserMe: {
             /** @description Интервалы доступности пользователя */
             schedules: components["schemas"]["ScheduleIntervalEntity"][];
-            id: number;
+            id: string;
             nickname: string;
             email: string;
             fullName: string | null;
@@ -255,10 +255,10 @@ export interface components {
             soclinks: Record<string, never> | null;
             gameHistory: Record<string, never>[];
             isVerified: boolean;
-            roleId: number;
+            roleId: string;
         };
         ProfileUserWithId: {
-            id: number;
+            id: string;
             nickname: string;
             email: string;
             fullName: string | null;
@@ -583,7 +583,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: string;
             };
             cookie?: never;
         };
@@ -605,7 +605,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: string;
             };
             cookie?: never;
         };

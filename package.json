@@ -19,6 +19,7 @@
   "dependencies": {
     "@iconify-json/lucide": "^1.2.100",
     "@iconify-json/simple-icons": "^1.2.75",
+    "@inspira-ui/plugins": "^0.0.2",
     "@internationalized/date": "^3.12.3",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/icon": "^2.2.1",
@@ -33,6 +34,7 @@
     "@vueuse/nuxt": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "motion-v": "^2.4.0",
     "nuxt": "^4.4.2",
     "nuxt-tiptap-editor": "3.2.0",
     "reka-ui": "^2.9.4",

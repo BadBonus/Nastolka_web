@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import Event from "./Event.vue";
+import Event from './Event.vue';
 type TEventListIndex = {
   items: TGamesCalendarEvent[];
 };
 
 defineOptions({
-  name: "EventList",
+  name: 'EventList',
 });
 
 defineProps<TEventListIndex>();
 </script>
 <template>
-  <!-- FIXME: потом избавиться от clientOnly -->
   <ClientOnly>
-    <ul class="EventList flex flex-col gap-3">
+    <ul class="EventList flex flex-col gap-6">
       <li v-for="event in items" :key="event.id">
         <NuxtLink :to="'/game' + '/' + event.link">
           <article>

@@ -91,3 +91,5 @@ const formatDate = (date: Date | string): string | undefined => {
     </template>
   </UCard>
 </template>
+
+<!--<style lang="scss"></style>-->

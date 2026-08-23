@@ -1,36 +1,30 @@
-import type {TabsItem} from '@nuxt/ui'
-import {EProfileNavigation} from "./types";
+import type { TabsItem } from '@nuxt/ui';
+import { EProfileNavigation } from './types';
 
 export const sections: TabsItem[] = [
   {
-    label: "Профиль",
+    label: 'Профиль',
     icon: 'i-lucide-user',
-    value: EProfileNavigation.profile
+    value: EProfileNavigation.profile,
   },
   {
-    label: "История",
+    label: 'История',
     value: EProfileNavigation.history,
     icon: 'material-symbols-history',
   },
   {
-    label: "Подписки",
+    label: 'Подписки',
     value: EProfileNavigation.subscriptions,
     icon: 'hugeicons-favourite-square',
   },
   {
-    label: "Оплата",
-    value: EProfileNavigation.payment,
-    icon: 'ic-baseline-payment',
-  },
-  {
-    label: "Геймастер",
+    label: 'Геймастер',
     value: EProfileNavigation['game-master'],
     icon: 'i-game-icons-cubes',
     ui: {
       root: '!bg-red',
       content: '!bg-info',
-
-    }
+    },
   },
 ];
 

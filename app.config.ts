@@ -18,6 +18,11 @@ export default defineAppConfig({
         base: 'border-2',
       },
     },
+    card: {
+      slots: {
+        root: 'overflow-visible',
+      },
+    },
     button: {
       variants: {
         color: {
