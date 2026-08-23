@@ -80,10 +80,10 @@ export type TEventCommentRate = {
 
 export type TEventRequest = {
   id: string;
-  idEvent: number; // через ивент можно выйти на мастера
-  idUser: number;
-  status: EStatusOfRequest; //статус заявки (на рассмотрении, принята, отклонена, отменена игроком). Без этого поля невозможно определить текущее состояние взаимодействия.
-  createdAt: Date; //метка времени создания заявки для формирования очереди кандидатов.
-  message?: string; //опциональный текст от игрока (предпочтения по роли, концепт персонажа).
+  idEvent: string;
+  idUser: string;
+  status: EStatusOfRequest;
+  createdAt: Date;
+  message?: string;
 };
 // interfaces

@@ -5,7 +5,7 @@ import { NuxtImg } from "#components";
 export type TGmCard = {
   link: string;
   name: string;
-  avatar?: string;
+  avatar?: string | null;
   rating?: {
     value: number;
     count: number;

@@ -90,6 +90,7 @@ export const useApi = async <T>(
             title: 'Ошибка авторизации',
             color: 'error',
             duration: 1000,
+            description: errorData.message as string,
           });
         }
       }

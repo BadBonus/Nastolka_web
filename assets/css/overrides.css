@@ -12,4 +12,13 @@
   .dark button.bg-warning:not(:hover) {
     background-color: rgb(237, 152, 0);
   }
+
+  span[data-slot='root'] {
+    background: white;
+    font-size: 250%;
+    span[data-slot='fallback'] {
+      color: var(--color-primary-950);
+      text-transform: uppercase;
+    }
+  }
 }

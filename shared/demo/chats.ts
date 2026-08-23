@@ -3,7 +3,7 @@ const createDate = (count: number = 0) => {
 }
 
 export const demoInitMessage = (count: number = 0) => ({
-  id: +(new Date(count)),
+  id: String(+(new Date(count))),
   title: "GM RAH - Bear M RAH - BeaM RAH - Bea",
   lastTime: createDate(count),
   lastMessage:

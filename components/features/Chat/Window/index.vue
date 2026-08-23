@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import Message from "./Message.vue";
 import InputForm from "./InputForm.vue";
+import type { TChatWindowMessage } from "./Message.vue";
 
-// 	 type TChatWindow = {
-
-// 	}
+enum EMessageHost {
+  you = 'you',
+  another = 'another',
+}
 
 defineOptions({
   name: "ChatWindow",
 });
 
-const demoMessages = [
+const demoMessages: (TChatWindowMessage & { id: string })[] = [
   {
-    id: 0,
-    messageType: "you",
+    id: '0',
+    messageType: EMessageHost.you,
     user: {
       avatar: "images/wod_1.png",
       slug: "100500",
@@ -23,8 +25,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 1,
-    messageType: "another",
+    id: '1',
+    messageType: EMessageHost.another,
     user: {
       avatar: "images/wod_1.png",
       slug: "2222",
@@ -36,8 +38,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 0,
-    messageType: "you",
+    id: '2',
+    messageType: EMessageHost.you,
     user: {
       avatar: "images/wod_1.png",
       slug: "100500",
@@ -47,8 +49,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 1,
-    messageType: "another",
+    id: '3',
+    messageType: EMessageHost.another,
     user: {
       avatar: "images/wod_1.png",
       slug: "2222",
@@ -60,8 +62,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 0,
-    messageType: "you",
+    id: '4',
+    messageType: EMessageHost.you,
     user: {
       avatar: "images/wod_1.png",
       slug: "100500",
@@ -71,8 +73,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 1,
-    messageType: "another",
+    id: '5',
+    messageType: EMessageHost.another,
     user: {
       avatar: "images/wod_1.png",
       slug: "2222",
@@ -84,8 +86,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 0,
-    messageType: "you",
+    id: '6',
+    messageType: EMessageHost.you,
     user: {
       avatar: "images/wod_1.png",
       slug: "100500",
@@ -95,8 +97,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 1,
-    messageType: "another",
+    id: '7',
+    messageType: EMessageHost.another,
     user: {
       avatar: "images/wod_1.png",
       slug: "2222",
@@ -108,8 +110,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 0,
-    messageType: "you",
+    id: '8',
+    messageType: EMessageHost.you,
     user: {
       avatar: "images/wod_1.png",
       slug: "100500",
@@ -119,8 +121,8 @@ const demoMessages = [
       "lorem loremloremloremloremloremlorem lorem  loremloremloremloremloremloremloremloremloremlorem loremlorem lorem",
   },
   {
-    id: 1,
-    messageType: "another",
+    id: '9',
+    messageType: EMessageHost.another,
     user: {
       avatar: "images/wod_1.png",
       slug: "2222",

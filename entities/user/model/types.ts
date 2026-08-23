@@ -1,5 +1,5 @@
 export type TUserAuthData = {
-  id: number;
+  id: string;
   email: string;
   nickname: string;
   avatar: string | undefined;

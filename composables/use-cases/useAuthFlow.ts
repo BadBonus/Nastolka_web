@@ -17,7 +17,7 @@ export default function useAuthFlow() {
       store.setAccessToken(data.accessToken);
       return data;
     } catch (error) {
-      console.error(error);
+      throw error;
     } finally {
       isLoading.value = false;
     }
@@ -56,7 +56,7 @@ export default function useAuthFlow() {
       store.setUser(sanitizeNulls(data));
       return data;
     } catch (error) {
-      console.error(error);
+      throw error;
     } finally {
       isLoading.value = false;
     }
@@ -68,7 +68,7 @@ export default function useAuthFlow() {
     try {
       await registerUserAction({ timezone, ...credentials });
     } catch (error) {
-      console.error(error);
+      throw error;
     } finally {
       isLoading.value = false;
     }
