@@ -1,35 +1,50 @@
-/**
- * @file Скрипт для автоматической генерации TypeScript типов и констант эндпоинтов из OpenAPI/Swagger спецификации.
- * Извлекает спецификацию, группирует пути по контроллерам и формирует типы запросов/ответов с учетом Content-Type.
- */
+import { execSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { execSync } from 'child_process';
-import fs from 'fs';
+// 1. Извлечение пути к артефакту спецификации из .env
+const envPath = path.resolve(process.cwd(), '.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  envContent.split('\n').forEach((line) => {
+    const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+    if (match) {
+      const key = match[1];
+      let value = match[2] || '';
+      if (value.length > 0 && value.startsWith('"') && value.endsWith('"')) {
+        value = value.slice(1, -1);
+      }
+      process.env[key] = value.trim();
+    }
+  });
+}
 
-const apiUrl = process.env.API_URL || 'http://localhost:4000';
+const OPENAPI_PATH = process.env.OPENAPI_PATH || '../backend/openapi.json';
 const typesPath = './shared/types/api.d.ts';
 const constantsPath = './shared/constants/api-endpoints.ts';
-const SWAGGER_PATH = '/api/docs-json';
 
 /**
  * @typedef {Object} MethodInfo
- * @property {string|null} reqContentType - Формат данных запроса.
- * @property {string|null} resContentType - Формат данных ответа.
- * @property {string|undefined} successCode - HTTP код успешного ответа (2xx).
+ * @property {string|null} reqContentType
+ * @property {string|null} resContentType
+ * @property {string|undefined} successCode
  */
 
 try {
-  console.log('Генерация типов из Swagger...');
-  execSync(`pnpm exec openapi-typescript ${apiUrl}${SWAGGER_PATH} -o ${typesPath}`, { stdio: 'inherit' });
+  console.log('Генерация типов из локального артефакта OpenAPI...');
 
-  const response = await fetch(`${apiUrl}${SWAGGER_PATH}`);
-  const spec = await response.json();
+  // 2. Генерация базовых типов напрямую из локального файла
+  execSync(`pnpm exec openapi-typescript "${OPENAPI_PATH}" -o "${typesPath}"`, { stdio: 'inherit' });
+
+  // 3. Чтение и парсинг локального JSON вместо fetch-запроса
+  const resolvedOpenapiPath = path.resolve(process.cwd(), OPENAPI_PATH);
+  const specContent = fs.readFileSync(resolvedOpenapiPath, 'utf-8');
+  const spec = JSON.parse(specContent);
   const paths = Object.keys(spec.paths);
 
   /** @type {Object.<string, Object.<string, { path: string, methods: Object.<string, MethodInfo> }>>} */
   const grouped = {};
 
-  // Группировка путей спецификации по неймспейсам (контроллерам)
   paths.forEach((path) => {
     const parts = path
       .split('/')
@@ -38,7 +53,6 @@ try {
 
     if (parts.length === 0) return;
 
-    // Определение группы (например, AUTH) и ключа (например, REGISTER)
     const group = parts[0].toUpperCase().replace(/-/g, '_');
     const key = parts.slice(1).join('_').toUpperCase().replace(/-/g, '_') || 'INDEX';
 
@@ -46,12 +60,10 @@ try {
 
     const methodsInfo = {};
 
-    // Обход всех HTTP-методов (get, post, patch и т.д.) для текущего пути
     Object.entries(spec.paths[path]).forEach(([method, detail]) => {
       const m = method.toLowerCase();
 
       let reqContentType = null;
-      // Определение приоритетного Content-Type для тела запроса
       if (detail.requestBody?.content) {
         const types = Object.keys(detail.requestBody.content);
         reqContentType = types.includes('application/json')
@@ -61,11 +73,9 @@ try {
             : types[0];
       }
 
-      // Поиск первого успешного HTTP-статуса (начинается с '2')
       const successCode = Object.keys(detail.responses || {}).find((code) => code.startsWith('2'));
       let resContentType = null;
 
-      // Определение приоритетного Content-Type для тела ответа
       if (successCode && detail.responses[successCode]?.content) {
         const types = Object.keys(detail.responses[successCode].content);
         resContentType = types.includes('application/json')
@@ -84,17 +94,11 @@ try {
     };
   });
 
-  /**
-   * Формирует строковое представление объекта API_ENDPOINTS.
-   * Очищает пути от динамических параметров Swagger (/{id}) для использования на клиенте.
-   * @returns {string} Исходный код объекта констант маршрутов.
-   */
   const generateEndpointsObject = () => {
     return Object.entries(grouped)
       .map(([group, items]) => {
         const entries = Object.entries(items)
           .map(([key, info]) => {
-            // Удаляет конструкции вида /{id} на конце пути и оставляет слэш
             const cleanPath = info.path.replace(/\/{[^}]+}$/, '/');
             return `    ${key}: "${cleanPath}",`;
           })
@@ -104,11 +108,6 @@ try {
       .join('\n');
   };
 
-  /**
-   * Формирует строковое представление типа TApiPayloads.
-   * Связывает пути и методы с соответствующими типами request и response из сгенерированного api.d.ts.
-   * @returns {string} Исходный код объявления типа полезной нагрузки API.
-   */
   const generateSchemaTypes = () => {
     return Object.entries(grouped)
       .map(([group, items]) => {
@@ -117,11 +116,9 @@ try {
             const methodTypes = Object.entries(info.methods)
               .map(([m, details]) => {
                 const methodUpper = m.toUpperCase();
-
                 const reqTypeLine = details.reqContentType
                   ? `req: paths["${info.path}"]["${m}"]["requestBody"]["content"]["${details.reqContentType}"];`
                   : 'req?: never;';
-
                 const resTypeLine = details.resContentType
                   ? `res: paths["${info.path}"]["${m}"]["responses"]["${details.successCode}"]["content"]["${details.resContentType}"];`
                   : 'res?: void;';
@@ -159,13 +156,6 @@ export type ApiPath = keyof paths;
   fs.writeFileSync(constantsPath, constantsContent);
   console.log(`Файл успешно обновлен в ${constantsPath}`);
 } catch (error) {
-  const errorText = String(error?.stderr || error?.message || error);
-  const isConnRefused = errorText.includes('ECONNREFUSED') || error?.cause?.code === 'ECONNREFUSED';
-
-  if (isConnRefused) {
-    console.error(`Сервер недоступен по адресу ${apiUrl}. Проверьте работу сервера.`);
-  } else {
-    console.error('Произошла ошибка при генерации типов', error);
-  }
+  console.error('Произошла ошибка при генерации типов:', error.message || error);
   process.exit(1);
 }

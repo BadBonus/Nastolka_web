@@ -4,17 +4,17 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "pnpm types:generate && nuxt dev --logLevel verbose",
+    "dev": "pnpm generate:api && nuxt dev --logLevel verbose",
     "dev_simple": "nuxt dev --logLevel verbose",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "typecheck": "nuxt typecheck",
-    "types:generate": "node --env-file=.env scripts/generate-types.mjs",
     "vmd:analyze": "npx vue-mess-detector analyze ./components --group=rule",
     "vmd:full-report": "node scripts/vmd-report.js",
     "vmd:diff": "node scripts/vmd-diff.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:api": "node --env-file=.env scripts/generate-api.mjs && node --env-file=.env scripts/formate-api.mjs"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.100",
