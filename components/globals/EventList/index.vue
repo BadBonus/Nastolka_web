@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Event from './Event.vue';
 type TEventListIndex = {
-  items: TGamesCalendarEvent[];
+  items: TEvent[];
 };
 
 defineOptions({

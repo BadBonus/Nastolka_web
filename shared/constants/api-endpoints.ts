@@ -16,6 +16,21 @@ export const API_ENDPOINTS = {
     ME: "/profile/me",
     ID: "/profile/",
   },
+  ORG: {
+    CREATE: "/org/create",
+    INDEX: "/org",
+    ME: "/org/me",
+    SLUG: "/org/",
+  },
+  EVENTS: {
+    INDEX: "/events",
+    SLUG: "/events/",
+    ID: "/events/",
+    ID_CANCEL: "/events/{id}/cancel",
+  },
+  DICTIONARIES: {
+    INDEX: "/dictionaries",
+  },
 } as const;
 
 export type TApiPayloads = {
@@ -42,10 +57,6 @@ export type TApiPayloads = {
       GET: {
         req?: never;
         res: paths["/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
-      };
-      DELETE: {
-        req?: never;
-        res: paths["/auth/me"]["delete"]["responses"]["200"]["content"]["application/json"];
       };
     };
     LOGOUT: {
@@ -89,6 +100,10 @@ export type TApiPayloads = {
         req: paths["/profile/me"]["patch"]["requestBody"]["content"]["multipart/form-data"];
         res?: void;
       };
+      DELETE: {
+        req?: never;
+        res?: void;
+      };
     };
     ID: {
       GET: {
@@ -98,6 +113,86 @@ export type TApiPayloads = {
       PATCH: {
         req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["multipart/form-data"];
         res?: void;
+      };
+      DELETE: {
+        req?: never;
+        res?: void;
+      };
+    };
+  };
+  ORG: {
+    CREATE: {
+      POST: {
+        req: paths["/org/create"]["post"]["requestBody"]["content"]["multipart/form-data"];
+        res?: void;
+      };
+    };
+    INDEX: {
+      GET: {
+        req?: never;
+        res?: void;
+      };
+    };
+    ME: {
+      GET: {
+        req?: never;
+        res: paths["/org/me"]["get"]["responses"]["200"]["content"]["application/json"];
+      };
+      PATCH: {
+        req: paths["/org/me"]["patch"]["requestBody"]["content"]["multipart/form-data"];
+        res?: void;
+      };
+      DELETE: {
+        req?: never;
+        res: paths["/org/me"]["delete"]["responses"]["200"]["content"]["application/json"];
+      };
+    };
+    SLUG: {
+      GET: {
+        req?: never;
+        res?: void;
+      };
+    };
+  };
+  EVENTS: {
+    INDEX: {
+      POST: {
+        req: paths["/events"]["post"]["requestBody"]["content"]["multipart/form-data"];
+        res: paths["/events"]["post"]["responses"]["201"]["content"]["application/json"];
+      };
+      GET: {
+        req?: never;
+        res: paths["/events"]["get"]["responses"]["200"]["content"]["application/json"];
+      };
+    };
+    SLUG: {
+      GET: {
+        req?: never;
+        res: paths["/events/{slug}"]["get"]["responses"]["200"]["content"]["application/json"];
+      };
+    };
+    ID: {
+      PATCH: {
+        req: paths["/events/{id}"]["patch"]["requestBody"]["content"]["application/json"];
+        res: paths["/events/{id}"]["patch"]["responses"]["200"]["content"]["application/json"];
+      };
+      DELETE: {
+        req?: never;
+        res?: void;
+      };
+    };
+    ID_CANCEL: {
+      PATCH: {
+        req: paths["/events/{id}/cancel"]["patch"]["requestBody"]["content"]["application/json"];
+        res: paths["/events/{id}/cancel"]["patch"]["responses"]["200"]["content"]["application/json"];
+      };
+    };
+  };
+  DICTIONARIES: {
+    INDEX: {
+      GET: {
+        req?: never;
+        res: paths["/dictionaries"]["get"]["responses"]["200"]["content"]["application/json"];
       };
     };
   };

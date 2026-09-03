@@ -15,7 +15,7 @@ async function onSubmit(event: FormSubmitEvent<TRegisterUserSchema>) {
 </script>
 
 <template>
-  <UForm :loading="isLoading" :schema="registerUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
+  <UForm :disabled="isLoading" :schema="registerUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
     <UFormField label="Nickname" name="nickname">
       <UInput class="w-full" v-model="state.nickname" />
     </UFormField>

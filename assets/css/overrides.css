@@ -21,4 +21,34 @@
       text-transform: uppercase;
     }
   }
+
+  /* .hover\:bg-primary\/75:hover,
+  .active\:bg-primary\/75:active {
+    background-color: color-mix(in srgb, var(--ui-primary) 60%, white);
+  } */
+
+  .hover\:bg-secondary\/75:hover,
+  .active\:bg-secondary\/75:active {
+    background-color: color-mix(in srgb, var(--ui-secondary) 60%, white);
+  }
+
+  .hover\:bg-success\/75:hover,
+  .active\:bg-success\/75:active {
+    background-color: color-mix(in srgb, var(--ui-success) 60%, white);
+  }
+
+  .hover\:bg-info\/75:hover,
+  .active\:bg-info\/75:active {
+    background-color: color-mix(in srgb, var(--ui-info) 60%, white);
+  }
+
+  .hover\:bg-warning\/75:hover,
+  .active\:bg-warning\/75:active {
+    background-color: color-mix(in srgb, var(--ui-warning) 60%, white);
+  }
+
+  .hover\:bg-error\/75:hover,
+  .active\:bg-error\/75:active {
+    background-color: color-mix(in srgb, var(--ui-error) 60%, white);
+  }
 }

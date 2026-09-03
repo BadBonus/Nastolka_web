@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { eventsFromPlaces } from "./demo/GamesCalendar";
-import Header from "./Header/index.vue";
+import { eventsFromPlaces } from './demo/GamesCalendar';
+import Header from './Header/index.vue';
 
 defineOptions({
-  name: "GameCalendarIndex",
+  name: 'GameCalendarIndex',
 });
 
 const isAllVars = ref<boolean | undefined>(true);
-const search = ref<string | undefined>("");
+const search = ref<string | undefined>('');
 const choosedDate = ref<Date | null | undefined>(new Date());
 
 const items = computed<
   {
     place: string;
-    events: TGamesCalendarEvent[];
+    events: TEvent[];
   }[]
 >(() => {
   const places = Object.keys(eventsFromPlaces);
@@ -26,11 +26,7 @@ const items = computed<
 </script>
 <template>
   <div class="GameCalendarIndex">
-    <Header
-      v-model:choosed-date="choosedDate"
-      v-model:is-all-vars="isAllVars"
-      v-model:search="search"
-    />
+    <Header v-model:choosed-date="choosedDate" v-model:is-all-vars="isAllVars" v-model:search="search" />
     <div class="mt-4 flex flex-col gap-4">
       <div v-for="list in items" :key="list.place">
         <USeparator :ui="{ border: 'border-white' }" type="solid">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TGamesCalendarEvent } from '~/shared/types/gamesCalendar';
-defineProps<TGamesCalendarEvent>();
+import type { TEvent } from '~/shared/types/gamesCalendar';
+defineProps<TEvent>();
 
 defineOptions({
   name: 'Event',
@@ -53,7 +53,7 @@ const formatDate = (date: Date | string): string | undefined => {
 
       <div class="absolute -top-4.5 right-0 flex gap-1.5">
         <UButton class="sketchy-border-5" color="error" icon="ci:heart-outline" />
-        <UButton color="info" icon="ci:message-circle" />
+        <UButton color="info" icon="game-icons:spock-hand" />
       </div>
     </template>
 

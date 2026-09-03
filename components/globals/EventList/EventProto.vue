@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TGamesCalendarEvent } from '~/shared/types/gamesCalendar';
-defineProps<TGamesCalendarEvent>();
+import type { TEvent } from '~/shared/types/gamesCalendar';
+defineProps<TEvent>();
 
 defineOptions({
   name: 'Event',

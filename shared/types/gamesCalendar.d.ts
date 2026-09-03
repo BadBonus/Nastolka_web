@@ -1,4 +1,8 @@
-export enum TGamesCalendarCurrency {
+import { API_ENDPOINTS, type TApiPayloads } from '#consts/api-endpoints';
+
+type TProfileRes = TApiPayloads['PROFILE']['ID']['GET']['res'];
+
+export enum ECurrency {
   EUR = 'EUR',
   USD = 'USD',
   RUB = 'RUB',
@@ -25,49 +29,43 @@ export enum EKindOfRate {
   THEATRICALISE = 'THEATRICALISE',
 }
 
-export type TGamesCalendarOrgRating = {
+export type TOrgRating = {
   name: EKindOfRate;
   value: number;
 };
 
-export type TGamesCalendarOrg = {
+export type TOrg = {
   id: string;
   name: string;
   avatar: string;
-  link: string;
-  rating: TGamesCalendarOrgRating[];
-  countOfEvents: number;
+  slug: string;
+  rating: TOrgRating[];
 };
 
-export type TGamesCalendarEventPlayer = {
-  link: string;
-  avatar: string;
-  name: string;
-};
+export type TEventPlayer = Pick<TProfileRes, 'avatar' | 'nickname' | 'slug'>;
 
-export type TGamesCalendarEvent = {
+export type TEvent = {
   id: string;
-  gameMaster: TGamesCalendarOrg;
   name: string;
   addInfo?: string;
+  description?: string;
   maxUsers?: number;
-  currentUsers: number;
   cost?: {
     value: number;
     currency: TGamesCalendarCurrency;
   };
   time: string;
   org: TGamesCalendarOrg;
-  link: string;
   state: EStatesOfEvent;
   rates: TEventCommentRate[];
   timeStart: number;
   timeFinish: number;
   createdAt: Date;
-  players: TGamesCalendarEventPlayer[];
+  players: TEventPlayer[];
+  comments: EventReview[];
 };
 
-export type TEventCommentRate = {
+export type EventReview = {
   id: string;
   userId: string;
   eventId: string;

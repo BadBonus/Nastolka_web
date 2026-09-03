@@ -49,7 +49,14 @@ const loginSubmit = async (data: TLoginUserSchema) => {
     <RegForm v-model="state" :isLoading="isLoading" v-if="isReg" @submit="regSubmit" />
     <AuthForm v-model="state" :isLoading="isLoading" v-else @submit="loginSubmit" />
   </KeepAlive>
-  <UButton @click="toggleAuthForm" type="button" size="sm" variant="ghost" class="mt-3 w-full justify-center text-xs!">
+  <UButton
+    :disabled="isLoading"
+    @click="toggleAuthForm"
+    type="button"
+    size="sm"
+    variant="ghost"
+    class="mt-3 w-full justify-center text-xs!"
+  >
     {{ isReg ? 'Авторизоваться' : 'Зарегистрироваться' }}
   </UButton>
 </template>

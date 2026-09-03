@@ -1,4 +1,3 @@
-
 // https://github.com/benjamincanac.png
 
 export const organizers = [
@@ -250,10 +249,10 @@ export const events = [
     link: 'fitnessFanatics',
     org: fitnessFanatics,
   },
-] as TGamesCalendarEvent[];
+] as TEvent[];
 
 export const eventsFromPlaces = {
   online: events,
   Minsk: events,
-  Pinsk: events
-} as Record<string, TGamesCalendarEvent[]>
+  Pinsk: events,
+} as Record<string, TEvent[]>;

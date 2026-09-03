@@ -24,8 +24,6 @@ const test = () => {
   </div>
   <br />
   <div class=" ">
-    <EventProto @click.stop="test" v-bind="events[0]" />
-    <br />
     <EventList :items="events" />
     <!--
     <FlipCard @click="flipstate = !flipstate" :isFlipped="flipstate" class="h-60 w-full" trigger="click">

@@ -67,11 +67,7 @@ watch(
       <h2 class="mb-2 text-xl font-bold">Изменить аватар</h2>
       <modals-change-img @confirm="changeAvatar" :cropper-props="PROFILE_IMG_PROPERTIES" title="Смена аватара">
         <button class="canEditWrapper shadow-element border-border relative rounded-full border-2">
-          <NuxtImg
-            class="bg-brown h-36 w-full min-w-36 rounded-full object-cover"
-            :src="currentAvatarSrc"
-            alt="Ваш аватар"
-          />
+          <UAvatar class="bg-brown h-36 w-full min-w-36 rounded-full object-cover" :src="currentAvatarSrc" :alt="nickname" />
           <Icon class="SettingsMainEditIcon absCenter text-3xl" name="material-symbols:edit-sharp" />
         </button>
       </modals-change-img>
