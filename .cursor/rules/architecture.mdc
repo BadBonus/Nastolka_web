@@ -1,0 +1,75 @@
+---
+description: Архитектура фронтенда Nastolka — слои, каталоги, именование, script setup и Tailwind
+alwaysApply: true
+---
+
+# Архитектура Nastolka (Nuxt 3)
+
+Clean Architecture. Зависимости только вниз:
+
+`pages / layouts` → `components/features` → `composables/use-cases` → `composables/actions` → `useApi` → HTTP
+
+Фичи читают Pinia и мапперы. `actions` не знают сторы и UI. Компоненты не вызывают `useApi` и `$fetch` к бэкенду.
+
+## Каталоги
+
+| Путь | Назначение |
+|---|---|
+| `pages/` | Тонкие оболочки маршрутов: слоты, `NuxtPage`, сборка фич. Без бизнес-логики и HTTP. |
+| `layouts/` | Каркас приложения (хедер, футер, фон). |
+| `components/globals/` | Глупые UI-компоненты: пропсы + слоты + события. Без `use-cases`, Pinia и API. |
+| `components/features/` | Умные виджеты домена (Auth, Profile, GameCalendar). Оркестрация UI, вызов `use-cases`. |
+| `composables/use-cases/` | Бизнес-сценарии (`useAuthFlow`): actions → стор, loading/error, маппинг DTO→UI. Без `useApi`. |
+| `composables/actions/` | Транспорт (`useAuth`): URL, DTO, `useApi`. Без Pinia и мутации UI-состояния. |
+| `composables/*.ts` | Переиспользуемые UI-хелперы (`useFormattedDate`), не сценарии домена. |
+| `stores/` | Pinia: глобальное состояние. Мутации только из use-cases / плагинов. |
+| `entities/` | Доменные типы модели (`entities/user/model`). Не DTO бэкенда. |
+| `shared/types/` | DTO, OpenAPI, глобальные типы (`TBackendError`). |
+| `shared/constants/` | Эндпоинты, словари, роли. Алиас `#consts`. |
+| `shared/demo/` | Моки. Не подменять ими actions в проде. |
+| `utils/` | Чистые функции: `transformers/` (`sanitizeNulls`), форматтеры. Без Vue/Nuxt API. |
+| `assets/css/` | Слои Tailwind/темы. Не писать стили фич сюда. |
+| `plugins/` | Инфраструктура Nuxt (SSR-инициализация сессии). |
+
+Мапперы (`mapToSettingsProps`) и Zod-схемы живут **рядом с фичей** (`features/AuthForm/schemas/`, `features/Profile/Settings/mappers.ts`), не в `globals`.
+
+На границе API: `sanitizeNulls` (null → undefined). Классы `@internationalized/date` — только в `computed` компонента, не в сторе и не в ответе API (ломают SSR/devalue).
+
+## Именование
+
+- Vue: **PascalCase** файлы и папки. Публичный вход папки — `index.vue` (`EventList/index.vue` → `EventList`).
+- Клиент-only: суффикс `.client.vue`.
+- Страницы: PascalCase, имя = маршрут (`GamesCalendar.vue`, `Chat/[id].vue`).
+- Компонент: `defineOptions({ name: 'EventList' })`.
+- Use-case: `useXxxFlow.ts`, default export функции.
+- Action: `useXxx.ts`, методы `xxxAction`.
+- Стор: `stores/auth.ts` → `useAuthStore`.
+- Типы: префикс `T` (`TUserAuthData`). Локальные пропсы/DTO — `*.types.ts` рядом с компонентом.
+- Схемы форм: `kebab-case.schema.ts` в `schemas/` фичи.
+- Плагины: числовой префикс порядка (`01.authInitiate.server.ts`).
+- Алиасы: `#globals`, `#features`, `#consts`, `#types`. Автоимпорт Vue/Nuxt не дублировать руками.
+
+```ts
+// ❌ HTTP в компоненте
+const data = await useApi('/auth/login', { method: 'POST', body })
+
+// ✅ страница/фича
+const { login, isLoading } = useAuthFlow()
+await login(credentials)
+```
+
+```ts
+// ❌ Pinia в actions
+const store = useAuthStore()
+
+// ✅ стор только в use-cases
+const data = await loginAction(credentials)
+store.setUser(sanitizeNulls(data.user))
+```
+
+## Vue и стили
+
+- Только `<script setup lang="ts">`. Options API, `<script>` без setup и классы — запрещены.
+- Стили в шаблоне: **только Tailwind** (утилиты + токены темы/`@nuxt/ui`). Новый SCSS и новые `<style>` в компонентах не добавлять; исключения — оверрайды сторонних виджетов в `assets/css`.
+- `globals` не знают доменных сторов. Логика экрана — в `features` + `use-cases`.
+- Страница не разрастается: разметка домена уходит в `components/features/<Domain>/`.
