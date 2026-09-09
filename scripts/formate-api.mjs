@@ -33,6 +33,14 @@ const constantsPath = './shared/constants/api-endpoints.ts';
 try {
   console.log('Генерация типов из локального артефакта OpenAPI...');
 
+  const generateEnumsObject = () => {
+    const schemas = spec.components?.schemas || {};
+    return Object.entries(schemas)
+      .filter(([_, schema]) => Array.isArray(schema.enum))
+      .map(([name, schema]) => `  ${name}: ${JSON.stringify(schema.enum)} as const,`)
+      .join('\n');
+  };
+
   // 2. Генерация базовых типов напрямую из локального файла
   execSync(`pnpm exec openapi-typescript "${OPENAPI_PATH}" -o "${typesPath}"`, { stdio: 'inherit' });
 
@@ -144,6 +152,10 @@ import type { paths } from '../types/api';
 
 export const API_ENDPOINTS = {
 ${generateEndpointsObject()}
+} as const;
+
+export const API_ENUMS = {
+${generateEnumsObject()}
 } as const;
 
 export type TApiPayloads = {
