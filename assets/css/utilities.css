@@ -110,3 +110,24 @@
     }
   }
 }
+
+@utility sketchy-list-parent {
+  & > *:nth-child(6n + 1) {
+    @apply sketchy-border;
+  }
+  & > *:nth-child(6n + 2) {
+    @apply sketchy-border-2;
+  }
+  & > *:nth-child(6n + 3) {
+    @apply sketchy-border-3;
+  }
+  & > *:nth-child(6n + 4) {
+    @apply sketchy-border-4;
+  }
+  & > *:nth-child(6n + 5) {
+    @apply sketchy-border-5;
+  }
+  & > *:nth-child(6n) {
+    @apply sketchy-border-6;
+  }
+}

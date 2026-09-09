@@ -3,27 +3,27 @@
 /* Здесь будут располагаться основные глобальные стили на проект, что переписывают base стили, в base другие фреймы и библиотеки могут добавлять глобаные стили */
 
 /*NOTE: @theme - спец. директива для tailwind, ненадо путать с утилитой css @layer your_name(например theme)  */
-@layer theme {
+@theme {
+  --font-main: 'Shantell Sans', 'Rubik', sans-serif;
+  --font-secondary: 'Caveat', cursive;
+  --font-decorate: 'Artist Nouveau', serif;
+
+  --ui-primary: white;
+  --ui-text: white;
+  --ui-error: rgb(220, 53, 69);
+  --ui-warning: rgb(237, 152, 0);
+  --ui-success: rgb(40, 167, 69);
+  --ui-info: rgb(23, 162, 184);
+  --ui-secondary: rgb(85, 85, 85);
+}
+
+@layer base {
   :root {
     --ui-primary: var(--ui-color-neutral-900);
   }
 
   .dark {
-    --ui-primary: white;
-    --ui-text: white;
-    --ui-error: rgb(220, 53, 69);
-    --ui-warning: #ffc107;
-    --ui-success: rgb(40, 167, 69);
-    --ui-info: rgb(23, 162, 184);
-    --ui-secondary: rgb(85, 85, 85);
   }
-}
-
-@theme {
-  /* Montserrat Alternates - ранее как main */
-  --font-main: 'Shantell Sans, Rubik';
-  --font-secondary: 'Shantell Sans';
-  --font-decorate: 'Artist Nouveau';
 }
 
 @theme static {

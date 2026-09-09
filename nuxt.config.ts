@@ -1,6 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import Inspect from 'vite-plugin-inspect';
-import { fileURLToPath } from 'node:url';
+import {fileURLToPath} from 'node:url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -99,7 +99,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
+    '/': {prerender: true},
   },
 
   compatibilityDate: '2025-01-15',
@@ -134,7 +134,7 @@ export default defineNuxtConfig({
     '#features': fileURLToPath(new URL('./components/features', import.meta.url)),
     '#globals': fileURLToPath(new URL('./components/globals', import.meta.url)),
   },
-  components: [{ path: '~/components/globals' }, { path: '~/components/features' }, '~/components'],
+  components: [{path: '~/components/globals'}, {path: '~/components/features'}, '~/components'],
   colorMode: {
     preference: 'dark',
   },

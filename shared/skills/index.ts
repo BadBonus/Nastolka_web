@@ -4,6 +4,7 @@ export type TSkillItem = {
   id: ESkillPlayer | ESkillGameMaster;
   rating: number;
   icon: string;
+  title: string;
 };
 
 export enum ESkillPlayer {
@@ -13,25 +14,23 @@ export enum ESkillPlayer {
 }
 
 export enum ESkillGameMaster {
-  creativity = 'creativity',
-  artistry = 'artistry',
-  playerEducation = 'playerEducation',
-  storytelling = 'storytelling',
-  worldbuilding = 'worldbuilding',
+  CREATIVITY = 'creativity',
+  STORYTELLING = 'storytelling',
+  PLAYER_EDUCATION = 'playerEducation',
+  THEATRICALISE = 'theatricalise',
 }
 
 export const skillItems: Record<ERoles.gamemaster | ERoles.player, TSkillItem[]> = {
   [ERoles.player]: [
-    {id: ESkillPlayer.creativity, rating: 0, icon: 'game-icons:light-bulb'},
-    {id: ESkillPlayer.artistry, rating: 0, icon: 'game-icons:duality-mask'},
-    {id: ESkillPlayer.playerEducation, rating: 0, icon: 'game-icons:graduate-cap'},
+    {id: ESkillPlayer.creativity, rating: 0, icon: 'game-icons:light-bulb', title: 'Креативность'},
+    {id: ESkillPlayer.artistry, rating: 0, icon: 'game-icons:duality-mask', title: 'Артистизм'},
+    {id: ESkillPlayer.playerEducation, rating: 0, icon: 'game-icons:graduate-cap', title: 'Знание правил'},
   ],
   [ERoles.gamemaster]: [
-    {id: ESkillGameMaster.creativity, rating: 0, icon: 'game-icons:light-bulb'},
-    {id: ESkillGameMaster.artistry, rating: 0, icon: 'game-icons:duality-mask'},
-    {id: ESkillGameMaster.playerEducation, rating: 0, icon: 'game-icons:graduate-cap'},
-    {id: ESkillGameMaster.storytelling, rating: 0, icon: 'game-icons:teacher'},
-    {id: ESkillGameMaster.worldbuilding, rating: 0, icon: 'game-icons:world'},
+    {id: ESkillGameMaster.CREATIVITY, rating: 0, icon: 'game-icons:light-bulb', title: 'Креативность'},
+    {id: ESkillGameMaster.THEATRICALISE, rating: 0, icon: 'game-icons:duality-mask', title: 'Артистизм'},
+    {id: ESkillGameMaster.PLAYER_EDUCATION, rating: 0, icon: 'game-icons:graduate-cap', title: 'Знание правил'},
+    {id: ESkillGameMaster.STORYTELLING, rating: 0, icon: 'game-icons:teacher', title: 'Сторителлинг'},
   ],
 };
 
@@ -39,9 +38,8 @@ export const skillItems: Record<ERoles.gamemaster | ERoles.player, TSkillItem[]>
 export const titleRussian = {
   [ESkillPlayer.creativity]: 'Креативность',
   [ESkillPlayer.artistry]: 'Артистизм',
-  [ESkillPlayer.playerEducation]: 'Обучение игроков',
-  [ESkillGameMaster.storytelling]: 'Сторителлинг',
-  [ESkillGameMaster.worldbuilding]: 'Проработка мира',
+  [ESkillPlayer.playerEducation]: 'Знание правил',
+  [ESkillGameMaster.STORYTELLING]: 'Сторителлинг',
 };
 
 export const skillPlayer = Object.values(ESkillPlayer);
