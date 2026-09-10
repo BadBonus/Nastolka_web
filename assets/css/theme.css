@@ -14,7 +14,7 @@
   --ui-warning: rgb(237, 152, 0);
   --ui-success: rgb(40, 167, 69);
   --ui-info: rgb(23, 162, 184);
-  --ui-secondary: rgb(85, 85, 85);
+  --ui-secondary: #522626;
 }
 
 @layer base {

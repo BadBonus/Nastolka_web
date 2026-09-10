@@ -349,48 +349,54 @@ defineExpose({
     <UInput
       ref="uInputRef"
       v-model="model"
-      icon="i-heroicons-magnifying-glass"
       clearable
       class="w-full"
       @clear="handleInputClear"
       @focus="handleFocus"
       @input="handleInput"
       @keydown.enter="handleSearchSubmit"
-    />
+      :ui="{ trailing: 'pe-1' }"
+    >
+      <template v-if="model.length" #trailing>
+        <UButton variant="link" size="sm" aria-label="Clear input" @click="handleInputClear" class="text-primary">
+          X
+        </UButton>
+      </template>
+    </UInput>
 
     <div
       v-show="isPopoverOpen"
-      class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-[300px] overflow-y-auto rounded-md border border-gray-200 bg-white p-2 shadow-lg dark:border-gray-800 dark:bg-gray-900"
+      class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-7 overflow-y-auto rounded-md border shadow-lg"
       @mousedown.prevent
     >
       <template v-if="currentContext.type === 'on_token' && currentContext.activeToken">
-        <div class="space-y-1 p-1">
-          <div class="border-b border-gray-100 px-2 py-1 font-mono text-xs text-gray-400 dark:border-gray-800">
+        <div class="bg-secondary space-y-1 p-1">
+          <div class="border-b border-gray-100 px-2 py-1 text-xs text-gray-300">
             {{ currentContext.activeToken.raw }}
           </div>
 
           <button
             type="button"
-            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-white/10"
             @click="handleToggleTokenNegation"
           >
-            <span>
+            <span class="text-warning">
               {{ currentContext.activeToken.type === 'negated_filter' ? 'Включить тег' : 'Исключить тег' }}
             </span>
 
-            <UBadge size="xs" color="warning">
+            <UBadge color="warning">
               {{ currentContext.activeToken.type === 'negated_filter' ? '+include' : '-exclude' }}
             </UBadge>
           </button>
 
           <button
             type="button"
-            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
+            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-red-600 hover:bg-white/10"
             @click="handleRemoveToken"
           >
-            <span>Удалить тег</span>
+            <span class="text-error">Удалить тег</span>
 
-            <UBadge size="xs" color="error"> delete </UBadge>
+            <UBadge color="error"> delete </UBadge>
           </button>
         </div>
       </template>
@@ -398,20 +404,20 @@ defineExpose({
       <slot v-else name="suggestions" :context="currentContext" :suggestions="props.suggestions">
         <div v-if="!props.suggestions.length" class="p-2 text-sm text-gray-400">Нет совпадений</div>
 
-        <ul v-else class="space-y-1">
+        <ul v-else class="space-y-1 bg-mauve-800">
           <li v-for="item in props.suggestions.slice(0, props.maxSuggestions)" :key="item.id">
             <button
               type="button"
-              class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+              class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left text-sm hover:bg-white/10"
               @click="handleItemClick(item)"
             >
               <span class="flex items-center gap-2">
-                <span v-if="item.type === 'tag'" class="font-mono text-xs text-gray-400"> #tag </span>
+                <span v-if="item.type === 'tag'" class="text-xs text-gray-400"> #tag </span>
 
                 {{ item.label }}
               </span>
 
-              <UBadge v-if="item.tagKey" size="xs" :color="item.badgeColor || 'neutral'">
+              <UBadge v-if="item.tagKey" :class="item.badgeColor || 'bg-neutral'">
                 {{ item.tagKey }}
               </UBadge>
             </button>
