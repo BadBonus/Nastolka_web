@@ -28,8 +28,9 @@ export function useCaretContext(
     const el = toValue(inputRef);
     if (!el || document.activeElement !== el) return null;
 
+    const value = el.value;
     const caretPos = el.selectionStart ?? 0;
-    const context = getCaretContext(toValue(modelValue), caretPos);
+    const context = getCaretContext(value, caretPos);
 
     currentContext.value = context;
     onContextChange?.(context, options.force ?? false);

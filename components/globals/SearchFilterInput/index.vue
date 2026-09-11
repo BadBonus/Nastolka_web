@@ -6,6 +6,7 @@ import { useCaretContext } from './composables/useCaretContext';
 import { useSuggestionsFetch, type FetchSuggestionsPayload } from './composables/useSuggestionsFetch';
 import { usePopoverState } from './composables/usePopoverState';
 import { useInputActions } from './composables/useInputActions';
+import { useActiveSuggestion } from './composables/useActiveSuggestion';
 
 interface Props {
   modelValue?: string;
@@ -73,9 +74,24 @@ const { selectTag, selectEntity, toggleNegation, removeActiveToken } = useInputA
   onAfterRestore: () => syncCaret({ force: true }),
 });
 
+const isListVisible = computed(() => currentContext.value.type !== 'on_token');
+
+const {
+  activeIndex,
+  setActive,
+  moveNext,
+  movePrev,
+  reset: resetActive,
+} = useActiveSuggestion(
+  () => props.suggestions,
+  () => props.maxSuggestions,
+  isListVisible
+);
+
 function handleInput() {
   openPopover();
-  nextTick(() => syncCaret());
+  resetActive();
+  syncCaret();
 }
 
 function handleFocus() {
@@ -84,6 +100,8 @@ function handleFocus() {
 }
 
 function handleItemClick(item: SuggestionItem) {
+  resetActive();
+
   if (item.type === 'tag') {
     selectTag(item.value);
     return;
@@ -91,15 +109,62 @@ function handleItemClick(item: SuggestionItem) {
   selectEntity(item.value, item.tagKey);
 }
 
+function handleKeydown(event: KeyboardEvent) {
+  switch (event.key) {
+    case 'ArrowDown': {
+      event.preventDefault();
+      openPopover();
+      moveNext();
+      return;
+    }
+    case 'ArrowUp': {
+      event.preventDefault();
+      openPopover();
+      movePrev();
+      return;
+    }
+    case 'Escape': {
+      if (!isPopoverOpen.value) return;
+      event.preventDefault();
+      resetActive();
+      closePopover();
+      return;
+    }
+    case 'Tab':
+    case 'Enter': {
+      const index = activeIndex.value;
+      const item = index >= 0 ? props.suggestions[index] : undefined;
+
+      if (item) {
+        event.preventDefault();
+        handleItemClick(item);
+        return;
+      }
+
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleSearchSubmit();
+      }
+      return;
+    }
+  }
+}
+
 function handleInputClear() {
   fetch.reset();
   resetCaret();
+  resetActive();
   model.value = '';
-  closePopover();
+
+  nextTick(() => {
+    nativeInput.value?.focus();
+    syncCaret({ force: true });
+  });
 }
 
 function handleSearchSubmit() {
   fetch.cancel();
+  resetActive();
   emit('search', props.modelValue);
   closePopover();
 }
@@ -122,11 +187,13 @@ defineExpose({
       @clear="handleInputClear"
       @focus="handleFocus"
       @input="handleInput"
-      @keydown.enter="handleSearchSubmit"
+      @keydown="handleKeydown"
       :ui="{ trailing: 'pe-1' }"
     >
       <template v-if="model.length" #trailing>
-        <UButton variant="link" aria-label="Clear input" @click="handleInputClear" class="text-primary"> X </UButton>
+        <UButton variant="link" aria-label="Clear input" @mousedown.prevent @click="handleInputClear" class="text-primary">
+          X
+        </UButton>
       </template>
     </UInput>
 
@@ -143,7 +210,14 @@ defineExpose({
         class="bg-secondary space-y-1 p-1"
       />
 
-      <List v-else :suggestions="props.suggestions" :maxSuggestions="props.maxSuggestions" @itemClick="handleItemClick" />
+      <List
+        v-else
+        :suggestions="props.suggestions"
+        :maxSuggestions="props.maxSuggestions"
+        :activeIndex="activeIndex"
+        @update:activeIndex="setActive"
+        @itemClick="handleItemClick"
+      />
     </div>
   </div>
 </template>
