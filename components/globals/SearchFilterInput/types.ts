@@ -22,3 +22,10 @@ export interface SuggestionItem {
   badgeColor?: string;
   type?: 'tag' | 'entity';
 }
+
+export interface TagConfig {
+  key: string;
+  label: string;
+  icon?: string;
+  badgeColor?: string;
+}

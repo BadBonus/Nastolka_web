@@ -1,31 +1,11 @@
 <script setup lang="ts">
-import {
-  getCaretContext,
-  insertEntity,
-  insertTag,
-  removeToken,
-  toggleTokenNegation,
-  type CaretContext,
-  type CaretContextType,
-} from './searchFilterParser';
-import type { Token, SuggestionItem } from './types.ts';
+import type { SuggestionItem, TagConfig } from './types';
 import SuggestionActions from './SuggestionActions.vue';
 import List from './List.vue';
-
-export interface TagConfig {
-  key: string;
-  label: string;
-  icon?: string;
-  badgeColor?: string;
-}
-
-export interface FetchSuggestionsPayload {
-  contextType: CaretContextType;
-  tagKey?: string;
-  queryWord?: string;
-  activeToken?: Token;
-  isNegated?: boolean;
-}
+import { useCaretContext } from './composables/useCaretContext';
+import { useSuggestionsFetch, type FetchSuggestionsPayload } from './composables/useSuggestionsFetch';
+import { usePopoverState } from './composables/usePopoverState';
+import { useInputActions } from './composables/useInputActions';
 
 interface Props {
   modelValue?: string;
@@ -60,278 +40,75 @@ const model = computed({
 });
 
 const containerRef = useTemplateRef<HTMLElement>('containerRef');
-
 const uInputRef = useTemplateRef<UInputInstance>('uInputRef');
-
-const isPopoverOpen = ref(false);
-
-const currentContext = ref<CaretContext>({ type: 'empty' });
-
-let suggestionsTimer: ReturnType<typeof setTimeout> | null = null;
-
-let lastSuggestionsKey = '';
 
 const nativeInput = computed<HTMLInputElement | null>(() => {
   const instance = uInputRef.value;
-
-  if (!instance) {
-    return null;
-  }
-
-  if (instance.inputRef instanceof HTMLInputElement) {
-    return instance.inputRef;
-  }
-
+  if (!instance) return null;
+  if (instance.inputRef instanceof HTMLInputElement) return instance.inputRef;
   return instance.$el?.querySelector('input') ?? null;
 });
 
-function clearSuggestionsTimer() {
-  if (suggestionsTimer !== null) {
-    clearTimeout(suggestionsTimer);
-    suggestionsTimer = null;
-  }
-}
+const { isOpen: isPopoverOpen, open: openPopover, close: closePopover, handleFocusOut } = usePopoverState(containerRef);
 
-function buildSuggestionsPayload(context: CaretContext): FetchSuggestionsPayload {
-  return {
-    contextType: context.type,
-    tagKey: context.tagKey,
-    queryWord: context.queryWord,
-    activeToken: context.activeToken,
-    isNegated: context.isNegated,
-  };
-}
+const fetch = useSuggestionsFetch(
+  (payload) => emit('fetch-suggestions', payload),
+  () => props.debounceMs
+);
 
-function buildSuggestionsKey(context: CaretContext): string {
-  return JSON.stringify({
-    type: context.type,
-    tagKey: context.tagKey ?? null,
-    queryWord: context.queryWord ?? null,
-    isNegated: context.isNegated ?? false,
-  });
-}
+const {
+  currentContext,
+  sync: syncCaret,
+  reset: resetCaret,
+} = useCaretContext(
+  nativeInput,
+  () => props.modelValue,
+  (context, force) => fetch.schedule(context, force)
+);
 
-function scheduleSuggestions(context: CaretContext, force = false) {
-  const suggestionsKey = buildSuggestionsKey(context);
-
-  if (!force && suggestionsKey === lastSuggestionsKey) {
-    return;
-  }
-
-  lastSuggestionsKey = suggestionsKey;
-
-  clearSuggestionsTimer();
-
-  suggestionsTimer = setTimeout(() => {
-    suggestionsTimer = null;
-
-    emit('fetch-suggestions', buildSuggestionsPayload(context));
-  }, props.debounceMs);
-}
-
-function syncCaretContext(options?: { fetchSuggestions?: boolean; forceFetch?: boolean }) {
-  const el = nativeInput.value;
-
-  if (!el || document.activeElement !== el) {
-    return;
-  }
-
-  const caretPos = el.selectionStart ?? 0;
-
-  const context = getCaretContext(props.modelValue, caretPos);
-
-  currentContext.value = context;
-
-  if (options?.fetchSuggestions) {
-    scheduleSuggestions(context, options.forceFetch ?? false);
-  }
-}
-
-function openSuggestions() {
-  isPopoverOpen.value = true;
-}
-
-function closeSuggestions() {
-  isPopoverOpen.value = false;
-  clearSuggestionsTimer();
-}
+const { selectTag, selectEntity, toggleNegation, removeActiveToken } = useInputActions({
+  modelValue: model,
+  inputRef: nativeInput,
+  currentContext,
+  onAfterRestore: () => syncCaret({ force: true }),
+});
 
 function handleInput() {
-  openSuggestions();
-
-  nextTick(() => {
-    syncCaretContext({
-      fetchSuggestions: true,
-    });
-  });
+  openPopover();
+  nextTick(() => syncCaret());
 }
 
 function handleFocus() {
-  openSuggestions();
-
-  syncCaretContext({
-    fetchSuggestions: true,
-    forceFetch: true,
-  });
-}
-
-function handleSelectionChange() {
-  const el = nativeInput.value;
-
-  if (!el || document.activeElement !== el) {
-    return;
-  }
-
-  syncCaretContext({
-    fetchSuggestions: true,
-  });
-}
-
-function getCaretPosition(): number {
-  return nativeInput.value?.selectionStart ?? props.modelValue.length;
-}
-
-function restoreCaretAndSync(caretPos: number) {
-  nextTick(() => {
-    const el = nativeInput.value;
-
-    if (!el) {
-      return;
-    }
-
-    el.focus();
-
-    const safeCaretPos = Math.min(Math.max(caretPos, 0), el.value.length);
-
-    el.setSelectionRange(safeCaretPos, safeCaretPos);
-
-    syncCaretContext({
-      fetchSuggestions: true,
-      forceFetch: true,
-    });
-  });
-}
-
-function handleSelectTag(tagKey: string) {
-  const caretPos = getCaretPosition();
-
-  const { newString, newCaretPos } = insertTag(props.modelValue, caretPos, tagKey);
-
-  model.value = newString;
-
-  restoreCaretAndSync(newCaretPos);
-}
-
-function handleSelectEntity(entityValue: string, tagKey?: string) {
-  const caretPos = getCaretPosition();
-
-  const context = currentContext.value;
-
-  const resolvedTagKey = tagKey ?? context.tagKey;
-
-  const { newString, newCaretPos } = insertEntity(props.modelValue, caretPos, entityValue, {
-    tagKey: resolvedTagKey,
-    isNegated: context.isNegated ?? false,
-  });
-
-  model.value = newString;
-
-  /*
-   * Parser уже вернул позицию ПОСЛЕ
-   * автоматически добавленного пробела.
-   */
-  restoreCaretAndSync(newCaretPos);
-}
-
-function handleToggleTokenNegation() {
-  const context = currentContext.value;
-
-  if (context.type !== 'on_token' || !context.activeToken) {
-    return;
-  }
-
-  const { newString, newCaretPos } = toggleTokenNegation(props.modelValue, context.activeToken);
-
-  model.value = newString;
-
-  restoreCaretAndSync(newCaretPos);
-}
-
-function handleRemoveToken() {
-  const context = currentContext.value;
-
-  if (context.type !== 'on_token' || !context.activeToken) {
-    return;
-  }
-
-  const { newString, newCaretPos } = removeToken(props.modelValue, context.activeToken);
-
-  model.value = newString;
-
-  restoreCaretAndSync(newCaretPos);
+  openPopover();
+  syncCaret({ force: true });
 }
 
 function handleItemClick(item: SuggestionItem) {
   if (item.type === 'tag') {
-    handleSelectTag(item.value);
+    selectTag(item.value);
     return;
   }
-
-  handleSelectEntity(item.value, item.tagKey);
+  selectEntity(item.value, item.tagKey);
 }
 
 function handleInputClear() {
-  clearSuggestionsTimer();
-
-  lastSuggestionsKey = '';
-
-  currentContext.value = {
-    type: 'empty',
-  };
-
+  fetch.reset();
+  resetCaret();
   model.value = '';
-
-  closeSuggestions();
+  closePopover();
 }
 
 function handleSearchSubmit() {
-  clearSuggestionsTimer();
-
+  fetch.cancel();
   emit('search', props.modelValue);
-
-  closeSuggestions();
+  closePopover();
 }
-
-function handleFocusOut(event: FocusEvent) {
-  const relatedTarget = event.relatedTarget;
-
-  if (relatedTarget instanceof Node && containerRef.value?.contains(relatedTarget)) {
-    return;
-  }
-
-  closeSuggestions();
-}
-
-onMounted(() => {
-  document.addEventListener('selectionchange', handleSelectionChange);
-});
-
-onUnmounted(() => {
-  clearSuggestionsTimer();
-
-  document.removeEventListener('selectionchange', handleSelectionChange);
-});
 
 defineExpose({
   nativeInput,
   isPopoverOpen,
   currentContext,
-
-  updateCaretAndContext: () =>
-    syncCaretContext({
-      fetchSuggestions: true,
-      forceFetch: true,
-    }),
+  updateCaretAndContext: () => syncCaret({ force: true }),
 });
 </script>
 
@@ -361,8 +138,8 @@ defineExpose({
       <SuggestionActions
         v-if="currentContext.type === 'on_token' && currentContext.activeToken"
         :activeToken="currentContext.activeToken"
-        @toggleTokenNegation="handleToggleTokenNegation"
-        @removeToken="handleRemoveToken"
+        @toggleTokenNegation="toggleNegation"
+        @removeToken="removeActiveToken"
         class="bg-secondary space-y-1 p-1"
       />
 
