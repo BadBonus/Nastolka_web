@@ -130,14 +130,14 @@ describe('Функции форматирования строки', () => {
 
   it('toggleTokenNegation переключает плюс и минус у тега', () => {
     const tokens = parseSearchString('category:"manga"');
-    const { newString } = toggleTokenNegation('category:"manga"', tokens[0]);
+    const { newString } = toggleTokenNegation('category:"manga"', tokens[0]!);
     expect(newString).toBe('-category:"manga"');
   });
 
   it('removeToken удаляет токен из строки', () => {
     const input = 'image category:"manga" foo';
     const tokens = parseSearchString(input);
-    const { newString } = removeToken(input, tokens[1]);
+    const { newString } = removeToken(input, tokens[1]!);
     expect(newString).toBe('image foo');
   });
 });

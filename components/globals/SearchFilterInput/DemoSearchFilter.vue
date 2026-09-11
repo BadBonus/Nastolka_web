@@ -1,7 +1,8 @@
-<!-- DemoSearchFilter.vue -->
 <script setup lang="ts">
 import { ref } from 'vue';
-import SearchFilterInput, { type FetchSuggestionsPayload, type SuggestionItem, type TagConfig } from './index.vue';
+import { type SuggestionItem, type TagConfig } from './types';
+import type { FetchSuggestionsPayload } from './composables/useSuggestionsFetch';
+import SearchFilterInput from './index.vue';
 
 const searchQuery = ref('image category:"manga"');
 const isLoading = ref(false);
