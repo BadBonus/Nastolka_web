@@ -13,3 +13,12 @@ export interface Token {
   start: number;
   end: number;
 }
+
+export interface SuggestionItem {
+  id: string | number;
+  label: string;
+  value: string;
+  tagKey?: string;
+  badgeColor?: string;
+  type?: 'tag' | 'entity';
+}

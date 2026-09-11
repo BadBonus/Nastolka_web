@@ -8,23 +8,15 @@ import {
   type CaretContext,
   type CaretContextType,
 } from './searchFilterParser';
-import type { Token } from './types.ts';
+import type { Token, SuggestionItem } from './types.ts';
 import SuggestionActions from './SuggestionActions.vue';
+import List from './List.vue';
 
 export interface TagConfig {
   key: string;
   label: string;
   icon?: string;
   badgeColor?: string;
-}
-
-export interface SuggestionItem {
-  id: string | number;
-  label: string;
-  value: string;
-  tagKey?: string;
-  badgeColor?: string;
-  type?: 'tag' | 'entity';
 }
 
 export interface FetchSuggestionsPayload {
@@ -357,9 +349,7 @@ defineExpose({
       :ui="{ trailing: 'pe-1' }"
     >
       <template v-if="model.length" #trailing>
-        <UButton variant="link" size="sm" aria-label="Clear input" @click="handleInputClear" class="text-primary">
-          X
-        </UButton>
+        <UButton variant="link" aria-label="Clear input" @click="handleInputClear" class="text-primary"> X </UButton>
       </template>
     </UInput>
 
@@ -376,61 +366,7 @@ defineExpose({
         class="bg-secondary space-y-1 p-1"
       />
 
-      <!-- <template v-if="currentContext.type === 'on_token' && currentContext.activeToken">
-        <div class="bg-secondary space-y-1 p-1">
-          <div class="border-b border-gray-100 px-2 py-1 text-xs text-gray-300">
-            {{ currentContext.activeToken.raw }}
-          </div>
-
-          <button
-            type="button"
-            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-white/10"
-            @click="handleToggleTokenNegation"
-          >
-            <span class="text-warning">
-              {{ currentContext.activeToken.type === 'negated_filter' ? 'Включить тег' : 'Исключить тег' }}
-            </span>
-
-            <UBadge color="warning">
-              {{ currentContext.activeToken.type === 'negated_filter' ? '+include' : '-exclude' }}
-            </UBadge>
-          </button>
-
-          <button
-            type="button"
-            class="flex w-full items-center justify-between rounded px-3 py-1.5 text-left text-sm text-red-600 hover:bg-white/10"
-            @click="handleRemoveToken"
-          >
-            <span class="text-error">Удалить тег</span>
-
-            <UBadge color="error"> delete </UBadge>
-          </button>
-        </div>
-      </template> -->
-
-      <slot v-else name="suggestions" :context="currentContext" :suggestions="props.suggestions">
-        <div v-if="!props.suggestions.length" class="p-2 text-sm text-gray-400">Нет совпадений</div>
-
-        <ul v-else class="space-y-1 bg-mauve-800">
-          <li v-for="item in props.suggestions.slice(0, props.maxSuggestions)" :key="item.id">
-            <button
-              type="button"
-              class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left text-sm hover:bg-white/10"
-              @click="handleItemClick(item)"
-            >
-              <span class="flex items-center gap-2">
-                <span v-if="item.type === 'tag'" class="text-xs text-gray-400"> #tag </span>
-
-                {{ item.label }}
-              </span>
-
-              <UBadge v-if="item.tagKey" :class="item.badgeColor || 'bg-neutral'">
-                {{ item.tagKey }}
-              </UBadge>
-            </button>
-          </li>
-        </ul>
-      </slot>
+      <List v-else :suggestions="props.suggestions" :maxSuggestions="props.maxSuggestions" @itemClick="handleItemClick" />
     </div>
   </div>
 </template>
