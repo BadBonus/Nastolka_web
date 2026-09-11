@@ -1,14 +1,5 @@
-export type TokenType = 'text' | 'filter' | 'negated_filter';
-
-export interface Token {
-  type: TokenType;
-  key?: string;
-  value?: string;
-  raw: string;
-  start: number;
-  end: number;
-}
-
+import type { Token } from './types';
+import { ETokenTypes } from './types';
 export type CaretContextType = 'empty' | 'after_tag_key' | 'inside_entity_value' | 'inside_word' | 'on_token';
 
 export interface CaretContext {
@@ -43,7 +34,7 @@ export function parseSearchString(input: string): Token[] {
       const value = match[3] !== undefined ? match[3] : (match[4] ?? '');
 
       tokens.push({
-        type: isNegated ? 'negated_filter' : 'filter',
+        type: isNegated ? ETokenTypes.NegatedFilter : ETokenTypes.Filter,
         key,
         value,
         raw,
@@ -52,7 +43,7 @@ export function parseSearchString(input: string): Token[] {
       });
     } else {
       tokens.push({
-        type: 'text',
+        type: ETokenTypes.Text,
         raw,
         start,
         end,
@@ -74,7 +65,7 @@ export function getCaretContext(input: string, caretPos: number): CaretContext {
 
   for (const token of tokens) {
     if (
-      (token.type === 'filter' || token.type === 'negated_filter') &&
+      (token.type === ETokenTypes.Filter || token.type === ETokenTypes.NegatedFilter) &&
       token.raw.includes('"') &&
       safeCaretPos >= token.start &&
       safeCaretPos <= token.end
@@ -310,8 +301,7 @@ export function toggleTokenNegation(
   }
 
   let updatedTokenRaw = '';
-
-  if (token.type === 'negated_filter') {
+  if (token.type === ETokenTypes.NegatedFilter) {
     updatedTokenRaw = `${token.key}:"${token.value}"`;
   } else {
     updatedTokenRaw = `-${token.key}:"${token.value}"`;

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, useTemplateRef } from 'vue';
-
 import {
   getCaretContext,
   insertEntity,
@@ -9,8 +7,9 @@ import {
   toggleTokenNegation,
   type CaretContext,
   type CaretContextType,
-  type Token,
 } from './searchFilterParser';
+import type { Token } from './types.ts';
+import SuggestionActions from './SuggestionActions.vue';
 
 export interface TagConfig {
   key: string;
@@ -369,7 +368,15 @@ defineExpose({
       class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-7 overflow-y-auto rounded-md border shadow-lg"
       @mousedown.prevent
     >
-      <template v-if="currentContext.type === 'on_token' && currentContext.activeToken">
+      <SuggestionActions
+        v-if="currentContext.type === 'on_token' && currentContext.activeToken"
+        :activeToken="currentContext.activeToken"
+        @toggleTokenNegation="handleToggleTokenNegation"
+        @removeToken="handleRemoveToken"
+        class="bg-secondary space-y-1 p-1"
+      />
+
+      <!-- <template v-if="currentContext.type === 'on_token' && currentContext.activeToken">
         <div class="bg-secondary space-y-1 p-1">
           <div class="border-b border-gray-100 px-2 py-1 text-xs text-gray-300">
             {{ currentContext.activeToken.raw }}
@@ -399,7 +406,7 @@ defineExpose({
             <UBadge color="error"> delete </UBadge>
           </button>
         </div>
-      </template>
+      </template> -->
 
       <slot v-else name="suggestions" :context="currentContext" :suggestions="props.suggestions">
         <div v-if="!props.suggestions.length" class="p-2 text-sm text-gray-400">Нет совпадений</div>
