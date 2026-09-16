@@ -1,9 +1,9 @@
-import { API_ENDPOINTS, type TApiPayloads } from '#consts/api-endpoints';
+import { PROFILE } from '#openApi';
 
-export type TProfileMeRes = TApiPayloads['PROFILE']['ME']['GET']['res'];
-export type TProfileMePatchReq = TApiPayloads['PROFILE']['ME']['PATCH']['req'];
+export type TProfileMeRes = PROFILE['ME']['GET']['res'];
+export type TProfileMePatchReq = PROFILE['ME']['PATCH']['req'];
 
-const urlProfileMe = API_ENDPOINTS.PROFILE.ME;
+const urlProfileMe = PROFILE.ME;
 
 export default function useActions() {
   const error = ref<string | null>(null);

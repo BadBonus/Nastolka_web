@@ -1,6 +1,6 @@
-import { API_ENDPOINTS, type TApiPayloads } from '#consts/api-endpoints';
+import type { PROFILE } from '#openApi';
 
-type TProfileRes = TApiPayloads['PROFILE']['ID']['GET']['res'];
+type TProfileRes = PROFILE['ID']['GET']['res'];
 
 export enum ECurrency {
   EUR = 'EUR',

@@ -1,8 +1,8 @@
-import { API_ENDPOINTS, type TApiPayloads } from '#consts/api-endpoints';
+import { DICTIONARIES } from '#openApi';
 
-type TDictionariesRes = TApiPayloads['DICTIONARIES']['INDEX']['GET']['res'];
+type TDictionariesRes = DICTIONARIES['INDEX']['GET']['res'];
 
-const urlDictionaries = API_ENDPOINTS.DICTIONARIES.INDEX;
+const urlDictionaries = DICTIONARIES.INDEX;
 
 export default function useActions() {
   const error = ref<string | null>(null);

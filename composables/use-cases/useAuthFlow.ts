@@ -1,4 +1,4 @@
-import { type TApiPayloads } from '@/shared/constants/api-endpoints';
+import type { AUTH } from '#openApi';
 import useActions from '@/composables/actions/useAuth';
 
 import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
@@ -9,7 +9,7 @@ export default function useAuthFlow() {
   const store = useAuthStore();
   const isLoading = ref(false);
 
-  const login = async (credentials: TApiPayloads['AUTH']['LOGIN']['POST']['req']) => {
+  const login = async (credentials: AUTH['LOGIN']['POST']['req']) => {
     isLoading.value = true;
     try {
       const data = await loginAction(credentials);

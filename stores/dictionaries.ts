@@ -1,6 +1,6 @@
-import type { TApiPayloads } from '#consts/api-endpoints';
+import type { DICTIONARIES } from '#openApi';
 
-export type TDictionaries = TApiPayloads['DICTIONARIES']['INDEX']['GET']['res'];
+export type TDictionaries = DICTIONARIES['INDEX']['GET']['res'];
 
 export const useDictionariesStore = defineStore('dictionaries', {
   state: () => ({

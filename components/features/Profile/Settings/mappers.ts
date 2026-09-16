@@ -1,7 +1,7 @@
-import { type TApiPayloads } from '#consts/api-endpoints';
+import type { PROFILE } from '#openApi';
 import type { TSettingsMainProps } from './Main.vue';
 
-export type TProfileMeRes = DeepNullToUndefined<TApiPayloads['PROFILE']['ME']['GET']['res']>;
+export type TProfileMeRes = DeepNullToUndefined<PROFILE['ME']['GET']['res']>;
 
 export const mapToSettingsProps = (data: TProfileMeRes): TSettingsMainProps => ({
   nickname: data.nickname,

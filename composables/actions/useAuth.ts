@@ -1,17 +1,17 @@
-import { API_ENDPOINTS, type TApiPayloads } from '#consts/api-endpoints';
+import { AUTH } from '#openApi';
 
-type TLoginReq = TApiPayloads['AUTH']['LOGIN']['POST']['req'];
-type TLoginRes = TApiPayloads['AUTH']['LOGIN']['POST']['res'];
-type TRefreshRes = TApiPayloads['AUTH']['REFRESH']['POST']['res'];
-type TRegReq = TApiPayloads['AUTH']['REGISTER']['POST']['req'];
-type TRegRes = TApiPayloads['AUTH']['REGISTER']['POST']['res'];
-type TMeRes = TApiPayloads['AUTH']['ME']['GET']['res'];
+type TLoginReq = AUTH['LOGIN']['POST']['req'];
+type TLoginRes = AUTH['LOGIN']['POST']['res'];
+type TRefreshRes = AUTH['REFRESH']['POST']['res'];
+type TRegReq = AUTH['REGISTER']['POST']['req'];
+type TRegRes = AUTH['REGISTER']['POST']['res'];
+type TMeRes = AUTH['ME']['GET']['res'];
 
-const urlAuthUserLogin = API_ENDPOINTS.AUTH.LOGIN;
-const urlAuthRefresh = API_ENDPOINTS.AUTH.REFRESH;
-const urlAuthLogout = API_ENDPOINTS.AUTH.LOGOUT;
-const urlUserMe = API_ENDPOINTS.AUTH.ME;
-const urlAuthRegister = API_ENDPOINTS.AUTH.REGISTER;
+const urlAuthUserLogin = AUTH.LOGIN;
+const urlAuthRefresh = AUTH.REFRESH;
+const urlAuthLogout = AUTH.LOGOUT;
+const urlUserMe = AUTH.ME;
+const urlAuthRegister = AUTH.REGISTER;
 
 export default function useActions() {
   const error = ref<string | null>(null);

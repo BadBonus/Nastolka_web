@@ -1,9 +1,9 @@
-import type { TApiPayloads } from '#consts/api-endpoints';
+import type { AUTH } from '#openApi';
 import { appendResponseHeader, deleteCookie } from 'h3';
 import { AUTH_COOKIE_TOKEN_NAME } from '#consts/auth.constants';
 import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
 
-type TRefreshRes = TApiPayloads['AUTH']['REFRESH']['POST']['res'];
+type TRefreshRes = AUTH['REFRESH']['POST']['res'];
 
 export default defineNuxtPlugin(async () => {
   const event = useRequestEvent();

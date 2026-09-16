@@ -128,7 +128,7 @@ export default defineNuxtConfig({
     '#src': fileURLToPath(new URL('./app', import.meta.url)),
     '#types': fileURLToPath(new URL('./shared/types', import.meta.url)),
     '#consts': fileURLToPath(new URL('./shared/constants', import.meta.url)),
-    '#apiEndPoints': fileURLToPath(new URL('./shared/constants/api-endpoints', import.meta.url)),
+    '#openApi': fileURLToPath(new URL('./shared/open-api', import.meta.url)),
     '#valSchemas': fileURLToPath(new URL('./shared/types/validationSchemas', import.meta.url)),
     '#components': fileURLToPath(new URL('./components', import.meta.url)),
     '#features': fileURLToPath(new URL('./components/features', import.meta.url)),

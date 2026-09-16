@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const OPENAPI_PATH = process.env.OPENAPI_PATH || '../backend/openapi.json';
-const OUTPUT_PATH = './shared/api/types.d.ts';
+const OUTPUT_PATH = './shared/open-api/schema.d.ts';
 
 const envPath = path.resolve(process.cwd(), '.env');
 if (fs.existsSync(envPath)) {
@@ -20,6 +20,8 @@ if (fs.existsSync(envPath)) {
     }
   });
 }
+
+fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
 
 execSync(`pnpm exec openapi-typescript "${OPENAPI_PATH}" -o "${OUTPUT_PATH}"`, {
   stdio: 'inherit',

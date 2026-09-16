@@ -2,7 +2,7 @@ import type {UseFetchOptions} from "nuxt/app";
 import {withQuery} from "ufo";
 import {useApi} from "./useApi";
 import debounce from "#utils/debounce";
-import type {TypePaginationMeta} from "#apiEndPoints";
+import type {TypePaginationMeta} from "#openApi";
 
 export type TResWithMeta<TData> = {
   data: TData;

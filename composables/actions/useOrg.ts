@@ -1,18 +1,18 @@
-import {API_ENDPOINTS, type TApiPayloads} from '#consts/api-endpoints';
+import {ORG} from '#openApi';
 
-export type TOrgCreateReq = TApiPayloads['ORG']['CREATE']['POST']['req'];
-export type TOrgCreateRes = TApiPayloads['ORG']['CREATE']['POST']['res'];
+export type TOrgCreateReq = ORG['CREATE']['POST']['req'];
+export type TOrgCreateRes = ORG['CREATE']['POST']['res'];
 
-export type TOrgIndexRes = TApiPayloads['ORG']['INDEX']['GET']['res'];
-export type TOrgMeRes = TApiPayloads['ORG']['ME']['GET']['res'];
-export type TOrgMePatchReq = TApiPayloads['ORG']['ME']['PATCH']['req'];
-export type TOrgMeDeleteRes = TApiPayloads['ORG']['ME']['DELETE']['res'];
-export type TOrgSlugRes = TApiPayloads['ORG']['SLUG']['GET']['res'];
+export type TOrgIndexRes = ORG['INDEX']['GET']['res'];
+export type TOrgMeRes = ORG['ME']['GET']['res'];
+export type TOrgMePatchReq = ORG['ME']['PATCH']['req'];
+export type TOrgMeDeleteRes = ORG['ME']['DELETE']['res'];
+export type TOrgSlugRes = ORG['SLUG']['GET']['res'];
 
-const urlOrgCreate = API_ENDPOINTS.ORG.CREATE;
-const urlOrgIndex = API_ENDPOINTS.ORG.INDEX;
-const urlOrgMe = API_ENDPOINTS.ORG.ME;
-const urlOrgSlug = API_ENDPOINTS.ORG.SLUG;
+const urlOrgCreate = ORG.CREATE;
+const urlOrgIndex = ORG.INDEX;
+const urlOrgMe = ORG.ME;
+const urlOrgSlug = ORG.SLUG;
 
 export default function useActions() {
   const error = ref<string | null>(null);

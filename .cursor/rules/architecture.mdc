@@ -24,8 +24,9 @@ Clean Architecture. Зависимости только вниз:
 | `composables/*.ts` | Переиспользуемые UI-хелперы (`useFormattedDate`), не сценарии домена. |
 | `stores/` | Pinia: глобальное состояние. Мутации только из use-cases / плагинов. |
 | `entities/` | Доменные типы модели (`entities/user/model`). Не DTO бэкенда. |
-| `shared/types/` | DTO, OpenAPI, глобальные типы (`TBackendError`). |
-| `shared/constants/` | Эндпоинты, словари, роли. Алиас `#consts`. |
+| `shared/types/` | DTO и глобальные типы (`TBackendError`). |
+| `shared/open-api/` | Сгенерированный каталог OpenAPI: пути, энамы, payload-типы. Алиас `#openApi`. |
+| `shared/constants/` | Словари, роли. Алиас `#consts`. |
 | `shared/demo/` | Моки. Не подменять ими actions в проде. |
 | `utils/` | Чистые функции: `transformers/` (`sanitizeNulls`), форматтеры. Без Vue/Nuxt API. |
 | `assets/css/` | Слои Tailwind/темы. Не писать стили фич сюда. |
@@ -47,7 +48,7 @@ Clean Architecture. Зависимости только вниз:
 - Типы: префикс `T` (`TUserAuthData`). Локальные пропсы/DTO — `*.types.ts` рядом с компонентом.
 - Схемы форм: `kebab-case.schema.ts` в `schemas/` фичи.
 - Плагины: числовой префикс порядка (`01.authInitiate.server.ts`).
-- Алиасы: `#globals`, `#features`, `#consts`, `#types`. Автоимпорт Vue/Nuxt не дублировать руками.
+- Алиасы: `#globals`, `#features`, `#consts`, `#types`, `#openApi`. Автоимпорт Vue/Nuxt не дублировать руками.
 
 ```ts
 // ❌ HTTP в компоненте
