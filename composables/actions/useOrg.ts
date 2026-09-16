@@ -3,6 +3,7 @@ import {ORG} from '#openApi';
 export type TOrgCreateReq = ORG['CREATE']['POST']['req'];
 export type TOrgCreateRes = ORG['CREATE']['POST']['res'];
 
+export type TOrgIndexQuery = ORG['INDEX']['GET']['query'];
 export type TOrgIndexRes = ORG['INDEX']['GET']['res'];
 export type TOrgMeRes = ORG['ME']['GET']['res'];
 export type TOrgMePatchReq = ORG['ME']['PATCH']['req'];
@@ -32,7 +33,7 @@ export default function useActions() {
     }
   };
 
-  const getOrgsAction = async () => {
+  const getOrgsAction = async (query?: TOrgIndexQuery) => {
     error.value = null;
 
     try {
@@ -40,6 +41,7 @@ export default function useActions() {
         method: 'GET',
         silent: true,
         noControle: true,
+        query,
       });
       return data;
     } catch (err: any) {

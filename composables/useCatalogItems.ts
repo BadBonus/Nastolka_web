@@ -1,131 +1,192 @@
-import type {UseFetchOptions} from "nuxt/app";
-import {withQuery} from "ufo";
-import {useApi} from "./useApi";
-import debounce from "#utils/debounce";
-import {type TypePaginationMeta, EtypesSort} from "#openApi";
+import type { TypePaginationMeta, TypeBaseQueryDto } from '#openApi';
+import { watchDebounced } from '@vueuse/core';
 
 export type TResWithMeta<TData> = {
   data: TData;
   meta: TypePaginationMeta;
 };
 
-// TODO: Добавь функционал локального sort
+export type TCatalogQuery<TFilters extends object = Record<string, never>> = TypeBaseQueryDto & TFilters;
 
-// types
-/**
- * Уточнения:
- * @param commonRequest - url.
- * @param filters
- * @param addForUrl - Дополнение к текущему адресу для указания доп. правил по запросу
- */
-export type TCatalogItemsOptions<Q, F> = {
-  commonRequest: string,
-  // requestForSingle?: string,
-  query?: Q,
-  filters?: F,
-  addForUrl?: object
-}
+export type TCatalogFiltersOf<TQuery> = Omit<NonNullable<TQuery>, keyof TypeBaseQueryDto>;
 
-export type TGetItemsParams = {page?: number, take?: number, order?: string, search?: string, filters?: object};
+export type TUseCatalogItemsOptions<TItem, TFilters extends object = Record<string, never>> = {
+  fetch: (query: TCatalogQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
+  initialQuery?: Partial<TypeBaseQueryDto>;
+  initialFilters?: Partial<TFilters>;
+  debounceMs?: number;
+  mode?: 'replace' | 'append';
+};
 
-export type TCatalogItems<T, Q, F> = {
-  items: Ref<T[]>;
+export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, never>> = {
+  items: Ref<TItem[]>;
   meta: Ref<TypePaginationMeta>;
   loading: Ref<boolean>;
-  search: Ref<string>;
-  getNextPage: () => Promise<TResWithMeta<T[]>>;
-  getItems: (params?: TGetItemsParams) => Promise<TResWithMeta<T[]>>;
-  getPrevPage: () => Promise<TResWithMeta<T[]>>;
+  error: Ref<unknown>;
+  q: Ref<string>;
+  page: Ref<number>;
+  limit: Ref<number>;
+  sortOrder: Ref<TypeBaseQueryDto['sortOrder']>;
+  filters: Ref<Partial<TFilters>>;
+  canNext: ComputedRef<boolean>;
+  canPrev: ComputedRef<boolean>;
+  getItems: (params?: Partial<TypeBaseQueryDto>) => Promise<TResWithMeta<TItem[]>>;
+  getNextPage: () => Promise<TResWithMeta<TItem[]>>;
+  getPrevPage: () => Promise<TResWithMeta<TItem[]>>;
+  setFilters: (next: Partial<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   resetMeta: () => void;
-}
+  refresh: () => Promise<TResWithMeta<TItem[]>>;
+};
 
-export type TFrontendPagination<T> = {
-  items: T[],
-  hasNextPage: boolean,
-  hasPreviousPage: boolean,
-  maxPages: number,
-}
-
+const createDefaultMeta = (): TypePaginationMeta => ({
+  page: 1,
+  limit: 20,
+  total: 0,
+  totalPages: 0,
+  hasNext: false,
+  hasPrev: false,
+});
 
 /**
- * Создаёт объект для управления пагинацией и получения данных из каталога.
- * @template T - Тип ожидаемых сущностей с сервера.
- * @param {TCatalogItemsOptions} requests - Настройки запроса к API каталога.
- * @param {UseFetchOptions<any>} [fetchOptions] - Опциональные параметры для настройки запроса через useApi.
- * @returns {TCatalogItems<T>} Объект с данными каталога, метаинформацией и методами управления пагинацией.
+ * Универсальный state-компосабл каталога: пагинация, поиск, фильтры.
+ * HTTP не вызывает — принимает `fetch` (его передаёт use-case через actions).
  */
+export default function useCatalogItems<TItem, TFilters extends object = Record<string, never>>(
+  options: TUseCatalogItemsOptions<TItem, TFilters>
+): TCatalogItemsReturn<TItem, TFilters> {
+  const mode = options.mode ?? 'replace';
+  const debounceMs = options.debounceMs ?? 500;
 
+  const items = ref<TItem[]>([]) as Ref<TItem[]>;
+  const meta = ref<TypePaginationMeta>(createDefaultMeta());
+  const loading = ref(false);
+  const error = ref<unknown>(null);
 
-export default function <T>(requests: TCatalogItemsOptions, fetchOptions?: UseFetchOptions<any>): TCatalogItems<T> {
-  const defaultMeta: TypePaginationMeta = {
-    page: 1,
-    limit: 20,
-    total: 0,
-    totalPages: 0,
-    hasNext: false,
-    hasPrev: false,
+  const q = ref(options.initialQuery?.q ?? '');
+  const page = ref(options.initialQuery?.page ?? 1);
+  const limit = ref(options.initialQuery?.limit ?? 20);
+  const sortOrder = ref<TypeBaseQueryDto['sortOrder']>(options.initialQuery?.sortOrder ?? 'desc');
+  const filters = ref<Partial<TFilters>>({ ...(options.initialFilters ?? {}) }) as Ref<Partial<TFilters>>;
+
+  const canNext = computed(() => meta.value.hasNext);
+  const canPrev = computed(() => meta.value.hasPrev);
+
+  let requestId = 0;
+
+  const buildQuery = (params?: Partial<TypeBaseQueryDto>): TCatalogQuery<TFilters> => {
+    const nextQ = params?.q ?? q.value;
+
+    return {
+      page: params?.page ?? page.value,
+      limit: params?.limit ?? limit.value,
+      sortOrder: params?.sortOrder ?? sortOrder.value,
+      ...(nextQ ? { q: nextQ } : {}),
+      ...filters.value,
+    } as TCatalogQuery<TFilters>;
   };
 
+  const applyBaseParams = (params?: Partial<TypeBaseQueryDto>) => {
+    if (!params) return;
+    if (params.page !== undefined) page.value = params.page;
+    if (params.limit !== undefined) limit.value = params.limit;
+    if (params.sortOrder !== undefined) sortOrder.value = params.sortOrder;
+    if (params.q !== undefined) q.value = params.q;
+  };
 
-  const state = reactive({
-    items: [] as T[],
-    meta: defaultMeta as Meta,
-    loading: false,
-    search: "" as string
-  });
+  const getItems = async (params?: Partial<TypeBaseQueryDto>): Promise<TResWithMeta<TItem[]>> => {
+    applyBaseParams(params);
 
-  const getItems = async (params?: TGetItemsParams): Promise<Pagination<T[]>> => {
-    state.loading = true;
+    const currentId = ++requestId;
+    loading.value = true;
+    error.value = null;
 
-    const modUrl = withQuery(requests.commonRequest, {
-      page: requests.query?.page ?? params?.page ?? state.meta.page,
-      take: requests.query?.take ?? params?.take ?? state.meta.take,
-      search: params?.search ?? state.search,
-      order: requests.query?.order ?? params?.order,
-      filter: requests.filters,
-      ...requests.addForUrl
-    });
+    try {
+      const result = await options.fetch(buildQuery());
 
-    const fb = await apiFetch<Pagination<T[]>>(modUrl, fetchOptions);
+      if (currentId !== requestId) {
+        return result;
+      }
 
-    if (fb.error.value) {
-      state.items = [];
-      state.meta = defaultMeta;
-      console.error('error on requested data');
-      console.log(fb.error.value);
-      state.loading = false;
-      return {data: [], meta: defaultMeta};
+      if (mode === 'append' && page.value > 1) {
+        items.value = [...items.value, ...result.data];
+      } else {
+        items.value = result.data;
+      }
+
+      meta.value = { ...result.meta };
+      page.value = result.meta.page;
+      limit.value = result.meta.limit;
+
+      return result;
+    } catch (err) {
+      if (currentId !== requestId) {
+        throw err;
+      }
+
+      error.value = err;
+      items.value = [];
+      meta.value = createDefaultMeta();
+      throw err;
+    } finally {
+      if (currentId === requestId) {
+        loading.value = false;
+      }
     }
-
-    // @ts-ignore
-    state.items = fb.data.value.data;
-    state.meta = fb.data.value.meta;
-    state.loading = false;
-    return fb.data.value;
   };
 
-  const getNextPage = async (): Promise<TResWithMeta<T[]>> => await getItems({page: state.meta.page + 1});
-  const getPrevPage = async (): Promise<TResWithMeta<T[]>> => await getItems({page: state.meta.page - 1});
+  const getNextPage = async (): Promise<TResWithMeta<TItem[]>> => {
+    if (!meta.value.hasNext) {
+      return { data: items.value, meta: meta.value };
+    }
+    return getItems({ page: page.value + 1 });
+  };
+
+  const getPrevPage = async (): Promise<TResWithMeta<TItem[]>> => {
+    if (!meta.value.hasPrev) {
+      return { data: items.value, meta: meta.value };
+    }
+    return getItems({ page: page.value - 1 });
+  };
+
+  const setFilters = async (next: Partial<TFilters>): Promise<TResWithMeta<TItem[]>> => {
+    filters.value = { ...filters.value, ...next };
+    page.value = 1;
+    return getItems();
+  };
 
   const resetMeta = () => {
-    state.meta = defaultMeta;
+    meta.value = createDefaultMeta();
+    page.value = 1;
   };
 
-  watch(() => state.search, debounce(async (newSearch: string) => {
-    await getItems({search: newSearch, page: 1});
-  }, 500));
+  const refresh = () => getItems();
 
-  // Используем ToRefs чтоб не было геммороя с постоянной нуждой использовать .value при обращении к вынесенным объектам в template благодаря UnwrapRefSimple
-  return {
-    ...toRefs(state) as {
-      items: Ref<T[]>;
-      meta: Ref<TypePaginationMeta>;
-      loading: Ref<boolean>;
-      search: Ref<string>;
+  watchDebounced(
+    q,
+    () => {
+      page.value = 1;
+      void getItems();
     },
-    getNextPage,
+    { debounce: debounceMs }
+  );
+
+  return {
+    items,
+    meta,
+    loading,
+    error,
+    q,
+    page,
+    limit,
+    sortOrder,
+    filters,
+    canNext,
+    canPrev,
     getItems,
+    getNextPage,
     getPrevPage,
-    resetMeta
+    setFilters,
+    resetMeta,
+    refresh,
   };
 }
