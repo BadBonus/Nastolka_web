@@ -2,82 +2,40 @@ import type {UseFetchOptions} from "nuxt/app";
 import {withQuery} from "ufo";
 import {useApi} from "./useApi";
 import debounce from "#utils/debounce";
-import type {TypePaginationMeta} from "#openApi";
+import {type TypePaginationMeta, EtypesSort} from "#openApi";
 
 export type TResWithMeta<TData> = {
   data: TData;
   meta: TypePaginationMeta;
 };
 
-export enum ESortsVariants {
-  ASC = "ASC",
-  DESC = "DESC",
-} // тоже перевести с backend
-
-export type QueryPagination = {
-  page?: number;
-  order?: ESortsVariants;
-  take?: number;
-};
-
-export type TCatalogItemsOptions = {
-  commonRequest: string,
-  // requestForSingle?: string,
-  query?: QueryPagination,
-  filters?: Object,
-  addForUrl?: object
-}
-
-// export type TGetItemsParams = {page?: number, take?: number, order?: string, search?: string, filters?: object}; //
-
-export type TCatalogItems<T> = {
-  items: Ref<T[]>;
-  meta: Ref<TypePaginationMeta>;
-  loading: Ref<boolean>;
-  search: Ref<string>;
-  getNextPage: () => Promise<Pagination<T[]>>;
-  getItems: (params?: TGetItemsParams) => Promise<Pagination<T[]>>;
-  getPrevPage: () => Promise<Pagination<T[]>>;
-  resetMeta: () => void;
-}
-
-export type TFrontendPagination<T> = {
-  items: T[],
-  hasNextPage: boolean,
-  hasPreviousPage: boolean,
-  maxPages: number,
-}
-
-
 // TODO: Добавь функционал локального sort
-
-// enums
 
 // types
 /**
  * Уточнения:
  * @param commonRequest - url.
- * @param filters - //в некоторых апи запросах это свойство полноценно работает, в некоторых нет.
+ * @param filters
  * @param addForUrl - Дополнение к текущему адресу для указания доп. правил по запросу
  */
-export type TCatalogItemsOptions = {
+export type TCatalogItemsOptions<Q, F> = {
   commonRequest: string,
   // requestForSingle?: string,
-  query?: QueryPagination,
-  filters?: Object,
+  query?: Q,
+  filters?: F,
   addForUrl?: object
 }
 
 export type TGetItemsParams = {page?: number, take?: number, order?: string, search?: string, filters?: object};
 
-export type TCatalogItems<T> = {
+export type TCatalogItems<T, Q, F> = {
   items: Ref<T[]>;
   meta: Ref<TypePaginationMeta>;
   loading: Ref<boolean>;
   search: Ref<string>;
-  getNextPage: () => Promise<Pagination<T[]>>;
-  getItems: (params?: TGetItemsParams) => Promise<Pagination<T[]>>;
-  getPrevPage: () => Promise<Pagination<T[]>>;
+  getNextPage: () => Promise<TResWithMeta<T[]>>;
+  getItems: (params?: TGetItemsParams) => Promise<TResWithMeta<T[]>>;
+  getPrevPage: () => Promise<TResWithMeta<T[]>>;
   resetMeta: () => void;
 }
 
@@ -99,13 +57,13 @@ export type TFrontendPagination<T> = {
 
 
 export default function <T>(requests: TCatalogItemsOptions, fetchOptions?: UseFetchOptions<any>): TCatalogItems<T> {
-  const defaultMeta = {
+  const defaultMeta: TypePaginationMeta = {
     page: 1,
-    take: 20,
-    itemCount: 0,
-    pageCount: 0,
-    hasPreviousPage: false,
-    hasNextPage: false,
+    limit: 20,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false,
   };
 
 
@@ -146,8 +104,8 @@ export default function <T>(requests: TCatalogItemsOptions, fetchOptions?: UseFe
     return fb.data.value;
   };
 
-  const getNextPage = async (): Promise<Pagination<T[]>> => await getItems({page: state.meta.page + 1});
-  const getPrevPage = async (): Promise<Pagination<T[]>> => await getItems({page: state.meta.page - 1});
+  const getNextPage = async (): Promise<TResWithMeta<T[]>> => await getItems({page: state.meta.page + 1});
+  const getPrevPage = async (): Promise<TResWithMeta<T[]>> => await getItems({page: state.meta.page - 1});
 
   const resetMeta = () => {
     state.meta = defaultMeta;

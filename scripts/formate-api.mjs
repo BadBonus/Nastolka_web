@@ -187,6 +187,8 @@ ${blocks}
 
 export type ApiPath = keyof paths;
 
+export type TypeBaseQueryDto = components['schemas']['BaseQueryDto'];
+
 export type TypePaginationMeta = components['schemas']['PaginationMetaDto'];
 `.trimStart();
   };
@@ -203,11 +205,12 @@ import type {
 ${typeImports}
   ApiPath,
   TypePaginationMeta,
+  TypeBaseQueryDto,
 } from './types';
 
 export { ${valueImport} };
 ${typeAliases}
-export type { ApiPath, TypePaginationMeta };
+export type { ApiPath, TypePaginationMeta, TypeBaseQueryDto };
 
 export * from './enums';
 `;

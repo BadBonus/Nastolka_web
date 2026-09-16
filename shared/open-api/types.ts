@@ -9,54 +9,63 @@ export type AUTH = {
   LOGIN: {
     POST: {
       req: paths["/auth/login"]["post"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res: paths["/auth/login"]["post"]["responses"]["201"]["content"]["application/json"];
     };
   };
   REGISTER: {
     POST: {
       req: paths["/auth/register"]["post"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res?: void;
     };
   };
   VERIFY_EMAIL: {
     POST: {
       req: paths["/auth/verify-email"]["post"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res?: void;
     };
   };
   ME: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/auth/me"]["get"]["responses"]["200"]["content"]["application/json"];
     };
   };
   LOGOUT: {
     POST: {
       req?: never;
+      query?: never;
       res?: void;
     };
   };
   REFRESH: {
     POST: {
       req?: never;
+      query?: never;
       res: paths["/auth/refresh"]["post"]["responses"]["200"]["content"]["application/json"];
     };
   };
   RESET_PASSWORD_REQUEST: {
     POST: {
       req: paths["/auth/reset-password/request"]["post"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res?: void;
     };
   };
   RESET_PASSWORD_VALIDATE: {
     GET: {
       req?: never;
+      query: NonNullable<paths["/auth/reset-password/validate"]["get"]["parameters"]["query"]>;
       res?: void;
     };
   };
   RESET_PASSWORD_CONFIRM: {
     POST: {
       req: paths["/auth/reset-password/confirm"]["post"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res?: void;
     };
   };
@@ -66,28 +75,34 @@ export type PROFILE = {
   ME: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/profile/me"]["get"]["responses"]["200"]["content"]["application/json"];
     };
     PATCH: {
       req: paths["/profile/me"]["patch"]["requestBody"]["content"]["multipart/form-data"];
+      query?: never;
       res?: void;
     };
     DELETE: {
       req?: never;
+      query?: never;
       res?: void;
     };
   };
   ID: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/profile/{id}"]["get"]["responses"]["200"]["content"]["application/json"];
     };
     PATCH: {
       req: paths["/profile/{id}"]["patch"]["requestBody"]["content"]["multipart/form-data"];
+      query?: never;
       res?: void;
     };
     DELETE: {
       req?: never;
+      query?: never;
       res?: void;
     };
   };
@@ -97,32 +112,38 @@ export type ORG = {
   CREATE: {
     POST: {
       req: paths["/org/create"]["post"]["requestBody"]["content"]["multipart/form-data"];
+      query?: never;
       res?: void;
     };
   };
   INDEX: {
     GET: {
       req?: never;
+      query: NonNullable<paths["/org"]["get"]["parameters"]["query"]>;
       res: paths["/org"]["get"]["responses"]["200"]["content"]["application/json"];
     };
   };
   ME: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/org/me"]["get"]["responses"]["200"]["content"]["application/json"];
     };
     PATCH: {
       req: paths["/org/me"]["patch"]["requestBody"]["content"]["multipart/form-data"];
+      query?: never;
       res?: void;
     };
     DELETE: {
       req?: never;
+      query?: never;
       res: paths["/org/me"]["delete"]["responses"]["200"]["content"]["application/json"];
     };
   };
   SLUG: {
     GET: {
       req?: never;
+      query?: never;
       res?: void;
     };
   };
@@ -132,32 +153,38 @@ export type EVENTS = {
   INDEX: {
     POST: {
       req: paths["/events"]["post"]["requestBody"]["content"]["multipart/form-data"];
+      query?: never;
       res: paths["/events"]["post"]["responses"]["201"]["content"]["application/json"];
     };
     GET: {
       req?: never;
+      query: NonNullable<paths["/events"]["get"]["parameters"]["query"]>;
       res: paths["/events"]["get"]["responses"]["200"]["content"]["application/json"];
     };
   };
   SLUG: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/events/{slug}"]["get"]["responses"]["200"]["content"]["application/json"];
     };
   };
   ID: {
     PATCH: {
       req: paths["/events/{id}"]["patch"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res: paths["/events/{id}"]["patch"]["responses"]["200"]["content"]["application/json"];
     };
     DELETE: {
       req?: never;
+      query?: never;
       res?: void;
     };
   };
   ID_CANCEL: {
     PATCH: {
       req: paths["/events/{id}/cancel"]["patch"]["requestBody"]["content"]["application/json"];
+      query?: never;
       res: paths["/events/{id}/cancel"]["patch"]["responses"]["200"]["content"]["application/json"];
     };
   };
@@ -167,11 +194,14 @@ export type DICTIONARIES = {
   INDEX: {
     GET: {
       req?: never;
+      query?: never;
       res: paths["/dictionaries"]["get"]["responses"]["200"]["content"]["application/json"];
     };
   };
 };
 
 export type ApiPath = keyof paths;
+
+export type TypeBaseQueryDto = components['schemas']['BaseQueryDto'];
 
 export type TypePaginationMeta = components['schemas']['PaginationMetaDto'];

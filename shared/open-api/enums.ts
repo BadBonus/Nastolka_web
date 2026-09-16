@@ -35,3 +35,6 @@ export type KindOfRate = (typeof KindOfRate)[number];
 
 export const ESocLinks = ["VK","TELEGRAM","DISCORD","INSTAGRAM","X","REDDIT"] as const;
 export type ESocLinks = (typeof ESocLinks)[number];
+
+export const EtypesSort = ["asc","desc"] as const;
+export type EtypesSort = (typeof EtypesSort)[number];

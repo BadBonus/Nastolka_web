@@ -12,6 +12,7 @@ import type {
   DICTIONARIES as DICTIONARIESType,
   ApiPath,
   TypePaginationMeta,
+  TypeBaseQueryDto,
 } from './types';
 
 export { AUTH, PROFILE, ORG, EVENTS, DICTIONARIES };
@@ -20,6 +21,6 @@ export type PROFILE = PROFILEType;
 export type ORG = ORGType;
 export type EVENTS = EVENTSType;
 export type DICTIONARIES = DICTIONARIESType;
-export type { ApiPath, TypePaginationMeta };
+export type { ApiPath, TypePaginationMeta, TypeBaseQueryDto };
 
 export * from './enums';
