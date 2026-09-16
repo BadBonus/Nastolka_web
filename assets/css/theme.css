@@ -15,6 +15,7 @@
   --ui-success: rgb(40, 167, 69);
   --ui-info: rgb(23, 162, 184);
   --ui-secondary: #522626;
+  --ui-card-decorate: #dce6e5;
 }
 
 @layer base {
@@ -29,6 +30,7 @@
 @theme static {
   --color-background: var(--ui-bg);
   --color-foreground: var(--ui-text);
+  --color-card-decorate: var(--ui-card-decorate);
 
   --color-card: var(--ui-bg-elevated);
   --color-card-foreground: var(--ui-text);

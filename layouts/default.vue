@@ -57,7 +57,7 @@ onMounted(() => {
       /> -->
 
       <!-- delete-tag - напоминание, что этот тег служит сугубо для поддержки мобильного вида и после разработки должен будет быть удален -->
-      <div delete-tag class="mx-auto max-w-100">
+      <div delete-tag class="mx-auto">
         <slot />
       </div>
     </main>
