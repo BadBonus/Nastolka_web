@@ -2,7 +2,7 @@
 
 @layer base {
   html {
-    font-family: 'Shantell Sans', 'Roboto';
+    font-family: 'Shantell Sans', 'Roboto', cursive, sans-serif;
   }
 
   * {

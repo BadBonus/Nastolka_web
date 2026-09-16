@@ -3,6 +3,17 @@ import { computed, h, type SetupContext } from 'vue';
 import { NuxtLink } from '#components';
 import { ADVICE } from '@/shared/messagesToUsers';
 
+const FONTS_FOR_HANDY_EFFECT = [
+  'Artist Nouveau',
+  'Shantell Sans',
+  'Caveat',
+  'Comforter Brush',
+  'Rubik',
+  'Comic Sans MS',
+  'Ink free',
+  'Segoe Script',
+];
+
 export type TGmCard = {
   nickname: string;
   avatar?: string;
@@ -16,6 +27,7 @@ export type TGmCard = {
   isNewbie: boolean;
   description?: string;
   slug?: string;
+  randomFont?: boolean;
 };
 
 defineOptions({
@@ -32,6 +44,8 @@ defineEmits<{
 const countOfGames = computed(() => {
   return props.isNewbie ? '????' : props.gamesCount;
 });
+
+const getRandomFont = props.randomFont && FONTS_FOR_HANDY_EFFECT[Math.floor(Math.random() * FONTS_FOR_HANDY_EFFECT.length)];
 
 const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContext) => {
   if (!wrapperProps.slug) {
@@ -61,7 +75,9 @@ const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContex
         <div class="flex w-[55%] flex-col items-start gap-1">
           <div class="relative w-full border-b border-dashed border-neutral-400 pb-1">
             <div class="truncate">
-              <span class="font-secondary mx-auto mb-px truncate text-center text-2xl">{{ nickname }}</span>
+              <span :style="{ 'font-family': getRandomFont }" class="mx-auto mb-px truncate text-center text-2xl">{{
+                nickname
+              }}</span>
             </div>
             <span class="absolute -bottom-5 left-0 text-xs text-neutral-500"> Имя </span>
           </div>
@@ -71,7 +87,7 @@ const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContex
             }"
             class="relative mt-3.5 w-full border-b border-dashed border-neutral-400 text-center"
           >
-            <span class="font-secondary text-2xl font-bold">
+            <span :style="{ 'font-family': getRandomFont }" class="text-2xl">
               {{ countOfGames }}
             </span>
             <span class="absolute -bottom-5 left-0 text-xs text-neutral-500"> Количество сессий </span>

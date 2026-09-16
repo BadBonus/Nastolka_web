@@ -55,6 +55,7 @@ getItems();
           avatar="https://imgcdn.stablediffusionweb.com/2024/9/29/e10091e9-5331-4917-abf3-7d937ea3de8b.jpg"
           class="min-h-85"
           :style="{ '--i': index + 1 }"
+          random-font
         />
       </li>
     </ul>
