@@ -133,6 +133,7 @@ export default defineNuxtConfig({
     '#components': fileURLToPath(new URL('./components', import.meta.url)),
     '#features': fileURLToPath(new URL('./components/features', import.meta.url)),
     '#globals': fileURLToPath(new URL('./components/globals', import.meta.url)),
+    '#utils': fileURLToPath(new URL('./utils', import.meta.url)),
   },
   components: [{path: '~/components/globals'}, {path: '~/components/features'}, '~/components'],
   colorMode: {

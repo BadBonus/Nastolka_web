@@ -32,13 +32,14 @@ export default function useActions() {
     }
   };
 
-  const getOrgsAction = async (query?: TOrgIndexQuery) => {
+  const getOrgsAction = async () => {
     error.value = null;
 
     try {
       const data = await useApi<TOrgIndexRes>(urlOrgIndex, {
         method: 'GET',
-        query,
+        silent: true,
+        noControle: true,
       });
       return data;
     } catch (err: any) {

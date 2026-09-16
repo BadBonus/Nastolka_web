@@ -148,22 +148,24 @@ try {
   };
 
   const constantsContent = `
-import type { paths } from '../types/api';
-
-export const API_ENDPOINTS = {
-${generateEndpointsObject()}
-} as const;
-
-export const API_ENUMS = {
-${generateEnumsObject()}
-} as const;
-
-export type TApiPayloads = {
-${generateSchemaTypes()}
-};
-
-export type ApiPath = keyof paths;
-`.trim();
+  import type { components, paths } from '../types/api';
+  
+  export const API_ENDPOINTS = {
+  ${generateEndpointsObject()}
+  } as const;
+  
+  export const API_ENUMS = {
+  ${generateEnumsObject()}
+  } as const;
+  
+  export type TApiPayloads = {
+  ${generateSchemaTypes()}
+  };
+  
+  export type ApiPath = keyof paths;
+  
+  export type TypePaginationMeta = components['schemas']['PaginationMetaDto'];
+  `.trim();
 
   fs.writeFileSync(constantsPath, constantsContent);
   console.log(`Файл успешно обновлен в ${constantsPath}`);

@@ -1,4 +1,5 @@
-import type {paths} from '../types/api';
+import type {components, paths} from '../types/api';
+
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -213,3 +214,5 @@ export type TApiPayloads = {
 };
 
 export type ApiPath = keyof paths;
+
+export type TypePaginationMeta = components['schemas']['PaginationMetaDto'];

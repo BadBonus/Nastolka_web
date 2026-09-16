@@ -1,18 +1,60 @@
 import useAuthFlow from '@/composables/use-cases/useAuthFlow';
 
+/**
+ * Проверяет, что тело ошибки соответствует контракту бэкенда.
+ *
+ * @param data — поле `err.data` из исключения `$fetch`.
+ * @returns `true`, если объект содержит `statusCode` и `message`.
+ */
 const isBackendError = (data: any): data is TBackendError => {
   return data !== null && typeof data === 'object' && 'statusCode' in data && 'message' in data;
 };
 
+/**
+ * Дополнительные опции транспортного клиента поверх параметров `$fetch`.
+ */
 type TExtParamsRequest = {
+  /**
+   * Не подставлять `Authorization` и не пытаться обновить сессию по 401.
+   * Нужен для публичных эндпоинтов (логин, регистрация).
+   */
   noControle?: boolean;
+  /**
+   * Тост об успехе. Показывается только на клиенте и только если `silent` не задан.
+   */
   successMessage?: {
     title?: string;
     descr?: string;
   };
+  /**
+   * Отключить тосты и retry по 401. Ошибка всё равно пробрасывается наверх.
+   */
   silent?: boolean;
 };
 
+/**
+ * Транспортный HTTP-клиент поверх `$fetch`.
+ *
+ * Вызывается только из слоя `composables/actions`.
+ * Подставляет `baseURL` из runtime-config, Bearer-токен из `useAuthStore`,
+ * показывает тосты и при 401 один раз пробует `refreshToken`, затем повторяет запрос.
+ *
+ * @typeParam T — ожидаемый тип тела ответа.
+ * @param request — URL или путь относительно `config.public.apiBase`.
+ * @param opts — опции `$fetch` плюс {@link TExtParamsRequest}.
+ * @returns Распарсенное тело ответа.
+ * @throws Оригинальную ошибку `$fetch` (в т.ч. после неудачного refresh).
+ *
+ * @example
+ * ```ts
+ * const data = await useApi<TLoginRes>(urlAuthUserLogin, {
+ *   method: 'POST',
+ *   body,
+ *   noControle: true,
+ *   credentials: 'include',
+ * });
+ * ```
+ */
 export const useApi = async <T>(
   request: Parameters<typeof $fetch<T>>[0],
   opts?: Parameters<typeof $fetch<T>>[1] & TExtParamsRequest
