@@ -27,12 +27,33 @@ const GENERATED_HEADER = `/**
  */
 `;
 
+const HTTP_METHODS = new Set(['get', 'post', 'put', 'patch', 'delete', 'options', 'head', 'trace']);
+
 /**
  * @typedef {Object} MethodInfo
  * @property {string|null} reqContentType
  * @property {string|null} resContentType
  * @property {string|undefined} successCode
+ * @property {boolean} hasQuery
  */
+
+/**
+ * @param {object} spec
+ * @param {object|undefined} pathItem
+ * @param {object} detail
+ */
+const operationHasQuery = (spec, pathItem, detail) => {
+  const params = [...(pathItem?.parameters || []), ...(detail.parameters || [])];
+
+  return params.some((param) => {
+    if (param.in === 'query') return true;
+    if (!param.$ref) return false;
+
+    const name = param.$ref.split('/').pop();
+    const resolved = spec.components?.parameters?.[name];
+    return resolved?.in === 'query';
+  });
+};
 
 try {
   console.log('Форматирование каталога OpenAPI...');
@@ -59,9 +80,11 @@ try {
     if (!grouped[group]) grouped[group] = {};
 
     const methodsInfo = {};
+    const pathItem = spec.paths[path];
 
-    Object.entries(spec.paths[path]).forEach(([method, detail]) => {
+    Object.entries(pathItem).forEach(([method, detail]) => {
       const m = method.toLowerCase();
+      if (!HTTP_METHODS.has(m)) return;
 
       let reqContentType = null;
       if (detail.requestBody?.content) {
@@ -85,7 +108,12 @@ try {
             : types[0];
       }
 
-      methodsInfo[m] = { reqContentType, resContentType, successCode };
+      methodsInfo[m] = {
+        reqContentType,
+        resContentType,
+        successCode,
+        hasQuery: operationHasQuery(spec, pathItem, detail),
+      };
     });
 
     grouped[group][key] = {
@@ -133,11 +161,14 @@ try {
                 const reqTypeLine = details.reqContentType
                   ? `req: paths["${info.path}"]["${m}"]["requestBody"]["content"]["${details.reqContentType}"];`
                   : 'req?: never;';
+                const queryTypeLine = details.hasQuery
+                  ? `query: NonNullable<paths["${info.path}"]["${m}"]["parameters"]["query"]>;`
+                  : 'query?: never;';
                 const resTypeLine = details.resContentType
                   ? `res: paths["${info.path}"]["${m}"]["responses"]["${details.successCode}"]["content"]["${details.resContentType}"];`
                   : 'res?: void;';
 
-                return `    ${methodUpper}: {\n      ${reqTypeLine}\n      ${resTypeLine}\n    };`;
+                return `    ${methodUpper}: {\n      ${reqTypeLine}\n      ${queryTypeLine}\n      ${resTypeLine}\n    };`;
               })
               .join('\n');
 
