@@ -18,6 +18,14 @@ export type TUseCatalogItemsOptions<TItem, TFilters extends object = Record<stri
   mode?: 'replace' | 'append';
 };
 
+export type TCatalogApplyQuery<TFilters extends object = Record<string, never>> = {
+  q?: string;
+  sortOrder?: TypeBaseQueryDto['sortOrder'];
+  /** Полная замена filters (не merge). */
+  filters?: Partial<TFilters>;
+  page?: number;
+};
+
 export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, never>> = {
   items: Ref<TItem[]>;
   meta: Ref<TypePaginationMeta>;
@@ -34,6 +42,7 @@ export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, 
   getNextPage: () => Promise<TResWithMeta<TItem[]>>;
   getPrevPage: () => Promise<TResWithMeta<TItem[]>>;
   setFilters: (next: Partial<TFilters>) => Promise<TResWithMeta<TItem[]>>;
+  applyQuery: (next: TCatalogApplyQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   resetMeta: () => void;
   refresh: () => Promise<TResWithMeta<TItem[]>>;
 };
@@ -72,6 +81,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
   const canPrev = computed(() => meta.value.hasPrev);
 
   let requestId = 0;
+  let suppressQWatch = false;
 
   const buildQuery = (params?: Partial<TypeBaseQueryDto>): TCatalogQuery<TFilters> => {
     const nextQ = params?.q ?? q.value;
@@ -154,6 +164,30 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     return getItems();
   };
 
+  const applyQuery = async (next: TCatalogApplyQuery<TFilters>): Promise<TResWithMeta<TItem[]>> => {
+    suppressQWatch = true;
+
+    if (next.filters !== undefined) {
+      filters.value = { ...next.filters };
+    }
+    if (next.q !== undefined) {
+      q.value = next.q;
+    }
+    if (next.sortOrder !== undefined) {
+      sortOrder.value = next.sortOrder;
+    }
+    page.value = next.page ?? 1;
+
+    try {
+      return await getItems();
+    } finally {
+      // Держим флаг дольше debounce, иначе watchDebounced всё равно вызовет второй fetch.
+      setTimeout(() => {
+        suppressQWatch = false;
+      }, debounceMs + 50);
+    }
+  };
+
   const resetMeta = () => {
     meta.value = createDefaultMeta();
     page.value = 1;
@@ -164,6 +198,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
   watchDebounced(
     q,
     () => {
+      if (suppressQWatch) return;
       page.value = 1;
       void getItems();
     },
@@ -186,6 +221,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     getNextPage,
     getPrevPage,
     setFilters,
+    applyQuery,
     resetMeta,
     refresh,
   };

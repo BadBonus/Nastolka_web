@@ -37,15 +37,15 @@ watch(
   <div class="SearchFilterInputList rounded border-2 border-solid bg-white text-black">
     <div v-if="!suggestions.length" class="p-2 text-sm">Нет совпадений</div>
 
-    <ul v-else class="space-y-1 bg-mauve-800">
+    <ul v-else class="space-y-1 bg-white">
       <li v-for="(item, index) in suggestions.slice(0, maxSuggestions)" :key="item.id">
         <button
           :id="`search-suggestion-${index}`"
           :ref="(el: HTMLButtonElement | null, index: number) => setItemRef(el, index)"
           type="button"
           :aria-selected="index === activeIndex"
-          class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left text-sm hover:bg-white/10"
-          :class="{ 'bg-white/10': index === activeIndex }"
+          class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left hover:bg-white/10"
+          :class="[item.type === 'entity' ? 'text-xs' : 'text-sm', { 'bg-white/10': index === activeIndex }]"
           @mouseenter="emit('update:activeIndex', index)"
           @click="emit('itemClick', item)"
         >
@@ -55,7 +55,7 @@ watch(
             {{ item.label }}
           </span>
 
-          <UBadge v-if="item.tagKey" :class="item.badgeColor || 'bg-neutral'">
+          <UBadge class="border-2 border-black" v-if="item.tagKey" :class="item.badgeColor || 'bg-neutral'">
             {{ item.tagKey }}
           </UBadge>
         </button>
