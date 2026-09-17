@@ -7,7 +7,7 @@ defineOptions({
 });
 
 const {
-  orgs: { items, getItems, meta, page, limit, applyQuery },
+  orgs: { items, getItems, meta, page, limit, applyQuery, resetFilters },
 } = useOrgFlow();
 
 function onSearchApply(parsed: TOrgSearchParsed) {
@@ -45,6 +45,13 @@ getItems();
         />
       </li>
     </ul>
+    <UiEmptyState
+      class="mx-auto"
+      @action="resetFilters"
+      action-label="Очистить фильтры"
+      v-if="!items.length"
+      title="Ничего не найдено"
+    />
     <UPagination
       v-if="meta.total > limit"
       @update:page="getItems({ page: $event, limit: limit })"

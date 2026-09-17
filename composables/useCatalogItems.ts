@@ -1,5 +1,5 @@
-import type { TypePaginationMeta, TypeBaseQueryDto } from '#openApi';
-import { watchDebounced } from '@vueuse/core';
+import type {TypePaginationMeta, TypeBaseQueryDto} from '#openApi';
+import {watchDebounced} from '@vueuse/core';
 
 export type TResWithMeta<TData> = {
   data: TData;
@@ -44,6 +44,7 @@ export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, 
   setFilters: (next: Partial<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   applyQuery: (next: TCatalogApplyQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   resetMeta: () => void;
+  resetFilters: () => void;
   refresh: () => Promise<TResWithMeta<TItem[]>>;
 };
 
@@ -75,7 +76,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
   const page = ref(options.initialQuery?.page ?? 1);
   const limit = ref(options.initialQuery?.limit ?? 20);
   const sortOrder = ref<TypeBaseQueryDto['sortOrder']>(options.initialQuery?.sortOrder ?? 'desc');
-  const filters = ref<Partial<TFilters>>({ ...(options.initialFilters ?? {}) }) as Ref<Partial<TFilters>>;
+  const filters = ref<Partial<TFilters>>({...(options.initialFilters ?? {})}) as Ref<Partial<TFilters>>;
 
   const canNext = computed(() => meta.value.hasNext);
   const canPrev = computed(() => meta.value.hasPrev);
@@ -90,7 +91,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
       page: params?.page ?? page.value,
       limit: params?.limit ?? limit.value,
       sortOrder: params?.sortOrder ?? sortOrder.value,
-      ...(nextQ ? { q: nextQ } : {}),
+      ...(nextQ ? {q: nextQ} : {}),
       ...filters.value,
     } as TCatalogQuery<TFilters>;
   };
@@ -123,7 +124,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
         items.value = result.data;
       }
 
-      meta.value = { ...result.meta };
+      meta.value = {...result.meta};
       page.value = result.meta.page;
       limit.value = result.meta.limit;
 
@@ -146,20 +147,20 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
 
   const getNextPage = async (): Promise<TResWithMeta<TItem[]>> => {
     if (!meta.value.hasNext) {
-      return { data: items.value, meta: meta.value };
+      return {data: items.value, meta: meta.value};
     }
-    return getItems({ page: page.value + 1 });
+    return getItems({page: page.value + 1});
   };
 
   const getPrevPage = async (): Promise<TResWithMeta<TItem[]>> => {
     if (!meta.value.hasPrev) {
-      return { data: items.value, meta: meta.value };
+      return {data: items.value, meta: meta.value};
     }
-    return getItems({ page: page.value - 1 });
+    return getItems({page: page.value - 1});
   };
 
   const setFilters = async (next: Partial<TFilters>): Promise<TResWithMeta<TItem[]>> => {
-    filters.value = { ...filters.value, ...next };
+    filters.value = {...filters.value, ...next};
     page.value = 1;
     return getItems();
   };
@@ -168,7 +169,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     suppressQWatch = true;
 
     if (next.filters !== undefined) {
-      filters.value = { ...next.filters };
+      filters.value = {...next.filters};
     }
     if (next.q !== undefined) {
       q.value = next.q;
@@ -188,6 +189,13 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     }
   };
 
+  const resetFilters = () => {
+    q.value = '';
+    sortOrder.value = 'desc';
+    filters.value = {...(options.initialFilters ?? {})};
+    resetMeta();
+  };
+
   const resetMeta = () => {
     meta.value = createDefaultMeta();
     page.value = 1;
@@ -202,7 +210,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
       page.value = 1;
       void getItems();
     },
-    { debounce: debounceMs }
+    {debounce: debounceMs}
   );
 
   return {
@@ -223,6 +231,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     setFilters,
     applyQuery,
     resetMeta,
+    resetFilters,
     refresh,
   };
 }

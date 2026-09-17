@@ -7,29 +7,21 @@ const handleError = () => clearError({ redirect: '/' });
 </script>
 
 <template>
-  <div class="error_page mt-8 flex flex-col items-center justify-center">
-    <h1 v-if="error.statusCode === 404" class="text-2xl font-bold">Как ты сюда попал!? Это не место для тебя!" (404)</h1>
+  <div class="error_page mt-8 flex h-[90vh] flex-col items-center justify-center">
+    <div class="w-fit">
+      <h1 v-if="error.statusCode === 404" class="text-2xl font-bold">Вы встретили орка! Сюда вам еще рано!" (404)</h1>
 
-    <div class="error_imgWrapper mt-6 flex h-75 w-75 items-center justify-center overflow-hidden rounded-full bg-white">
-      <NuxtImg src="/images/404.webp" alt="404" class="relative w-full" />
+      <div class="bg-card-decorate mx-auto mt-6 w-fit rounded-xl p-1">
+        <div
+          class="error_imgWrapper border-background flex w-75 flex-col items-center justify-center rounded-lg border-2 border-dashed"
+        >
+          <NuxtImg src="/images/404.webp" alt="404" class="relative w-full" />
+
+          <UButton color="neutral" variant="outline" class="my-3" @click="handleError" size="xl">На главную</UButton>
+        </div>
+      </div>
     </div>
-
-    <UButton class="mt-6" @click="handleError" size="xl">На главную</UButton>
   </div>
 </template>
 
-<style>
-.error_page {
-  height: 90vh;
-}
-.error_imgWrapper {
-  width: 300px;
-  height: 300px;
-
-  img {
-    transform: scale(1.8);
-    left: -12px;
-    top: 40px;
-  }
-}
-</style>
+<style></style>
