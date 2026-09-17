@@ -9,10 +9,10 @@ export type TGmCard = {
     value: number;
     count: number;
   };
-  gamesCount: number;
+  gamesCount?: number;
   costValue?: number;
   costCurrency?: string;
-  isNewbie: boolean;
+  countOfGamesIsHidden?: boolean;
   description?: string;
   slug?: string;
   randomFont?: boolean;
@@ -42,7 +42,7 @@ defineEmits<{
 }>();
 
 const countOfGames = computed(() => {
-  return props.isNewbie ? NEWBIE_PLACEHOLDER : props.gamesCount;
+  return props.countOfGamesIsHidden ? NEWBIE_PLACEHOLDER : props.gamesCount;
 });
 
 // ПО идее такая функция рэндома убирает проблему разных чисел при рэнжоме на SSR и клиенте
@@ -76,7 +76,7 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
           </div>
           <div
             :class="{
-              disabled: isNewbie,
+              disabled: countOfGamesIsHidden,
             }"
             class="relative mt-3.5 w-full border-b border-dashed border-neutral-400 text-center"
           >

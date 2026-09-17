@@ -34,8 +34,8 @@ watch(
 </script>
 
 <template>
-  <div class="SearchFilterInputList">
-    <div v-if="!suggestions.length" class="p-2 text-sm text-gray-400">Нет совпадений</div>
+  <div class="SearchFilterInputList rounded border-2 border-solid bg-white text-black">
+    <div v-if="!suggestions.length" class="p-2 text-sm">Нет совпадений</div>
 
     <ul v-else class="space-y-1 bg-mauve-800">
       <li v-for="(item, index) in suggestions.slice(0, maxSuggestions)" :key="item.id">
@@ -50,7 +50,7 @@ watch(
           @click="emit('itemClick', item)"
         >
           <span class="flex items-center gap-2">
-            <span v-if="item.type === 'tag'" class="text-xs text-gray-400"> #tag </span>
+            <span v-if="item.type === 'tag'" class="text-xs"> #tag </span>
 
             {{ item.label }}
           </span>

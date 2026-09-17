@@ -10,6 +10,7 @@ import { useActiveSuggestion } from './composables/useActiveSuggestion';
 
 interface Props {
   modelValue?: string;
+  placeholder?: string;
   tags?: TagConfig[];
   suggestions?: SuggestionItem[];
   maxSuggestions?: number;
@@ -184,11 +185,12 @@ defineExpose({
       v-model="model"
       clearable
       class="w-full"
+      :placeholder="placeholder"
       @clear="handleInputClear"
       @focus="handleFocus"
       @input="handleInput"
       @keydown="handleKeydown"
-      :ui="{ trailing: 'pe-1' }"
+      :ui="{ trailing: 'pe-1', base: 'bg-white text-black' }"
     >
       <template v-if="model.length" #trailing>
         <UButton variant="link" aria-label="Clear input" @mousedown.prevent @click="handleInputClear" class="text-primary">
@@ -199,7 +201,7 @@ defineExpose({
 
     <div
       v-show="isPopoverOpen"
-      class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-7 overflow-y-auto rounded-md border shadow-lg"
+      class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-7 overflow-y-auto rounded-md shadow-lg"
       @mousedown.prevent
     >
       <SuggestionActions
