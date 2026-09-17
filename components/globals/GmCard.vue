@@ -1,18 +1,6 @@
 <script setup lang="ts">
-import { computed, h, type SetupContext } from 'vue';
 import { NuxtLink } from '#components';
 import { ADVICE } from '@/shared/messagesToUsers';
-
-const FONTS_FOR_HANDY_EFFECT = [
-  'Artist Nouveau',
-  'Shantell Sans',
-  'Caveat',
-  'Comforter Brush',
-  'Rubik',
-  'Comic Sans MS',
-  'Ink free',
-  'Segoe Script',
-];
 
 export type TGmCard = {
   nickname: string;
@@ -30,6 +18,18 @@ export type TGmCard = {
   randomFont?: boolean;
 };
 
+const FONTS_FOR_HANDY_EFFECT = [
+  'Artist Nouveau',
+  'Shantell Sans',
+  'Caveat',
+  'Comforter Brush',
+  'Rubik',
+  'Comic Sans MS',
+  'Ink free',
+  'Segoe Script',
+];
+const NEWBIE_PLACEHOLDER = '????';
+
 defineOptions({
   name: 'GmCard',
 });
@@ -42,30 +42,25 @@ defineEmits<{
 }>();
 
 const countOfGames = computed(() => {
-  return props.isNewbie ? '????' : props.gamesCount;
+  return props.isNewbie ? NEWBIE_PLACEHOLDER : props.gamesCount;
 });
 
-const getRandomFont = props.randomFont && FONTS_FOR_HANDY_EFFECT[Math.floor(Math.random() * FONTS_FOR_HANDY_EFFECT.length)];
+// ПО идее такая функция рэндома убирает проблему разных чисел при рэнжоме на SSR и клиенте
+function pickFontFor(seed: string) {
+  const hash = [...seed].reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+  return FONTS_FOR_HANDY_EFFECT[hash % FONTS_FOR_HANDY_EFFECT.length];
+}
 
-const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContext) => {
-  if (!wrapperProps.slug) {
-    return slots.default ? slots.default() : null;
-  }
-
-  return h(
-    NuxtLink,
-    {
-      to: `/org/${wrapperProps.slug}`,
-      target: '_blank',
-      class: 'block',
-    },
-    slots.default
-  );
-};
+const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname) : undefined));
 </script>
 
 <template>
-  <ConditionalLink :slug="slug" class="bg-card-decorate h-full rounded-lg p-1.5">
+  <component
+    :is="slug ? NuxtLink : 'div'"
+    :to="slug ? `/org/${slug}` : undefined"
+    :target="slug ? '_blank' : undefined"
+    class="bg-card-decorate block h-full w-full rounded-lg p-1.5"
+  >
     <article
       class="GmCard shadow-element relative flex h-full flex-col items-center gap-1 rounded-lg border-2 border-dashed p-2 text-black"
     >
@@ -75,9 +70,7 @@ const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContex
         <div class="flex w-[55%] flex-col items-start gap-1">
           <div class="relative w-full border-b border-dashed border-neutral-400 pb-1">
             <div class="truncate">
-              <span :style="{ 'font-family': getRandomFont }" class="mx-auto mb-px truncate text-center text-2xl">{{
-                nickname
-              }}</span>
+              <span :style="{ fontFamily }" class="mx-auto mb-px truncate text-center text-2xl">{{ nickname }}</span>
             </div>
             <span class="absolute -bottom-5 left-0 text-xs text-neutral-500"> Имя </span>
           </div>
@@ -87,7 +80,7 @@ const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContex
             }"
             class="relative mt-3.5 w-full border-b border-dashed border-neutral-400 text-center"
           >
-            <span :style="{ 'font-family': getRandomFont }" class="text-2xl">
+            <span :style="{ fontFamily }" class="text-2xl">
               {{ countOfGames }}
             </span>
             <span class="absolute -bottom-5 left-0 text-xs text-neutral-500"> Количество сессий </span>
@@ -126,5 +119,5 @@ const ConditionalLink = (wrapperProps: { slug?: string }, { slots }: SetupContex
 
       <UButton class="GmCard_like sketchy-border-5 absolute -top-5 -right-3.5" color="error" icon="ci:heart-outline" />
     </article>
-  </ConditionalLink>
+  </component>
 </template>
