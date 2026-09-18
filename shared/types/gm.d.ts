@@ -1,6 +1,6 @@
 import {ESkillGameMaster} from "@/shared/skills";
 import type {ELang} from "#consts/lang";
-import {game_systems} from "#consts/gameAttrs";
+import type {GameSystem} from "#openApi/enums";
 
 type TGMFilters = {
   sortBy?: ESkillGameMaster;
@@ -12,5 +12,5 @@ type TGMFilters = {
   },
   gameType?: string[], //потом добавить enum отдельный,
   theme?: string[], //тоже отдельно добавить
-  gameSystems?: typeof game_systems
+  gameSystems?: GameSystem[]
 }

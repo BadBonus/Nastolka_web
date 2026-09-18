@@ -1,5 +1,5 @@
-import { formatEnumLabel } from '@/utils/formatEnumLabel';
-import type { SuggestionItem, TagConfig } from './types';
+import {formatUnderscoreToSpace} from '@/utils/transformers/formatUnderscoreToSpace';
+import type {SuggestionItem, TagConfig} from './types';
 
 export function tagsToSuggestions(tags: TagConfig[]): SuggestionItem[] {
   return tags.map((tag) => ({
@@ -18,7 +18,7 @@ export function valuesToEntitySuggestions(
 ): SuggestionItem[] {
   return values.map((value) => ({
     id: `${tagKey}-${value}`,
-    label: formatEnumLabel(value),
+    label: formatUnderscoreToSpace(value),
     value,
     tagKey,
     type: 'entity',

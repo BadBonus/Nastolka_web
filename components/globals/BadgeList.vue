@@ -13,7 +13,8 @@ defineOptions({
   name: 'BadgeList',
 });
 
-defineProps<{
+const props = defineProps<{
+  maxLettersToShow?: number;
   items: TBadgeListItem[];
 }>();
 
@@ -22,7 +23,15 @@ const DEFAULT_BORDER_COLOR = '#000000';
 const DEFAULT_BG_COLOR = 'transparent';
 
 const badgeClass =
-  'border ring-0 bg-(--badge-bg)! text-(--badge-text)! border-(--badge-border)! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-black';
+  'ring-0 bg-(--badge-bg)! text-(--badge-text)! border-(--badge-border)! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-black';
+
+const formatTitle = (title: string) => {
+  const isNeededCrops = props.maxLettersToShow && title.length > props.maxLettersToShow;
+  if (isNeededCrops) {
+    return title.slice(0, props.maxLettersToShow) + '...';
+  }
+  return title;
+};
 
 function getBadgeStyle(item: TBadgeListItem): CSSProperties {
   return {
@@ -36,22 +45,11 @@ function getBadgeStyle(item: TBadgeListItem): CSSProperties {
 <template>
   <ul v-if="items.length" class="flex flex-wrap gap-1">
     <li v-for="(item, index) in items" :key="`${item.shortLabel}-${index}`">
-      <UTooltip v-if="item.fullLabel" :text="item.fullLabel" :delay-duration="0">
-        <UBadge
-          as="button"
-          type="button"
-          color="neutral"
-          variant="outline"
-          class="cursor-pointer"
-          :class="badgeClass"
-          :style="getBadgeStyle(item)"
-        >
-          {{ item.shortLabel }}
+      <UTooltip :text="item.fullLabel ?? item.shortLabel" :delay-duration="0">
+        <UBadge color="neutral" variant="outline" :class="badgeClass" :style="getBadgeStyle(item)">
+          {{ formatTitle(item.shortLabel) }}
         </UBadge>
       </UTooltip>
-      <UBadge v-else color="neutral" variant="outline" :class="badgeClass" :style="getBadgeStyle(item)">
-        {{ item.shortLabel }}
-      </UBadge>
     </li>
   </ul>
 </template>

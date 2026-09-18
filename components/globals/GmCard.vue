@@ -102,7 +102,7 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
         </div>
       </template>
 
-      <BadgeList v-if="preferredSystems" class="mt-auto" :items="preferredSystems" />
+      <BadgeList :maxLettersToShow="12" v-if="preferredSystems" class="mt-auto" :items="preferredSystems" />
 
       <USeparator class="mt-auto" decorative :ui="{ border: 'border-neutral-400' }" />
       <div class="my-1 flex w-full items-center justify-between">

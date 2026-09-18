@@ -79,6 +79,12 @@ export default defineAppConfig({
       slots: {
         root: 'outline-3 outline-[var(--ui-border)] -outline-offset-6 border-6 border-primary-inverted'
       }
+    },
+
+    badge: {
+      slots: {
+        base: 'border-2',
+      },
     }
   },
 });

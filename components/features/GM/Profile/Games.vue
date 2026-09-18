@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import { game_adv_types } from "#consts/gameAttrs";
-import { events } from "@/shared/demo/events";
+import { events } from '@/shared/demo/events';
+import { SessionType } from '#openApi/enums';
+import { formatUnderscoreToSpace } from '@/utils/transformers/formatUnderscoreToSpace';
 
-const ALL_EVENTS_ID = "all";
+const ALL_EVENTS_ID = 'all';
 
 defineOptions({
-  name: "ProfileGames",
+  name: 'ProfileGames',
 });
 
 const tabs = [
-  { value: ALL_EVENTS_ID, name: "Все" },
-  ...game_adv_types.map((el) => ({ value: el.id, name: el.name })),
+  { value: ALL_EVENTS_ID, name: 'Все' },
+  ...SessionType.map((value) => ({ value, name: formatUnderscoreToSpace(value) })),
 ];
 
-const currentTab = ref(tabs[0].value);
+const currentTab = ref(ALL_EVENTS_ID);
 const preparedEvents = computed(() => {
-  const x = {
+  const x: Record<string, typeof events> = {
     [ALL_EVENTS_ID]: events,
-    [game_adv_types[0].id]: events.slice(0, 3),
-    [game_adv_types[1].id]: events.slice(3, 10),
+    ONE_SHOT: events.slice(0, 3),
+    CAMPAIGN: events.slice(3, 10),
   };
-  return x[currentTab.value];
+  return x[currentTab.value] ?? events;
 });
 </script>
 <template>
@@ -30,5 +31,3 @@ const preparedEvents = computed(() => {
     <EventList class="mt-2" :items="preparedEvents" />
   </section>
 </template>
-
-<!--<style lang="scss"></style>-->

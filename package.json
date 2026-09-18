@@ -14,7 +14,7 @@
     "vmd:full-report": "node scripts/vmd-report.js",
     "vmd:diff": "node scripts/vmd-diff.js",
     "prepare": "husky",
-    "generate:api": "node --env-file=.env scripts/generate-api.mjs && node --env-file=.env scripts/formate-api.mjs"
+    "generate:api": "node --env-file=.env scripts/generate-api.mjs && node --env-file=.env scripts/formate-api.mjs && node --env-file=.env scripts/generate-game-system-badges.mjs"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.100",

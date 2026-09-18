@@ -2,8 +2,10 @@
 import { EExpYears } from '../types';
 import type { FormError, FormSubmitEvent } from '@nuxt/ui';
 import { countries } from '#consts/countries';
-import { game_platforms, game_systems } from '#consts/gameAttrs';
+import { GAME_SYSTEM_BADGES } from '#consts/gameSystems';
 import type { ESocLinks } from '#consts/socLinks';
+import { GamePlatform, GameSystem } from '#openApi/enums';
+import { formatUnderscoreToSpace } from '@/utils/transformers/formatUnderscoreToSpace';
 import { initSocLinks } from '~/utils/soclinks';
 
 type TSettingsGMForm = {
@@ -17,10 +19,20 @@ type TSettingsGMForm = {
   gm_exp_age: EExpYears;
   gameStyle?: string;
   social_links: Partial<Record<ESocLinks, string | undefined>>;
-  game_platforms: string[];
-  game_systems: string[];
+  game_platforms: GamePlatform[];
+  game_systems: GameSystem[];
   languages: string[];
 };
+
+const gameSystemItems = GameSystem.map((value) => ({
+  value,
+  label: GAME_SYSTEM_BADGES[value].shortLabel,
+}));
+
+const gamePlatformItems = GamePlatform.map((value) => ({
+  value,
+  label: formatUnderscoreToSpace(value),
+}));
 
 defineOptions({
   name: 'GMForm',
@@ -94,11 +106,11 @@ const editorContent = ref('');
     </u-form-field>
 
     <u-form-field label="Предпочитаемые системы" name="timezone">
-      <USelectMenu class="w-full" multiple v-model="state.game_systems" value-key="offset" :items="game_systems" />
+      <USelectMenu class="w-full" multiple value-key="value" v-model="state.game_systems" :items="gameSystemItems" />
     </u-form-field>
 
     <u-form-field label="Предпочитаемые платформы" name="timezone">
-      <USelectMenu multiple class="w-full" v-model="state.game_platforms" value-key="offset" :items="game_platforms" />
+      <USelectMenu multiple class="w-full" value-key="value" v-model="state.game_platforms" :items="gamePlatformItems" />
     </u-form-field>
 
     <div class="flex items-end gap-4">
