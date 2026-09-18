@@ -38,7 +38,7 @@ defineProps<TModal>();
       </div>
 
       <UTextarea placeholder="Ваше сообщение" class="text-text mt-2 w-full" />
-      <Button color="secondary" class="mt-3 w-full">Отправить</Button>
+      <UButton class="mt-3 flex w-full justify-center">Отправить</UButton>
     </template>
   </UModal>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { NuxtLink } from '#components';
 import { ADVICE } from '@/shared/messagesToUsers';
+import type { TBadgeListItem } from '@/components/globals/BadgeList.vue';
 
 export type TGmCard = {
   nickname: string;
@@ -16,6 +17,7 @@ export type TGmCard = {
   description?: string;
   slug?: string;
   randomFont?: boolean;
+  preferredSystems?: TBadgeListItem[];
 };
 
 const FONTS_FOR_HANDY_EFFECT = [
@@ -93,28 +95,33 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
           <div>
             <h5 class="font-extrabold">Обо мне</h5>
 
-            <p class="max-h-35.5 overflow-hidden text-xs">
+            <p class="h-35.5 overflow-hidden text-xs">
               {{ description }}
             </p>
           </div>
         </div>
       </template>
+
+      <BadgeList v-if="preferredSystems" class="mt-auto" :items="preferredSystems" />
+
       <USeparator class="mt-auto" decorative :ui="{ border: 'border-neutral-400' }" />
       <div class="my-1 flex w-full items-center justify-between">
         <CardsCost :cost="costValue" :costCurrency="costCurrency" />
-        <ChatModal
-          :advice="ADVICE"
-          :title="'Диалог с мастером Васей'"
-          :user="{ name: 'Вася', avatar: 'https://github.com/benjamincanac.png' }"
-        >
-          <UButton
-            variant="ghost"
-            icon="ic:baseline-message"
-            class="sketchy-border-5! w-1/2 border-2 border-black text-black"
+        <div @click.stop.prevent>
+          <ChatModal
+            :advice="ADVICE"
+            :title="'Диалог с мастером Васей'"
+            :user="{ name: 'Вася', avatar: 'https://github.com/benjamincanac.png' }"
           >
-            Написать
-          </UButton>
-        </ChatModal>
+            <UButton
+              variant="ghost"
+              icon="ic:baseline-message"
+              class="sketchy-border-5! w-full border-2 border-black text-black hover:bg-black hover:text-white"
+            >
+              Написать
+            </UButton>
+          </ChatModal>
+        </div>
       </div>
 
       <UButton class="GmCard_like sketchy-border-5 absolute -top-5 -right-3.5" color="error" icon="ci:heart-outline" />
