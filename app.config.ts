@@ -85,6 +85,17 @@ export default defineAppConfig({
       slots: {
         base: 'border-2',
       },
+    },
+
+    pagination: {
+      slots: {
+        item: 'border-white text-white data-[selected]:text-black font-bold',
+        prev: 'border-white text-white',
+        next: 'border-white text-white',
+        last: 'border-white text-white',
+        first: 'border-white text-white',
+      },
+
     }
   },
 });

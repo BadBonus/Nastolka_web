@@ -115,7 +115,7 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
           >
             <UButton
               variant="ghost"
-              icon="ic:baseline-message"
+              trailingIcon="ic:baseline-message"
               class="sketchy-border-5! w-full border-2 border-black text-black hover:bg-black hover:text-white"
             >
               Написать
