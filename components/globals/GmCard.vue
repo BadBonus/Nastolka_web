@@ -71,9 +71,9 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
         <UAvatar :alt="nickname" class="size-24.5 rounded-sm border-2 outline-none" :src="avatar" />
 
         <div class="flex w-[55%] flex-col items-start gap-1">
-          <div class="relative w-full border-b border-dashed border-neutral-400 pb-1">
+          <div class="relative w-full border-b border-dashed border-neutral-400">
             <div class="truncate">
-              <span :style="{ fontFamily }" class="mx-auto mb-px truncate text-center text-2xl">{{ nickname }}</span>
+              <span :style="{ fontFamily }" class="mx-auto mb-px truncate text-center text-lg">{{ nickname }}</span>
             </div>
             <span class="absolute -bottom-5 left-0 text-xs text-neutral-500"> Имя </span>
           </div>
