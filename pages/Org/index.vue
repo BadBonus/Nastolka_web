@@ -6,9 +6,8 @@ defineOptions({
   name: 'Org',
 });
 
-const {
-  orgs: { items, getItems, meta, page, limit, applyQuery, resetFilters },
-} = await useOrgFlow();
+const { loadCatalog } = useOrgFlow();
+const { items, getItems, meta, page, limit, applyQuery, resetFilters } = await loadCatalog();
 
 function onSearchApply(parsed: TOrgSearchParsed) {
   void applyQuery({

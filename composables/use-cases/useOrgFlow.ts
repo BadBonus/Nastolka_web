@@ -6,30 +6,31 @@ import type {TypeBaseQueryDto} from '#openApi';
 
 type TOrgFilters = TCatalogFiltersOf<TOrgIndexQuery>;
 
-type TOrgFlowOptions = {
+type TLoadCatalogOptions = {
   initialQuery?: Partial<TypeBaseQueryDto>;
   initialFilters?: Partial<TOrgFilters>;
 };
 
-export default async function useOrgFlow(options?: TOrgFlowOptions) {
+export default function useOrgFlow() {
   const {getOrgsAction} = useOrgActions();
 
-  const orgs = await useCatalogItems<TOrgCard, TOrgFilters>({
-    key: 'org-catalog',
-    initialQuery: options?.initialQuery,
-    initialFilters: options?.initialFilters,
-    fetch: async (query) => {
-      const data = await getOrgsAction(query);
-      const sanitized = sanitizeNulls(data);
+  const loadCatalog = (options?: TLoadCatalogOptions) =>
+    useCatalogItems<TOrgCard, TOrgFilters>({
+      key: 'org-catalog',
+      initialQuery: options?.initialQuery,
+      initialFilters: options?.initialFilters,
+      fetch: async (query) => {
+        const data = await getOrgsAction(query);
+        const sanitized = sanitizeNulls(data);
 
-      return {
-        ...sanitized,
-        data: sanitized.data.map(mapOrgListItemToGmCard),
-      };
-    },
-  });
+        return {
+          ...sanitized,
+          data: sanitized.data.map(mapOrgListItemToGmCard),
+        };
+      },
+    });
 
   return {
-    orgs,
+    loadCatalog,
   };
 }
