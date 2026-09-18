@@ -1,5 +1,6 @@
 import type {TypePaginationMeta, TypeBaseQueryDto} from '#openApi';
 import {watchDebounced} from '@vueuse/core';
+import {computed, ref, shallowRef} from 'vue';
 
 export type TResWithMeta<TData> = {
   data: TData;
@@ -44,9 +45,11 @@ export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, 
   setFilters: (next: Partial<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   applyQuery: (next: TCatalogApplyQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   resetMeta: () => void;
-  resetFilters: () => void;
+  resetFilters: () => Promise<TResWithMeta<TItem[]>>;
   refresh: () => Promise<TResWithMeta<TItem[]>>;
 };
+
+type TItemsMerge = 'replace' | 'append';
 
 const createDefaultMeta = (): TypePaginationMeta => ({
   page: 1,
@@ -67,7 +70,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
   const mode = options.mode ?? 'replace';
   const debounceMs = options.debounceMs ?? 500;
 
-  const items = ref<TItem[]>([]) as Ref<TItem[]>;
+  const items = shallowRef<TItem[]>([]);
   const meta = ref<TypePaginationMeta>(createDefaultMeta());
   const loading = ref(false);
   const error = ref<unknown>(null);
@@ -82,17 +85,18 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
   const canPrev = computed(() => meta.value.hasPrev);
 
   let requestId = 0;
-  let suppressQWatch = false;
+  let lastLoadedQ: string | undefined;
+  let paginationInFlight = false;
 
-  const buildQuery = (params?: Partial<TypeBaseQueryDto>): TCatalogQuery<TFilters> => {
-    const nextQ = params?.q ?? q.value;
+  const buildQuery = (): TCatalogQuery<TFilters> => {
+    const nextQ = q.value;
 
     return {
-      page: params?.page ?? page.value,
-      limit: params?.limit ?? limit.value,
-      sortOrder: params?.sortOrder ?? sortOrder.value,
-      ...(nextQ ? {q: nextQ} : {}),
       ...filters.value,
+      page: page.value,
+      limit: limit.value,
+      sortOrder: sortOrder.value,
+      ...(nextQ ? {q: nextQ} : {}),
     } as TCatalogQuery<TFilters>;
   };
 
@@ -104,9 +108,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     if (params.q !== undefined) q.value = params.q;
   };
 
-  const getItems = async (params?: Partial<TypeBaseQueryDto>): Promise<TResWithMeta<TItem[]>> => {
-    applyBaseParams(params);
-
+  const load = async (merge: TItemsMerge): Promise<TResWithMeta<TItem[]>> => {
     const currentId = ++requestId;
     loading.value = true;
     error.value = null;
@@ -118,15 +120,11 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
         return result;
       }
 
-      if (mode === 'append' && page.value > 1) {
-        items.value = [...items.value, ...result.data];
-      } else {
-        items.value = result.data;
-      }
-
+      items.value = merge === 'append' ? [...items.value, ...result.data] : result.data;
       meta.value = {...result.meta};
       page.value = result.meta.page;
       limit.value = result.meta.limit;
+      lastLoadedQ = q.value;
 
       return result;
     } catch (err) {
@@ -135,8 +133,12 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
       }
 
       error.value = err;
-      items.value = [];
-      meta.value = createDefaultMeta();
+      if (merge === 'replace') {
+        items.value = [];
+        meta.value = createDefaultMeta();
+      } else {
+        page.value = meta.value.page;
+      }
       throw err;
     } finally {
       if (currentId === requestId) {
@@ -145,29 +147,44 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     }
   };
 
+  const getItems = async (params?: Partial<TypeBaseQueryDto>): Promise<TResWithMeta<TItem[]>> => {
+    applyBaseParams(params);
+    return load('replace');
+  };
+
   const getNextPage = async (): Promise<TResWithMeta<TItem[]>> => {
-    if (!meta.value.hasNext) {
+    if (!meta.value.hasNext || paginationInFlight) {
       return {data: items.value, meta: meta.value};
     }
-    return getItems({page: page.value + 1});
+    paginationInFlight = true;
+    page.value += 1;
+    try {
+      return await load(mode === 'append' ? 'append' : 'replace');
+    } finally {
+      paginationInFlight = false;
+    }
   };
 
   const getPrevPage = async (): Promise<TResWithMeta<TItem[]>> => {
-    if (!meta.value.hasPrev) {
+    if (!meta.value.hasPrev || paginationInFlight) {
       return {data: items.value, meta: meta.value};
     }
-    return getItems({page: page.value - 1});
+    paginationInFlight = true;
+    page.value -= 1;
+    try {
+      return await load('replace');
+    } finally {
+      paginationInFlight = false;
+    }
   };
 
   const setFilters = async (next: Partial<TFilters>): Promise<TResWithMeta<TItem[]>> => {
     filters.value = {...filters.value, ...next};
     page.value = 1;
-    return getItems();
+    return load('replace');
   };
 
   const applyQuery = async (next: TCatalogApplyQuery<TFilters>): Promise<TResWithMeta<TItem[]>> => {
-    suppressQWatch = true;
-
     if (next.filters !== undefined) {
       filters.value = {...next.filters};
     }
@@ -179,21 +196,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     }
     page.value = next.page ?? 1;
 
-    try {
-      return await getItems();
-    } finally {
-      // Держим флаг дольше debounce, иначе watchDebounced всё равно вызовет второй fetch.
-      setTimeout(() => {
-        suppressQWatch = false;
-      }, debounceMs + 50);
-    }
-  };
-
-  const resetFilters = () => {
-    q.value = '';
-    sortOrder.value = 'desc';
-    filters.value = {...(options.initialFilters ?? {})};
-    resetMeta();
+    return load('replace');
   };
 
   const resetMeta = () => {
@@ -201,14 +204,22 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     page.value = 1;
   };
 
-  const refresh = () => getItems();
+  const resetFilters = () => {
+    q.value = '';
+    sortOrder.value = 'desc';
+    filters.value = {...(options.initialFilters ?? {})};
+    page.value = 1;
+    return load('replace');
+  };
+
+  const refresh = () => load('replace');
 
   watchDebounced(
     q,
     () => {
-      if (suppressQWatch) return;
+      if (q.value === lastLoadedQ) return;
       page.value = 1;
-      void getItems();
+      void load('replace').catch(() => { });
     },
     {debounce: debounceMs}
   );
