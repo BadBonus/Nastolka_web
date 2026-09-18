@@ -8,7 +8,7 @@ defineOptions({
 
 const {
   orgs: { items, getItems, meta, page, limit, applyQuery, resetFilters },
-} = useOrgFlow();
+} = await useOrgFlow();
 
 function onSearchApply(parsed: TOrgSearchParsed) {
   void applyQuery({
@@ -18,7 +18,6 @@ function onSearchApply(parsed: TOrgSearchParsed) {
   });
 }
 
-getItems();
 </script>
 
 <template>

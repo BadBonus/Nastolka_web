@@ -18,6 +18,7 @@ export type TGmCard = {
   slug?: string;
   randomFont?: boolean;
   preferredSystems?: TBadgeListItem[];
+  location?: string;
 };
 
 const FONTS_FOR_HANDY_EFFECT = [
@@ -80,7 +81,7 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
             :class="{
               'opacity-50': countOfGamesIsHidden,
             }"
-            class="relative mt-3.5 w-full border-b border-dashed border-neutral-400 text-center"
+            class="relative mt-2 w-full border-b border-dashed border-neutral-400 text-center"
           >
             <span :style="{ fontFamily }" class="text-2xl">
               {{ countOfGames }}
@@ -93,7 +94,10 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
       <template v-if="description">
         <div class="-mt-2 flex gap-1.5">
           <div>
-            <h5 class="font-extrabold">Обо мне</h5>
+            <div class="flex items-center justify-between font-extrabold">
+              <h5 class="">Обо мне</h5>
+              <span v-if="location"> <UIcon class="text-base" name="game-icons:position-marker" />{{ location }} </span>
+            </div>
 
             <p class="h-35.5 overflow-hidden text-xs">
               {{ description }}

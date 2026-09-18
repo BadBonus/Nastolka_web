@@ -12,6 +12,7 @@ export type TCatalogQuery<TFilters extends object = Record<string, never>> = Typ
 export type TCatalogFiltersOf<TQuery> = Omit<NonNullable<TQuery>, keyof TypeBaseQueryDto>;
 
 export type TUseCatalogItemsOptions<TItem, TFilters extends object = Record<string, never>> = {
+  key: string;
   fetch: (query: TCatalogQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
   initialQuery?: Partial<TypeBaseQueryDto>;
   initialFilters?: Partial<TFilters>;
@@ -63,10 +64,11 @@ const createDefaultMeta = (): TypePaginationMeta => ({
 /**
  * Универсальный state-компосабл каталога: пагинация, поиск, фильтры.
  * HTTP не вызывает — принимает `fetch` (его передаёт use-case через actions).
+ * Первая загрузка идёт через `useAsyncData` (SSR + payload); повторные — через `refresh`.
  */
-export default function useCatalogItems<TItem, TFilters extends object = Record<string, never>>(
+export default async function useCatalogItems<TItem, TFilters extends object = Record<string, never>>(
   options: TUseCatalogItemsOptions<TItem, TFilters>
-): TCatalogItemsReturn<TItem, TFilters> {
+): Promise<TCatalogItemsReturn<TItem, TFilters>> {
   const mode = options.mode ?? 'replace';
   const debounceMs = options.debounceMs ?? 500;
 
@@ -108,24 +110,59 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     if (params.q !== undefined) q.value = params.q;
   };
 
+  const applyResult = (result: TResWithMeta<TItem[]>, merge: TItemsMerge) => {
+    items.value = merge === 'append' ? [...items.value, ...result.data] : result.data;
+    meta.value = {...result.meta};
+    page.value = result.meta.page;
+    limit.value = result.meta.limit;
+    lastLoadedQ = q.value;
+  };
+
+  const {
+    data,
+    refresh: refreshAsyncData,
+    error: asyncError,
+    status,
+  } = await useAsyncData(options.key, () => options.fetch(buildQuery()), {
+    dedupe: 'cancel',
+  });
+
+  if (data.value) {
+    applyResult(data.value, 'replace');
+  } else if (asyncError.value) {
+    error.value = asyncError.value;
+  }
+
+  loading.value = status.value === 'pending';
+
   const load = async (merge: TItemsMerge): Promise<TResWithMeta<TItem[]>> => {
     const currentId = ++requestId;
     loading.value = true;
     error.value = null;
 
     try {
-      const result = await options.fetch(buildQuery());
+      try {
+        await refreshAsyncData();
+      } catch (err) {
+        if (!asyncError.value) {
+          throw err;
+        }
+      }
+
+      if (asyncError.value) {
+        throw asyncError.value;
+      }
+
+      const result = data.value;
+      if (!result) {
+        throw new Error('Catalog fetch returned empty data');
+      }
 
       if (currentId !== requestId) {
         return result;
       }
 
-      items.value = merge === 'append' ? [...items.value, ...result.data] : result.data;
-      meta.value = {...result.meta};
-      page.value = result.meta.page;
-      limit.value = result.meta.limit;
-      lastLoadedQ = q.value;
-
+      applyResult(result, merge);
       return result;
     } catch (err) {
       if (currentId !== requestId) {
@@ -219,7 +256,7 @@ export default function useCatalogItems<TItem, TFilters extends object = Record<
     () => {
       if (q.value === lastLoadedQ) return;
       page.value = 1;
-      void load('replace').catch(() => { });
+      void load('replace').catch(() => {});
     },
     {debounce: debounceMs}
   );

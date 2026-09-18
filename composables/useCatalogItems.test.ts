@@ -32,17 +32,23 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-function createCatalog(
+async function createCatalog(
   fetch: (query: Record<string, unknown>) => Promise<TResWithMeta<TItem[]>>,
-  options: {mode?: 'replace' | 'append'; initialFilters?: Partial<TFilters>} = {}
+  options: {
+    mode?: 'replace' | 'append';
+    initialFilters?: Partial<TFilters>;
+    initialQuery?: {page?: number; limit?: number; q?: string};
+  } = {}
 ) {
   const scope = effectScope(true);
-  const catalog = scope.run(() =>
+  const catalog = await scope.run(() =>
     useCatalogItems<TItem, TFilters>({
+      key: 'test-catalog',
       fetch: fetch as never,
       debounceMs: DEBOUNCE_MS,
       mode: options.mode,
       initialFilters: options.initialFilters,
+      initialQuery: options.initialQuery,
     })
   );
 
@@ -59,15 +65,31 @@ async function flushDebounce() {
 }
 
 describe('useCatalogItems', () => {
+  it('первый fetch идёт из initialQuery без getItems', async () => {
+    const fetch = vi.fn().mockResolvedValue(pageResult(2, ['b'], {limit: 10}));
+
+    const catalog = await createCatalog(fetch, {initialQuery: {page: 2, limit: 10}});
+
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        page: 2,
+        limit: 10,
+      })
+    );
+    expect(catalog.items.value.map((item) => item.id)).toEqual(['b']);
+    expect(catalog.page.value).toBe(2);
+    expect(catalog.limit.value).toBe(10);
+  });
+
   it('в режиме replace заменяет items при загрузке page > 1', async () => {
     const fetch = vi
       .fn()
       .mockResolvedValueOnce(pageResult(1, ['a']))
       .mockResolvedValueOnce(pageResult(2, ['b']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await catalog.getItems({page: 2});
 
     expect(catalog.items.value.map((item) => item.id)).toEqual(['b']);
@@ -80,9 +102,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(2, ['b']))
       .mockResolvedValueOnce(pageResult(2, ['b-refresh']));
 
-    const catalog = createCatalog(fetch, {mode: 'append'});
+    const catalog = await createCatalog(fetch, {mode: 'append'});
 
-    await catalog.getItems();
     await catalog.getNextPage();
     expect(catalog.items.value.map((item) => item.id)).toEqual(['a', 'b']);
 
@@ -98,9 +119,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(3, ['c']))
       .mockResolvedValueOnce(pageResult(2, ['b-prev']));
 
-    const catalog = createCatalog(fetch, {mode: 'append'});
+    const catalog = await createCatalog(fetch, {mode: 'append'});
 
-    await catalog.getItems();
     await catalog.getNextPage();
     await catalog.getNextPage();
     await catalog.getPrevPage();
@@ -115,9 +135,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(2, ['b']))
       .mockRejectedValueOnce(new Error('page 3 failed'));
 
-    const catalog = createCatalog(fetch, {mode: 'append'});
+    const catalog = await createCatalog(fetch, {mode: 'append'});
 
-    await catalog.getItems();
     await catalog.getNextPage();
 
     await expect(catalog.getNextPage()).rejects.toThrow('page 3 failed');
@@ -136,9 +155,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(1, ['a']))
       .mockResolvedValueOnce(pageResult(1, ['filtered']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await catalog.applyQuery({filters: {city: 'msk'}});
     await flushDebounce();
 
@@ -153,9 +171,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(1, ['a']))
       .mockResolvedValueOnce(pageResult(1, ['orc']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await catalog.applyQuery({q: 'orc'});
     await flushDebounce();
 
@@ -172,9 +189,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(2, ['orc-p2']))
       .mockResolvedValueOnce(pageResult(1, ['elf']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await catalog.applyQuery({q: 'orc'});
     await catalog.getItems({page: 2});
 
@@ -194,9 +210,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(1, ['one']))
       .mockResolvedValueOnce(pageResult(1, ['two']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     const first = catalog.applyQuery({q: 'one'});
     const second = catalog.applyQuery({q: 'two'});
     await Promise.allSettled([first, second]);
@@ -214,9 +229,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(1, ['filtered']))
       .mockResolvedValueOnce(pageResult(1, ['reset']));
 
-    const catalog = createCatalog(fetch, {initialFilters: {city: 'spb'}});
+    const catalog = await createCatalog(fetch, {initialFilters: {city: 'spb'}});
 
-    await catalog.getItems();
     await catalog.applyQuery({q: '', filters: {city: 'msk'}});
     expect(catalog.filters.value).toEqual({city: 'msk'});
 
@@ -237,9 +251,8 @@ describe('useCatalogItems', () => {
       .mockResolvedValueOnce(pageResult(2, ['b']))
       .mockRejectedValueOnce(new Error('search failed'));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await catalog.getItems({page: 2});
 
     const unhandled: unknown[] = [];
@@ -261,9 +274,7 @@ describe('useCatalogItems', () => {
 
   it('базовые поля query побеждают одноимённые ключи в filters', async () => {
     const fetch = vi.fn().mockResolvedValue(pageResult(1, ['a']));
-    const catalog = createCatalog(fetch, {initialFilters: {city: 'msk', page: 99}});
-
-    await catalog.getItems();
+    await createCatalog(fetch, {initialFilters: {city: 'msk', page: 99}});
 
     expect(fetch).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -285,8 +296,7 @@ describe('useCatalogItems', () => {
           })
       );
 
-    const catalog = createCatalog(fetch);
-    await catalog.getItems();
+    const catalog = await createCatalog(fetch);
 
     const first = catalog.getNextPage();
     const second = catalog.getNextPage();
@@ -317,8 +327,7 @@ describe('useCatalogItems', () => {
           })
       );
 
-    const catalog = createCatalog(fetch);
-    await catalog.getItems();
+    const catalog = await createCatalog(fetch);
 
     const next = catalog.getNextPage();
     await catalog.getPrevPage();
@@ -341,9 +350,8 @@ describe('useCatalogItems', () => {
       .mockRejectedValueOnce(new Error('search failed'))
       .mockResolvedValueOnce(pageResult(1, ['orc-retry']));
 
-    const catalog = createCatalog(fetch);
+    const catalog = await createCatalog(fetch);
 
-    await catalog.getItems();
     await expect(catalog.applyQuery({q: 'orc'})).rejects.toThrow('search failed');
     await flushDebounce();
 
