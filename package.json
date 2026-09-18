@@ -19,6 +19,9 @@
   "dependencies": {
     "@iconify-json/lucide": "^1.2.100",
     "@iconify-json/simple-icons": "^1.2.75",
+    "@iconify-json/ci": "^1.2.2",
+    "@iconify-json/game-icons": "^1.2.4",
+    "@iconify-json/material-symbols": "^1.2.88",
     "@inspira-ui/plugins": "^0.0.2",
     "@internationalized/date": "^3.12.3",
     "@nuxt/fonts": "^0.14.0",
@@ -51,9 +54,6 @@
   "devDependencies": {
     "@cspell/dict-russian": "^1.1.27",
     "@cspell/eslint-plugin": "^10.0.0",
-    "@iconify-json/ci": "^1.2.2",
-    "@iconify-json/game-icons": "^1.2.4",
-    "@iconify-json/material-symbols": "^1.2.88",
     "@nuxt/eslint": "^1.15.2",
     "@tailwindcss/vite": "^4.2.2",
     "@types/node": "^25.5.2",

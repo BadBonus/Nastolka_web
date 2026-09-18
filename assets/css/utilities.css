@@ -131,3 +131,36 @@
     @apply sketchy-border-6;
   }
 }
+
+@utility list-random-rotate {
+  & > * {
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.2s;
+  }
+
+  & > *:nth-child(7n + 1) {
+    --rot: -0.8deg;
+  }
+  & > *:nth-child(7n + 2) {
+    --rot: 0.4deg;
+  }
+  & > *:nth-child(7n + 3) {
+    --rot: -0.6deg;
+  }
+  & > *:nth-child(7n + 4) {
+    --rot: 1deg;
+  }
+  & > *:nth-child(7n + 5) {
+    --rot: -0.2deg;
+  }
+  & > *:nth-child(7n + 6) {
+    --rot: 0.9deg;
+  }
+  & > *:nth-child(7n + 7) {
+    --rot: -1deg;
+  }
+
+  &.-hover-straighten > *:hover {
+    transform: rotate(0deg) scale(1.05);
+  }
+}

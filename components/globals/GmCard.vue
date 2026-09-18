@@ -76,7 +76,7 @@ const fontFamily = computed(() => (props.randomFont ? pickFontFor(props.nickname
           </div>
           <div
             :class="{
-              disabled: countOfGamesIsHidden,
+              'opacity-50': countOfGamesIsHidden,
             }"
             class="relative mt-3.5 w-full border-b border-dashed border-neutral-400 text-center"
           >

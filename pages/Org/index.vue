@@ -33,7 +33,7 @@ getItems();
       </p>
     </div>
 
-    <ul class="flex flex-wrap justify-center gap-4.5">
+    <ul class="list-random-rotate -hover-straighten flex flex-wrap justify-center gap-4.5">
       <li class="w-65" v-for="(item, index) in items" :key="item.id">
         <GmCard
           :games-count="11"
