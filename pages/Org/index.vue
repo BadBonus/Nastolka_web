@@ -205,7 +205,10 @@ watch(
       :apply-query="applyQuery"
       :current-q="q"
       v-model:sort-order="sortOrder"
-      :current-preferred-systems="(filters as any).preferredSystems"
+      :current-preferred-systems="filters.preferredSystems"
+      :current-min-cost="filters.minCost"
+      :current-max-cost="filters.maxCost"
+      :current-min-events="filters.minEvents"
     />
 
     <div class="mb-8 text-center">

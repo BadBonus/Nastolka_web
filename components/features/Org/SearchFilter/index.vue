@@ -7,7 +7,7 @@ import {
   filterSuggestionsByQuery,
 } from '@/components/globals/SearchFilterInput/utils';
 import { ORG_SEARCH_TAGS, ORG_SEARCH_VALUES } from './config';
-import { parseOrgSearchString, formatOrgSearchString } from './mappers';
+import { parseOrgSearchString, formatOrgSearchString, type TOrgFiltersForFormat, type TOrgSearchParsed } from './mappers';
 import type { TCatalogApplyQuery, TCatalogFiltersOf } from '@/composables/useCatalogItems';
 import type { TOrgIndexQuery } from '@/composables/actions/useOrg';
 
@@ -21,6 +21,9 @@ interface Props {
   placeholder?: string;
   currentQ?: string;
   currentPreferredSystems?: TOrgIndexQuery['preferredSystems'];
+  currentMinCost?: number;
+  currentMaxCost?: number;
+  currentMinEvents?: number;
   currentSortOrder?: 'asc' | 'desc';
   applyQuery: (next: TCatalogApplyQuery<TOrgFilters>) => Promise<any>;
 }
@@ -51,22 +54,62 @@ const searchRaw = ref(
 );
 const suggestionsList = ref<SuggestionItem[]>([]);
 
+function currentFiltersFromProps(): TOrgFiltersForFormat {
+  return {
+    preferredSystems: props.currentPreferredSystems,
+    minCost: props.currentMinCost,
+    maxCost: props.currentMaxCost,
+    minEvents: props.currentMinEvents,
+  };
+}
+
+function systemsMatch(
+  a: TOrgIndexQuery['preferredSystems'] | undefined,
+  b: TOrgIndexQuery['preferredSystems'] | undefined
+): boolean {
+  const left = a ?? [];
+  const right = b ?? [];
+  return left.length === right.length && left.every((s, i) => s === right[i]);
+}
+
+function numericFiltersMatch(parsed: TOrgSearchParsed, filters: TOrgFiltersForFormat): boolean {
+  return parsed.minCost === filters.minCost && parsed.maxCost === filters.maxCost && parsed.minEvents === filters.minEvents;
+}
+
 watch(
-  () => [props.currentQ, props.currentPreferredSystems] as const,
-  ([q, systems], prev) => {
-    const [prevQ, prevSystems] = (prev ?? ['', []]) as [string, TOrgIndexQuery['preferredSystems'] | undefined];
-    const systemsArr = systems ?? [];
-    const prevArr = prevSystems ?? [];
-    if (q === prevQ && systemsArr.length === prevArr.length && systemsArr.every((s, i) => s === prevArr[i])) {
-      return;
+  () =>
+    [
+      props.currentQ,
+      props.currentPreferredSystems,
+      props.currentMinCost,
+      props.currentMaxCost,
+      props.currentMinEvents,
+    ] as const,
+  ([q, systems, minCost, maxCost, minEvents], prev) => {
+    if (prev) {
+      const [prevQ, prevSystems, prevMinCost, prevMaxCost, prevMinEvents] = prev;
+      if (
+        q === prevQ &&
+        systemsMatch(systems, prevSystems) &&
+        minCost === prevMinCost &&
+        maxCost === prevMaxCost &&
+        minEvents === prevMinEvents
+      ) {
+        return;
+      }
     }
+
     const parsedInput = parseOrgSearchString(searchRaw.value ?? '');
-    const inputSystems = parsedInput.preferredSystems ?? [];
-    const systemsMatch = inputSystems.length === systemsArr.length && inputSystems.every((s, i) => s === systemsArr[i]);
-    if ((parsedInput.q ?? '') === (q ?? '') && systemsMatch) {
+    const filters = currentFiltersFromProps();
+    if (
+      (parsedInput.q ?? '') === (q ?? '') &&
+      systemsMatch(parsedInput.preferredSystems, systems) &&
+      numericFiltersMatch(parsedInput, filters)
+    ) {
       return;
     }
-    searchRaw.value = formatOrgSearchString({ q, filters: { preferredSystems: systems } });
+
+    searchRaw.value = formatOrgSearchString({ q, filters });
   },
   { immediate: true, flush: 'post' }
 );
@@ -103,12 +146,21 @@ function handleFetchSuggestions(payload: FetchSuggestionsPayload) {
   suggestionsList.value = [];
 }
 
+function parsedToFilters(parsed: TOrgSearchParsed): TOrgFilters {
+  const filters: TOrgFilters = {};
+  if (parsed.preferredSystems) filters.preferredSystems = parsed.preferredSystems;
+  if (parsed.minCost !== undefined) filters.minCost = parsed.minCost;
+  if (parsed.maxCost !== undefined) filters.maxCost = parsed.maxCost;
+  if (parsed.minEvents !== undefined) filters.minEvents = parsed.minEvents;
+  return filters;
+}
+
 function handleSearch(query: string) {
   const parsed = parseOrgSearchString(query);
   void props.applyQuery({
     q: parsed.q,
     sortOrder: props.currentSortOrder,
-    filters: parsed.preferredSystems ? { preferredSystems: parsed.preferredSystems } : ({} as any),
+    filters: parsedToFilters(parsed),
     page: 1,
   });
 }

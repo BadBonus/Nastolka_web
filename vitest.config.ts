@@ -10,7 +10,8 @@ const vuePath = dirname(require.resolve('vue/package.json', {paths: [nuxtDir]}))
 export default defineConfig({
   resolve: {
     alias: {
-      '#openApi': fileURLToPath(new URL('./shared/open-api/index.ts', import.meta.url)),
+      '#openApi': fileURLToPath(new URL('./shared/open-api', import.meta.url)),
+      '@': fileURLToPath(new URL('./', import.meta.url)),
       vue: vuePath,
     },
   },
