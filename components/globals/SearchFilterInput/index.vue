@@ -193,7 +193,15 @@ defineExpose({
       :ui="{ trailing: 'pe-1', base: 'bg-white text-black' }"
     >
       <template v-if="model.length" #trailing>
-        <UButton variant="link" aria-label="Clear input" @mousedown.prevent @click="handleInputClear" class="text-primary">
+        <UButton
+          size="sm"
+          color="neutral"
+          variant="ghost"
+          aria-label="Clear input"
+          @mousedown.prevent
+          @click="handleInputClear"
+          class="text-black hover:text-white"
+        >
           X
         </UButton>
       </template>

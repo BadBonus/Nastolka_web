@@ -22,13 +22,16 @@ function setItemRef(el: Element | ComponentPublicInstance | null, index: number)
   }
 }
 
-// Активная опция всегда должна быть видна в скролл-контейнере попапа.
 watch(
   () => props.activeIndex,
   async (index) => {
     if (index < 0) return;
     await nextTick();
-    itemEls.value[index]?.scrollIntoView({ block: 'nearest' });
+    const el = itemEls.value[index];
+    if (el) {
+      el.scrollIntoView({ block: 'nearest' });
+      el.focus({ preventScroll: true });
+    }
   }
 );
 </script>
@@ -44,8 +47,8 @@ watch(
           :ref="(el: HTMLButtonElement | null, index: number) => setItemRef(el, index)"
           type="button"
           :aria-selected="index === activeIndex"
-          class="flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left hover:bg-white/10"
-          :class="[item.type === 'entity' ? 'text-xs' : 'text-sm', { 'bg-white/10': index === activeIndex }]"
+          class="hover:bg-background focus:bg-background flex w-full cursor-pointer items-center justify-between rounded px-3 py-1.5 text-left hover:text-white focus:text-white"
+          :class="[item.type === 'entity' ? 'text-xs' : 'text-sm', { 'bg-background text-white': index === activeIndex }]"
           @mouseenter="emit('update:activeIndex', index)"
           @click="emit('itemClick', item)"
         >
