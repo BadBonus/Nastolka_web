@@ -1,28 +1,33 @@
-import type {TypePaginationMeta, TypeBaseQueryDto} from '#openApi';
-import {watchDebounced} from '@vueuse/core';
-import {computed, ref, shallowRef} from 'vue';
+import type { TypePaginationMeta, TypeBaseQueryDto } from '#openApi';
+import { watchDebounced } from '@vueuse/core';
+import { computed, ref, shallowRef, type Ref, type ComputedRef } from 'vue';
 
 export type TResWithMeta<TData> = {
   data: TData;
   meta: TypePaginationMeta;
 };
 
-export type TCatalogQuery<TFilters extends object = Record<string, never>> = TypeBaseQueryDto & TFilters;
+export type TCatalogQuery<TFilters extends object = Record<string, never>> = TypeBaseQueryDto & {
+  sortBy?: TSortByField;
+} & TFilters;
 
-export type TCatalogFiltersOf<TQuery> = Omit<NonNullable<TQuery>, keyof TypeBaseQueryDto>;
+export type TCatalogFiltersOf<TQuery> = Omit<NonNullable<TQuery>, keyof TypeBaseQueryDto | 'sortBy'>;
 
 export type TUseCatalogItemsOptions<TItem, TFilters extends object = Record<string, never>> = {
   key: string;
   fetch: (query: TCatalogQuery<TFilters>) => Promise<TResWithMeta<TItem[]>>;
-  initialQuery?: Partial<TypeBaseQueryDto>;
+  initialQuery?: Partial<TypeBaseQueryDto & { sortBy: TSortByField }>;
   initialFilters?: Partial<TFilters>;
   debounceMs?: number;
   mode?: 'replace' | 'append';
 };
 
+export type TSortByField = 'createdAt' | 'eventsCount' | 'reviewsCount';
+
 export type TCatalogApplyQuery<TFilters extends object = Record<string, never>> = {
   q?: string;
   sortOrder?: TypeBaseQueryDto['sortOrder'];
+  sortBy?: TSortByField;
   /** Полная замена filters (не merge). */
   filters?: Partial<TFilters>;
   page?: number;
@@ -37,6 +42,7 @@ export type TCatalogItemsReturn<TItem, TFilters extends object = Record<string, 
   page: Ref<number>;
   limit: Ref<number>;
   sortOrder: Ref<TypeBaseQueryDto['sortOrder']>;
+  sortBy: Ref<TSortByField | undefined>;
   filters: Ref<Partial<TFilters>>;
   canNext: ComputedRef<boolean>;
   canPrev: ComputedRef<boolean>;
@@ -81,7 +87,8 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
   const page = ref(options.initialQuery?.page ?? 1);
   const limit = ref(options.initialQuery?.limit ?? 20);
   const sortOrder = ref<TypeBaseQueryDto['sortOrder']>(options.initialQuery?.sortOrder ?? 'desc');
-  const filters = ref<Partial<TFilters>>({...(options.initialFilters ?? {})}) as Ref<Partial<TFilters>>;
+  const sortBy = ref<TSortByField | undefined>(options.initialQuery?.sortBy as TSortByField | undefined);
+  const filters = ref<Partial<TFilters>>({ ...(options.initialFilters ?? {}) }) as Ref<Partial<TFilters>>;
 
   const canNext = computed(() => meta.value.hasNext);
   const canPrev = computed(() => meta.value.hasPrev);
@@ -98,7 +105,8 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
       page: page.value,
       limit: limit.value,
       sortOrder: sortOrder.value,
-      ...(nextQ ? {q: nextQ} : {}),
+      ...(sortBy.value ? { sortBy: sortBy.value } : {}),
+      ...(nextQ ? { q: nextQ } : {}),
     } as TCatalogQuery<TFilters>;
   };
 
@@ -107,12 +115,13 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
     if (params.page !== undefined) page.value = params.page;
     if (params.limit !== undefined) limit.value = params.limit;
     if (params.sortOrder !== undefined) sortOrder.value = params.sortOrder;
+    if ((params as any).sortBy !== undefined) sortBy.value = (params as any).sortBy;
     if (params.q !== undefined) q.value = params.q;
   };
 
   const applyResult = (result: TResWithMeta<TItem[]>, merge: TItemsMerge) => {
     items.value = merge === 'append' ? [...items.value, ...result.data] : result.data;
-    meta.value = {...result.meta};
+    meta.value = { ...result.meta };
     page.value = result.meta.page;
     limit.value = result.meta.limit;
     lastLoadedQ = q.value;
@@ -191,7 +200,7 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
 
   const getNextPage = async (): Promise<TResWithMeta<TItem[]>> => {
     if (!meta.value.hasNext || paginationInFlight) {
-      return {data: items.value, meta: meta.value};
+      return { data: items.value, meta: meta.value };
     }
     paginationInFlight = true;
     page.value += 1;
@@ -204,7 +213,7 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
 
   const getPrevPage = async (): Promise<TResWithMeta<TItem[]>> => {
     if (!meta.value.hasPrev || paginationInFlight) {
-      return {data: items.value, meta: meta.value};
+      return { data: items.value, meta: meta.value };
     }
     paginationInFlight = true;
     page.value -= 1;
@@ -216,20 +225,23 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
   };
 
   const setFilters = async (next: Partial<TFilters>): Promise<TResWithMeta<TItem[]>> => {
-    filters.value = {...filters.value, ...next};
+    filters.value = { ...filters.value, ...next };
     page.value = 1;
     return load('replace');
   };
 
   const applyQuery = async (next: TCatalogApplyQuery<TFilters>): Promise<TResWithMeta<TItem[]>> => {
     if (next.filters !== undefined) {
-      filters.value = {...next.filters};
+      filters.value = { ...next.filters };
     }
     if (next.q !== undefined) {
       q.value = next.q;
     }
     if (next.sortOrder !== undefined) {
       sortOrder.value = next.sortOrder;
+    }
+    if (next.sortBy !== undefined) {
+      sortBy.value = next.sortBy;
     }
     page.value = next.page ?? 1;
 
@@ -244,7 +256,8 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
   const resetFilters = () => {
     q.value = '';
     sortOrder.value = 'desc';
-    filters.value = {...(options.initialFilters ?? {})};
+    sortBy.value = undefined;
+    filters.value = { ...(options.initialFilters ?? {}) };
     page.value = 1;
     return load('replace');
   };
@@ -258,7 +271,7 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
       page.value = 1;
       void load('replace').catch(() => {});
     },
-    {debounce: debounceMs}
+    { debounce: debounceMs }
   );
 
   return {
@@ -270,6 +283,7 @@ export default async function useCatalogItems<TItem, TFilters extends object = R
     page,
     limit,
     sortOrder,
+    sortBy,
     filters,
     canNext,
     canPrev,

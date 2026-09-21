@@ -1,18 +1,18 @@
-import useOrgActions, {type TOrgIndexQuery} from '@/composables/actions/useOrg';
-import useCatalogItems, {type TCatalogFiltersOf} from '@/composables/useCatalogItems';
-import {mapOrgListItemToGmCard, type TOrgCard} from '@/components/features/Org/mappers';
-import {sanitizeNulls} from '~/utils/transformers/nullToUndefined';
-import type {TypeBaseQueryDto} from '#openApi';
+import useOrgActions, { type TOrgIndexQuery } from '@/composables/actions/useOrg';
+import useCatalogItems, { type TCatalogFiltersOf, type TSortByField } from '@/composables/useCatalogItems';
+import { mapOrgListItemToGmCard, type TOrgCard } from '@/components/features/Org/mappers';
+import { sanitizeNulls } from '~/utils/transformers/nullToUndefined';
+import type { TypeBaseQueryDto } from '#openApi';
 
 type TOrgFilters = TCatalogFiltersOf<TOrgIndexQuery>;
 
 type TLoadCatalogOptions = {
-  initialQuery?: Partial<TypeBaseQueryDto>;
+  initialQuery?: Partial<TypeBaseQueryDto & { sortBy: TSortByField }>;
   initialFilters?: Partial<TOrgFilters>;
 };
 
 export default function useOrgFlow() {
-  const {getOrgsAction} = useOrgActions();
+  const { getOrgsAction } = useOrgActions();
 
   const loadCatalog = (options?: TLoadCatalogOptions) =>
     useCatalogItems<TOrgCard, TOrgFilters>({

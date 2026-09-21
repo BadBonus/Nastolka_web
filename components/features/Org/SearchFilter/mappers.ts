@@ -10,6 +10,10 @@ export type TOrgSearchParsed = {
   preferredSystems?: TOrgIndexQuery['preferredSystems'];
 };
 
+export type TOrgFiltersForFormat = {
+  preferredSystems?: TOrgIndexQuery['preferredSystems'];
+};
+
 const GAME_SYSTEM_SET = new Set<string>(GameSystem);
 
 /**
@@ -41,4 +45,29 @@ export function parseOrgSearchString(input: string): TOrgSearchParsed {
     q: textParts.join(' '),
     ...(systems.size ? { preferredSystems: [...systems] as TOrgIndexQuery['preferredSystems'] } : {}),
   };
+}
+
+function escapeFilterValue(value: string): string {
+  if (/[\s":,\\]/.test(value)) {
+    return `"${value.replace(/(["\\])/g, '\\$1')}"`;
+  }
+  return value;
+}
+
+/**
+ * Форматирует q + набор фильтров обратно в строку SearchFilterInput.
+ * Обратная к parseOrgSearchString функция.
+ */
+export function formatOrgSearchString(params: { q?: string; filters?: TOrgFiltersForFormat }): string {
+  const parts: string[] = [];
+  if (params.q?.trim()) {
+    parts.push(params.q.trim());
+  }
+  const filters = params.filters ?? {};
+  if (filters.preferredSystems?.length) {
+    for (const sys of filters.preferredSystems) {
+      parts.push(`preferredSystems:${escapeFilterValue(sys)}`);
+    }
+  }
+  return parts.join(' ');
 }

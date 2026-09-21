@@ -7,26 +7,56 @@ import {
   filterSuggestionsByQuery,
 } from '@/components/globals/SearchFilterInput/utils';
 import { ORG_SEARCH_TAGS, ORG_SEARCH_VALUES } from './config';
-import { parseOrgSearchString, type TOrgSearchParsed } from './mappers';
+import { parseOrgSearchString, formatOrgSearchString } from './mappers';
+import type { TCatalogApplyQuery, TCatalogFiltersOf } from '@/composables/useCatalogItems';
+import type { TOrgIndexQuery } from '@/composables/actions/useOrg';
 
 defineOptions({
   name: 'OrgSearchFilter',
 });
 
+type TOrgFilters = TCatalogFiltersOf<TOrgIndexQuery>;
+
 interface Props {
   placeholder?: string;
+  currentQ?: string;
+  currentPreferredSystems?: TOrgIndexQuery['preferredSystems'];
+  applyQuery: (next: TCatalogApplyQuery<TOrgFilters>) => Promise<any>;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Поиск мастеров и фильтрация',
+  currentQ: '',
+  currentPreferredSystems: () => [],
 });
 
-const emit = defineEmits<{
-  (e: 'apply', value: TOrgSearchParsed): void;
-}>();
-
-const searchRaw = ref('');
+const searchRaw = ref(
+  formatOrgSearchString({
+    q: '' as string,
+    filters: { preferredSystems: [] as TOrgIndexQuery['preferredSystems'] },
+  })
+);
 const suggestionsList = ref<SuggestionItem[]>([]);
+
+watch(
+  () => [props.currentQ, props.currentPreferredSystems] as const,
+  ([q, systems], prev) => {
+    const [prevQ, prevSystems] = (prev ?? ['', []]) as [string, TOrgIndexQuery['preferredSystems'] | undefined];
+    const systemsArr = systems ?? [];
+    const prevArr = prevSystems ?? [];
+    if (q === prevQ && systemsArr.length === prevArr.length && systemsArr.every((s, i) => s === prevArr[i])) {
+      return;
+    }
+    const parsedInput = parseOrgSearchString(searchRaw.value ?? '');
+    const inputSystems = parsedInput.preferredSystems ?? [];
+    const systemsMatch = inputSystems.length === systemsArr.length && inputSystems.every((s, i) => s === systemsArr[i]);
+    if ((parsedInput.q ?? '') === (q ?? '') && systemsMatch) {
+      return;
+    }
+    searchRaw.value = formatOrgSearchString({ q, filters: { preferredSystems: systems } });
+  },
+  { immediate: true, flush: 'post' }
+);
 
 function handleFetchSuggestions(payload: FetchSuggestionsPayload) {
   const { contextType, tagKey, queryWord } = payload;
@@ -61,7 +91,12 @@ function handleFetchSuggestions(payload: FetchSuggestionsPayload) {
 }
 
 function handleSearch(query: string) {
-  emit('apply', parseOrgSearchString(query));
+  const parsed = parseOrgSearchString(query);
+  void props.applyQuery({
+    q: parsed.q,
+    filters: parsed.preferredSystems ? { preferredSystems: parsed.preferredSystems } : ({} as any),
+    page: 1,
+  });
 }
 </script>
 
