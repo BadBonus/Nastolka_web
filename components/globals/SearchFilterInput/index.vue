@@ -209,7 +209,7 @@ defineExpose({
 
     <div
       v-show="isPopoverOpen"
-      class="absolute top-full left-0 z-50 mt-1 max-h-60 w-full min-w-7 overflow-y-auto rounded-md shadow-lg"
+      class="absolute top-full left-0 z-50 mt-1 w-full min-w-7 rounded-md shadow-lg"
       @mousedown.prevent
     >
       <SuggestionActions
