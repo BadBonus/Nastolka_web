@@ -204,6 +204,7 @@ watch(
       class="mx-auto w-full max-w-4xl"
       :apply-query="applyQuery"
       :current-q="q"
+      v-model:sort-order="sortOrder"
       :current-preferred-systems="(filters as any).preferredSystems"
     />
 

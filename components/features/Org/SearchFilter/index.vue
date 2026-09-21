@@ -21,6 +21,7 @@ interface Props {
   placeholder?: string;
   currentQ?: string;
   currentPreferredSystems?: TOrgIndexQuery['preferredSystems'];
+  currentSortOrder?: 'asc' | 'desc';
   applyQuery: (next: TCatalogApplyQuery<TOrgFilters>) => Promise<any>;
 }
 
@@ -28,6 +29,18 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Поиск мастеров и фильтрация',
   currentQ: '',
   currentPreferredSystems: () => [],
+});
+
+const emit = defineEmits<{
+  (e: 'update:sortOrder', value: 'asc' | 'desc'): void;
+}>();
+
+const sortOrderProxy = computed({
+  get: () => props.currentSortOrder,
+  set: (next: 'asc' | 'desc') => {
+    emit('update:sortOrder', next);
+    void props.applyQuery({ sortOrder: next, page: 1 });
+  },
 });
 
 const searchRaw = ref(
@@ -94,6 +107,7 @@ function handleSearch(query: string) {
   const parsed = parseOrgSearchString(query);
   void props.applyQuery({
     q: parsed.q,
+    sortOrder: props.currentSortOrder,
     filters: parsed.preferredSystems ? { preferredSystems: parsed.preferredSystems } : ({} as any),
     page: 1,
   });
@@ -103,6 +117,7 @@ function handleSearch(query: string) {
 <template>
   <SearchFilterInput
     v-model="searchRaw"
+    v-model:sort-order="sortOrderProxy"
     :placeholder="placeholder"
     :tags="ORG_SEARCH_TAGS"
     :suggestions="suggestionsList"

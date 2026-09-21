@@ -15,6 +15,7 @@ interface Props {
   suggestions?: SuggestionItem[];
   maxSuggestions?: number;
   debounceMs?: number;
+  sortOrder?: 'asc' | 'desc';
 }
 
 interface UInputInstance {
@@ -32,6 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
+  (e: 'update:sortOrder', value: 'asc' | 'desc'): void;
   (e: 'search', value: string): void;
   (e: 'fetch-suggestions', payload: FetchSuggestionsPayload): void;
 }>();
@@ -176,36 +178,57 @@ defineExpose({
   currentContext,
   updateCaretAndContext: () => syncCaret({ force: true }),
 });
+
+const isSortButtonVisible = computed(() => props.sortOrder !== undefined);
+
+const sortOrderModel = computed<'asc' | 'desc'>(() => props.sortOrder ?? 'desc');
+
+function handleSortToggle() {
+  const next: 'asc' | 'desc' = sortOrderModel.value === 'desc' ? 'asc' : 'desc';
+  emit('update:sortOrder', next);
+}
 </script>
 
 <template>
   <div ref="containerRef" class="relative w-full" @focusout="handleFocusOut">
-    <UInput
-      ref="uInputRef"
-      v-model="model"
-      clearable
-      class="w-full"
-      :placeholder="placeholder"
-      @clear="handleInputClear"
-      @focus="handleFocus"
-      @input="handleInput"
-      @keydown="handleKeydown"
-      :ui="{ trailing: 'pe-1', base: 'bg-white text-black' }"
-    >
-      <template v-if="model.length" #trailing>
-        <UButton
-          size="sm"
-          color="neutral"
-          variant="ghost"
-          aria-label="Clear input"
-          @mousedown.prevent
-          @click="handleInputClear"
-          class="text-black hover:text-white"
-        >
-          X
-        </UButton>
-      </template>
-    </UInput>
+    <div class="flex">
+      <UInput
+        ref="uInputRef"
+        v-model="model"
+        clearable
+        class="w-full"
+        :placeholder="placeholder"
+        @clear="handleInputClear"
+        @focus="handleFocus"
+        @input="handleInput"
+        @keydown="handleKeydown"
+        :ui="{ trailing: 'pe-1', base: 'bg-white text-black' }"
+      >
+        <template v-if="model.length" #trailing>
+          <UButton
+            size="sm"
+            color="neutral"
+            variant="ghost"
+            aria-label="Clear input"
+            @mousedown.prevent
+            @click="handleInputClear"
+            class="text-black hover:text-white"
+          >
+            X
+          </UButton>
+        </template>
+      </UInput>
+
+      <UButton
+        v-if="isSortButtonVisible"
+        @click="handleSortToggle"
+        @mousedown.prevent
+        :icon="sortOrderModel === 'desc' ? 'lucide:list-sort-descending' : 'lucide:list-sort-ascending'"
+        color="primary"
+        :class="sortOrderModel === 'desc' ? 'sketchy-border-5' : 'sketchy-border'"
+        class="ml-3"
+      />
+    </div>
 
     <div
       v-show="isPopoverOpen"
